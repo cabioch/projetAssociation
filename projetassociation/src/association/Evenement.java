@@ -170,7 +170,10 @@ public class Evenement implements java.io.Serializable {
    * @return Vrai si le participant a bien pu �tre ajout�
    */
   public boolean ajouterParticipant(InterMembre participant) {
-    return this.participants.add(participant);
+    if (participants.size() < nbParticipantsMax) {
+      return this.participants.add(participant);
+    }
+    return false;
   }
 
   /**
