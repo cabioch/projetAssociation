@@ -2,6 +2,7 @@ package association;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -211,18 +212,23 @@ public class Evenement implements java.io.Serializable {
    * @param mois              Le mois auquel l'evenement debute
    * @param jour              Le jour auquel l'evenement debute
    * @param heure             L'heure � laquelle l'evenement debute
-   * @param minute            La minute � laquelle l'evenement debute
+   * @param minutes           La minute � laquelle l'evenement debute
    * @param duree             La duree de l'evenement en minutes
    * @param nbParticipantsMax Le nombre maximum de participants
    */
   public Evenement(
-          String nom, String lieu, int annee, int mois, int jour, int heure, int minute,
+          String nom, String lieu, int annee, Month mois, int jour, int heure, int minutes,
           int duree, int nbParticipantsMax) {
+    this.participants = new HashSet<>();
+    // En cas de paramètres non valides (potentiellement inutile car déjà faite par LocalDateTime ??
+    if (!(jour >= 1 && jour <= 31 && heure >= 0 && heure <= 23 && minutes >= 0 && minutes <= 59)) {
+      return;
+    }
+    this.date = LocalDateTime.of(annee, mois, jour, heure, minutes);
     this.nom = nom;
     this.lieu = lieu;
-    this.date = LocalDateTime.of(annee, mois, jour, heure, minute);
     this.duree = duree;
     this.nbParticipantsMax = nbParticipantsMax;
-    this.participants = new HashSet<>();
+
   }
 }
