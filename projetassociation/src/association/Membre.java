@@ -10,17 +10,6 @@ import java.util.List;
  */
 public class Membre implements InterMembre {
   
-  
-  /**
-   * L'âge de la personne.
-   */
-  private int age;
-  
-  /**
-   * L'adresse de la personne.
-   */
-  private String adresse;
-  
   private InterGestionEvenements evenements;
   
   private InformationPersonnelle infos;
@@ -29,16 +18,13 @@ public class Membre implements InterMembre {
   
   
   /**
-   * Creer un membre avec ses informations corrélées à ses InformationPersonnelle.
+   * Creer un membre avec ses informations corrélées à ses
+   * InformationPersonnelle.
    *
-   * @param adresse l'adresse de la personne
-   * @param age l'age de la personne
+   * @param info l'objet informationPersonnelle du membre
    */
-  public Membre(int age, String adresse) {
-    String prenom = infos.getPrenom();
-    String nom = infos.getNom();
-    age = infos.getAge();
-    adresse = infos.getAdresse();
+  public Membre(InformationPersonnelle info) {
+    this.infos = info;
   }
   
   
@@ -72,11 +58,9 @@ public class Membre implements InterMembre {
   @Override
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
     if (membres.ensembleMembres().contains(info)) {
-      if (this.adresse != null)
-        info.setAdresse(this.adresse);
-      if (this.age < 0)
-        this.age = 0;
-      info.setAge(this.age);
+      // pas de vérification car elles sont déjà dans informations personnelles
+      info.setAdresse(infos.getAdresse());
+      info.setAge(infos.getAge());
     }
     
   }
