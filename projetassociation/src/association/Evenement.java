@@ -69,8 +69,8 @@ public class Evenement implements java.io.Serializable {
     LocalDateTime finThis = date.plusMinutes(duree);
     LocalDateTime finEvt = date.plusMinutes(evt.duree);
 
-    // Pas supperpos� en temps
-    return (finThis.compareTo(evt.date) <= 0 || date.compareTo(finEvt) >= 0);
+    // Pas supperposé en temps
+    return (finThis.compareTo(evt.date) < 0 || date.compareTo(finEvt) > 0);
   }
 
   //<editor-fold desc="Getter-Setter">
