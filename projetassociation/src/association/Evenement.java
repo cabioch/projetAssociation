@@ -52,9 +52,9 @@ public class Evenement implements java.io.Serializable {
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps et en lieu avec celui-ci
    */
   public boolean pasDeChevauchementLieu(Evenement evt) {
-    // J'ai un doute sur le fonctionnement de la m�thode
-    // -> Les 2 conditions doivent etre v�rifi�es ou juste une ?
-    // Pris le fonctionnement a une condition v�rifi�e
+    // J'ai un doute sur le fonctionnement de la méthode
+    // -> Les 2 conditions doivent etre vérifiées ou juste une ?
+    // Pris le fonctionnement a une condition vérifiée
     return (!Objects.equals(evt.lieu, this.lieu) || pasDeChevauchementTemps(evt));
 
   }
@@ -69,8 +69,8 @@ public class Evenement implements java.io.Serializable {
     LocalDateTime finThis = date.plusMinutes(duree);
     LocalDateTime finEvt = date.plusMinutes(evt.duree);
 
-    // Pas supperpos� en temps
-    return (finThis.compareTo(evt.date) <= 0 || date.compareTo(finEvt) >= 0);
+    // Pas supperposé en temps
+    return (finThis.compareTo(evt.date) < 0 || date.compareTo(finEvt) > 0);
   }
 
   //<editor-fold desc="Getter-Setter">
@@ -164,12 +164,16 @@ public class Evenement implements java.io.Serializable {
   //</editor-fold>
 
   /**
-   * Ajoute un participant à la liste de participants.
+   * Ajoute un participant à la liste de participants si le nombre maximum de particpants
+   * n'est pas déjà atteint.
    *
    * @param participant Un participant
    * @return Vrai si le participant a bien pu être ajouté
    */
   public boolean ajouterParticipant(InterMembre participant) {
+    if (participants.size() >= nbParticipantsMax) {
+      return false;
+    }
     return this.participants.add(participant);
   }
 

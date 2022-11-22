@@ -24,9 +24,9 @@ public class GestionAssociation implements InterGestionAssociation {
   private static InterGestionMembres gestionMembres = null;
 
   /**
-   * Renvoie le gestionnaire d'�v�nements de l'association. L'objet retourn� est
-   * unique. Au premier appel de la m�thode, il est cr�� et aux appels suivants,
-   * c'est la r�f�rence sur cet objet qui est retourn�e.
+   * Renvoie le gestionnaire d'événements de l'association. L'objet retourné est
+   * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
+   * c'est la référence sur cet objet qui est retournée.
    *
    * @return le gestionnaire d'�v�nements de l'association
    */
@@ -40,9 +40,9 @@ public class GestionAssociation implements InterGestionAssociation {
   }
 
   /**
-   * Renvoie le gestionnaire de membres de l'association. L'objet retourn� est
-   * unique. Au premier appel de la m�thode, il est cr�� et aux appels suivants,
-   * c'est la r�f�rence sur cet objet qui est retourn�e.
+   * Renvoie le gestionnaire de membres de l'association. L'objet retourné est
+   * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
+   * c'est la référence sur cet objet qui est retournée.
    *
    * @return le gestionnaire de membres de l'association
    */
@@ -56,11 +56,11 @@ public class GestionAssociation implements InterGestionAssociation {
   }
 
   /**
-   * Enregistre dans un fichier toutes les donn�es de l'association,
-   * c'est-�-dire l'ensemble des membres et des �v�n�ments.
+   * Enregistre dans un fichier toutes les données de l'association,
+   * c'est-à-dire l'ensemble des membres et des événéments.
    *
-   * @param nomFichier le fichier dans lequel enregistrer les donn�es
-   * @throws IOException en cas de probl�me d'�criture dans le fichier
+   * @param nomFichier le fichier dans lequel enregistrer les données
+   * @throws IOException en cas de problème d'écriture dans le fichier
    */
   @Override
   public void sauvegarderDonnees(String nomFichier) throws IOException {
@@ -73,7 +73,7 @@ public class GestionAssociation implements InterGestionAssociation {
   }
 
   /**
-   * Charge � partir d'un fichier toutes les donn�es de l'association,
+   * Charge à partir d'un fichier toutes les donn�es de l'association,
    * c'est-�-dire un ensemble de membres et d'�v�nements. Si des membres et des
    * �v�n�ments avaient d�j� �t� d�finis, ils sont �cras�s par le contenu trouv�
    * dans le fichier.
