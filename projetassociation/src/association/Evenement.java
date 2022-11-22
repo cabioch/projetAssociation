@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Repr�sente un Evenement nomm� a un lieu donn�, avec un debut, une fin et des participants.
+ * Représente un Evenement nommé a un lieu donné, avec un debut, une fin et des participants.
  */
 public class Evenement implements java.io.Serializable {
 
@@ -46,7 +46,7 @@ public class Evenement implements java.io.Serializable {
   private final Set<InterMembre> participants;
 
   /**
-   * V�rifie que 2 Evenements ne se passent pas en m�me temps et au m�me endroit.
+   * Vérifie que 2 Evenements ne se passent pas en même temps et au même endroit.
    *
    * @param evt Un evenement
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps et en lieu avec celui-ci
@@ -60,7 +60,7 @@ public class Evenement implements java.io.Serializable {
   }
 
   /**
-   * V�rifie si 2 Evenements ne se passent pas en m�me temps.
+   * Vérifie si 2 Evenements ne se passent pas en même temps.
    *
    * @param evt Un evenement
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps avec celui-ci
@@ -164,10 +164,10 @@ public class Evenement implements java.io.Serializable {
   //</editor-fold>
 
   /**
-   * Ajoute un participant � la liste de participants.
+   * Ajoute un participant à la liste de participants.
    *
    * @param participant Un participant
-   * @return Vrai si le participant a bien pu �tre ajout�
+   * @return Vrai si le participant a bien pu être ajouté
    */
   public boolean ajouterParticipant(InterMembre participant) {
     return this.participants.add(participant);
@@ -177,20 +177,20 @@ public class Evenement implements java.io.Serializable {
    * Enleve un participant de la liste de participants.
    *
    * @param participant Un participant
-   * @return Vrai si le participant a bien �t� enlev�
+   * @return Vrai si le participant a bien été enlevé
    */
   public boolean enleverParticipant(InterMembre participant) {
     return this.participants.remove(participant);
   }
 
   /**
-   * Cr�e un �venement a partir d'un nom, d'un lieu, d'un objet LocalDateTime, d'une dur�e et
+   * Crée un évenement a partir d'un nom, d'un lieu, d'un objet LocalDateTime, d'une dur�e et
    * d'un nombre de participants maximum.
    *
-   * @param nom Le nom de l'evenement
-   * @param lieu Le lieu de l'evenement
-   * @param date La date de l'evenement
-   * @param duree La duree de l'evenement en minutes
+   * @param nom               Le nom de l'evenement
+   * @param lieu              Le lieu de l'evenement
+   * @param date              La date de l'evenement
+   * @param duree             La duree de l'evenement en minutes
    * @param nbParticipantsMax Le nombre maximum de participants
    */
   public Evenement(String nom, String lieu, LocalDateTime date, int duree, int nbParticipantsMax) {
@@ -208,11 +208,11 @@ public class Evenement implements java.io.Serializable {
    *
    * @param nom               Le nom de l'evenement
    * @param lieu              Le lieu de l'evenement
-   * @param annee             L'ann�e de l'evenement
+   * @param annee             L'année de l'evenement
    * @param mois              Le mois auquel l'evenement debute
    * @param jour              Le jour auquel l'evenement debute
-   * @param heure             L'heure � laquelle l'evenement debute
-   * @param minutes           La minute � laquelle l'evenement debute
+   * @param heure             L'heure à laquelle l'evenement debute
+   * @param minutes           La minute à laquelle l'evenement debute
    * @param duree             La duree de l'evenement en minutes
    * @param nbParticipantsMax Le nombre maximum de participants
    */
