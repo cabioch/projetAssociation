@@ -9,47 +9,47 @@ import java.util.Set;
  */
 public interface InterGestionMembres {
   /**
-   * Ajoute un membre dans l'association. Ne fait rien si le membre était déjà
-   * présent dans l'association.
+   * Ajoute un membre dans l'association. Ne fait rien si le membre Ã©tait dÃ©jÃ 
+   * prÃ©sent dans l'association.
    *
-   * @param membre le membre à rajouter
-   * @return <code>true</code> si le membre a bien été ajouté,
-   *         <code>false</code> si le membre était déjà présent (dans ce cas il
-   *         n'est pas ajouté à nouveau)
+   * @param membre le membre Ã  rajouter
+   * @return <code>true</code> si le membre a bien Ã©tÃ© ajoutÃ©,
+   *         <code>false</code> si le membre Ã©tait dÃ©jÃ  prÃ©sent (dans ce cas il
+   *         n'est pas ajoutÃ© Ã  nouveau)
    */
   boolean ajouterMembre(InterMembre membre);
-  
+
   /**
    * Supprime un membre de l'association.
    *
-   * @param membre le membre à supprimer
-   * @return <code>true</code> si le membre était présent et a été supprimé,
-   *         <code>false</code> si le membre n'était pas dans l'association
+   * @param membre le membre Ã  supprimer
+   * @return <code>true</code> si le membre Ã©tait prÃ©sent et a Ã©tÃ© supprimÃ©,
+   *         <code>false</code> si le membre n'Ã©tait pas dans l'association
    */
   boolean supprimerMembre(InterMembre membre);
-  
+
   /**
-   * Désigne le président de l'association. Il doit être un des membres de
+   * DÃ©signe le prÃ©sident de l'association. Il doit Ãªtre un des membres de
    * l'association.
    *
-   * @param membre le membre à désigner comme président.
-   * @return <code>false</code> si le membre n'était pas dans l'association (le
-   *         président n'est alors pas positionné), <code>true</code> si le
-   *         membre a été nommé président
+   * @param membre le membre Ã  dÃ©signer comme prÃ©sident.
+   * @return <code>false</code> si le membre n'ï¿½tait pas dans l'association (le
+   *         prï¿½sident n'est alors pas positionnï¿½), <code>true</code> si le
+   *         membre a ï¿½tï¿½ nommï¿½ prï¿½sident
    */
   boolean designerPresident(InterMembre membre);
-  
+
   /**
    * Renvoie l'ensemble des membres de l'association.
    *
    * @return l'ensemble des membres de l'association.
    */
   Set<InterMembre> ensembleMembres();
-  
+
   /**
-   * Renvoie le président de l'association.
+   * Renvoie le prï¿½sident de l'association.
    *
-   * @return le membre président de l'association s'il avait été désigné sinon
+   * @return le membre prï¿½sident de l'association s'il avait ï¿½tï¿½ dï¿½signï¿½ sinon
    *         retourne <code>null</code>
    */
   InterMembre president();

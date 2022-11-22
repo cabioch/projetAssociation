@@ -1,43 +1,234 @@
 package association;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+/**
+ * ReprÃ©sente un Evenement nommÃ© a un lieu donnÃ©, avec un debut, une fin et des participants.
+ */
 public class Evenement implements java.io.Serializable {
-  
+
+  @Serial
+  private static final long serialVersionUID = 7414938932769654866L;
+
+  /**
+   * Le nom de l'evenement.
+   */
   private String nom;
 
+  /**
+   * Le lieu de l'evenement.
+   */
   private String lieu;
 
+  /**
+   * La date de l'evenement.
+   */
   private LocalDateTime date;
 
+  /**
+   * La duree en minutes de l'evenement.
+   */
   private int duree;
 
+  /**
+   * le nombre de participants maximums a l'evenement.
+   */
   private int nbParticipantsMax;
 
-  private Set<InterMembre> participants;
+  /**
+   * Les participants.
+   */
+  private final Set<InterMembre> participants;
 
-  // A implémenter : retourne vrai si deux événements ne se chevauchent pas
-  // dans le même lieu en même temps
+  /**
+   * VÃ©rifie que 2 Evenements ne se passent pas en mÃªme temps et au mÃªme endroit.
+   *
+   * @param evt Un evenement
+   * @return vrai si l'evenement en parametre ne se chevauche pas en temps et en lieu avec celui-ci
+   */
   public boolean pasDeChevauchementLieu(Evenement evt) {
-    throw new UnsupportedOperationException("Méthode non implémentée !");
+    // J'ai un doute sur le fonctionnement de la mï¿½thode
+    // -> Les 2 conditions doivent etre vï¿½rifiï¿½es ou juste une ?
+    // Pris le fonctionnement a une condition vï¿½rifiï¿½e
+    return (!Objects.equals(evt.lieu, this.lieu) || pasDeChevauchementTemps(evt));
+
   }
 
-  // A implémenter : retourne vrai si deux événements ne se chevauchent pas
-  // dans le temps (indépendamment du lieu)
+  /**
+   * VÃ©rifie si 2 Evenements ne se passent pas en mÃªme temps.
+   *
+   * @param evt Un evenement
+   * @return vrai si l'evenement en parametre ne se chevauche pas en temps avec celui-ci
+   */
   public boolean pasDeChevauchementTemps(Evenement evt) {
-    throw new UnsupportedOperationException("Méthode non implémentée !");
+    LocalDateTime finThis = date.plusMinutes(duree);
+    LocalDateTime finEvt = date.plusMinutes(evt.duree);
+
+    // Pas supperposï¿½ en temps
+    return (finThis.compareTo(evt.date) <= 0 || date.compareTo(finEvt) >= 0);
   }
 
-  // A compléter :
-  //
-  // - génération automatique des getters, setters, constructeurs,
-  // des méthodes hashCode, toString et equals.
-  // Modifiez manuellement le code généré au besoin. Rajoutez notamment
-  // les méthodes de gestion des participants à l'événement.
-  //
-  // - Rajoutez un/des constructeurs permettant de construire plus facilement
-  // un événement sans avoir besoin de passer un paramètre de type LocalDateTime
-  //
-  // - Ecrivez la JavaDoc complète de la classe
+  //<editor-fold desc="Getter-Setter">
+  public String getNom() {
+    return nom;
+  }
+
+  public void setNom(String nom) {
+    this.nom = nom;
+  }
+
+  public String getLieu() {
+    return lieu;
+  }
+
+  public void setLieu(String lieu) {
+    this.lieu = lieu;
+  }
+
+  public LocalDateTime getDate() {
+    return date;
+  }
+
+  public void setDate(LocalDateTime date) {
+    this.date = date;
+  }
+
+  public int getDuree() {
+    return duree;
+  }
+
+  public void setDuree(int duree) {
+    this.duree = duree;
+  }
+
+  public int getNbParticipantsMax() {
+    return nbParticipantsMax;
+  }
+
+  public void setNbParticipantsMax(int nbParticipantsMax) {
+    this.nbParticipantsMax = nbParticipantsMax;
+  }
+
+  public Set<InterMembre> getParticipants() {
+    return participants;
+  }
+
+  // Juste enlevï¿½ le setter de participants
+  //</editor-fold>
+
+
+  //<editor-fold desc="Overrides">
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Evenement evenement = (Evenement) o;
+
+    if (duree != evenement.duree) {
+      return false;
+    }
+    if (!Objects.equals(lieu, evenement.lieu)) {
+      return false;
+    }
+    return Objects.equals(date, evenement.date);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = lieu != null ? lieu.hashCode() : 0;
+    result = 31 * result + (date != null ? date.hashCode() : 0);
+    result = 31 * result + duree;
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "Evenement \""
+            + nom + "\" a "
+            + lieu + " , de "
+            + date + " a "
+            + date.plusMinutes(duree)
+            + ". Il y a un maximum de "
+            + nbParticipantsMax + " participants.";
+  }
+  //</editor-fold>
+
+  /**
+   * Ajoute un participant Ã  la liste de participants.
+   *
+   * @param participant Un participant
+   * @return Vrai si le participant a bien pu Ãªtre ajoutÃ©
+   */
+  public boolean ajouterParticipant(InterMembre participant) {
+    return this.participants.add(participant);
+  }
+
+  /**
+   * Enleve un participant de la liste de participants.
+   *
+   * @param participant Un participant
+   * @return Vrai si le participant a bien Ã©tÃ© enlevÃ©
+   */
+  public boolean enleverParticipant(InterMembre participant) {
+    return this.participants.remove(participant);
+  }
+
+  /**
+   * CrÃ©e un Ã©venement a partir d'un nom, d'un lieu, d'un objet LocalDateTime, d'une durï¿½e et
+   * d'un nombre de participants maximum.
+   *
+   * @param nom               Le nom de l'evenement
+   * @param lieu              Le lieu de l'evenement
+   * @param date              La date de l'evenement
+   * @param duree             La duree de l'evenement en minutes
+   * @param nbParticipantsMax Le nombre maximum de participants
+   */
+  public Evenement(String nom, String lieu, LocalDateTime date, int duree, int nbParticipantsMax) {
+    this.nom = nom;
+    this.lieu = lieu;
+    this.date = date;
+    this.duree = duree;
+    this.nbParticipantsMax = nbParticipantsMax;
+    this.participants = new HashSet<>();
+  }
+
+  /**
+   * CrÃ©e un Ã©venement a partir d'un nom, d'un lieu, d'une annÃ©e, mois, jour, heure, minute,
+   * d'une durÃ©e en minutes et d'un nombre maximum de participants.
+   *
+   * @param nom               Le nom de l'evenement
+   * @param lieu              Le lieu de l'evenement
+   * @param annee             L'annÃ©e de l'evenement
+   * @param mois              Le mois auquel l'evenement debute
+   * @param jour              Le jour auquel l'evenement debute
+   * @param heure             L'heure Ã  laquelle l'evenement debute
+   * @param minutes           La minute Ã  laquelle l'evenement debute
+   * @param duree             La duree de l'evenement en minutes
+   * @param nbParticipantsMax Le nombre maximum de participants
+   */
+  public Evenement(
+          String nom, String lieu, int annee, Month mois, int jour, int heure, int minutes,
+          int duree, int nbParticipantsMax) {
+    this.participants = new HashSet<>();
+    // En cas de paramÃ¨tres non valides (potentiellement inutile car dÃ©jÃ  faite par LocalDateTime ??
+    if (!(jour >= 1 && jour <= 31 && heure >= 0 && heure <= 23 && minutes >= 0 && minutes <= 59)) {
+      return;
+    }
+    this.date = LocalDateTime.of(annee, mois, jour, heure, minutes);
+    this.nom = nom;
+    this.lieu = lieu;
+    this.duree = duree;
+    this.nbParticipantsMax = nbParticipantsMax;
+
+  }
 }

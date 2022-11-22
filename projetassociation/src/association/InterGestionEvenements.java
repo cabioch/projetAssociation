@@ -4,7 +4,7 @@ import java.time.Month;
 import java.util.List;
 
 /**
- * Gestion des événements d'une association.
+ * Gestion des Ã©vÃ©nements d'une association.
  *
  * @author Eric Cariou
  *
@@ -12,70 +12,70 @@ import java.util.List;
 public interface InterGestionEvenements { 
 
   /**
-   * Crée un nouvel événement. Plusieurs vérifications sont effectuées : que les
-   * dates et heures sont cohérentes et qu'il n'y a pas un chevauchement sur la
-   * même période avec un autre événement dans le même lieu.
+   * CrÃ©e un nouvel Ã©vÃ©nement. Plusieurs vÃ©rifications sont effectuÃ©es : que les
+   * dates et heures sont cohÃ©rentes et qu'il n'y a pas un chevauchement sur la
+   * mÃªme pÃ©riode avec un autre Ã©vÃ©nement dans le mÃªme lieu.
    *
-   * @param nom le nom de l'événement
+   * @param nom le nom de l'Ã©vÃ©nement
    * @param lieu le lieu
-   * @param jour le jour dans le mois (nombre de 0 à 31)
-   * @param mois le mois dans l'année
-   * @param annee l'année
-   * @param heure l'heure de la journée (nombre entre 0 et 23)
+   * @param jour le jour dans le mois (nombre de 0 Ã  31)
+   * @param mois le mois dans l'annÃ©e
+   * @param annee l'annÃ©e
+   * @param heure l'heure de la journÃ©e (nombre entre 0 et 23)
    * @param minutes les minutes de l'heure (nombre entre 0 et 59)
-   * @param duree la durée (en minutes)
+   * @param duree la durÃ©e (en minutes)
    * @param nbParticipants le nombre maximum de participants (0 signifie un
    *        nombre quelconque)
-   * @return l'événement créé ou <code>null</code> en cas de problème
-   *         (paramètres non valides)
+   * @return l'Ã©vÃ©nement crÃ©Ã© ou <code>null</code> en cas de problÃ¨me
+   *         (paramÃ¨tres non valides)
    */
   Evenement creerEvenement(String nom, String lieu, int jour, Month mois,
       int annee, int heure, int minutes, int duree, int nbParticipants);
 
   /**
-   * Supprime un événement. Les membres qui étaient inscrits sont
-   * automatiquement désinscrits de l'événement supprimé. Si l'événement
-   * n'existait pas, la méthode ne fait rien.
+   * Supprime un Ã©vÃ©nement. Les membres qui Ã©taient inscrits sont
+   * automatiquement dÃ©sinscrits de l'Ã©vÃ©nement supprimÃ©. Si l'Ã©vÃ©nement
+   * n'existait pas, la mÃ©thode ne fait rien.
    *
-   * @param evt l'événement à supprimer.
+   * @param evt l'Ã©vÃ©nement Ã  supprimer.
    */
   void supprimerEvenement(Evenement evt);
 
   /**
-   * Renvoie l'ensemble des événements de l'association.
+   * Renvoie l'ensemble des Ã©vÃ©nements de l'association.
    *
-   * @return l'ensemble des événements
+   * @return l'ensemble des Ã©vÃ©nements
    */
   List<Evenement> ensembleEvenements();
 
   /**
-   * Renvoie l'ensemble des événements à venir de l'association.
+   * Renvoie l'ensemble des Ã©vÃ©nements Ã  venir de l'association.
    *
-   * @return l'ensemble des événements à venir
+   * @return l'ensemble des Ã©vÃ©nements Ã  venir
    */
   List<Evenement> ensembleEvenementAvenir();
 
   /**
-   * Un membre est incrit à un événement.
+   * Un membre est incrit Ã  un Ã©vÃ©nement.
    *
-   * @param evt l'événement auquel s'inscrire
+   * @param evt l'Ã©vÃ©nement auquel s'inscrire
    * @param mbr le membre qui s'inscrit
-   * @return <code>true</code> s'il n'y a pas eu de problème, <code>false</code>
-   *         si l'événement est en conflit de calendrier avec un événement
-   *         auquel est déjà inscrit le membre ou si le nombre de participants
-   *         maximum est déjà atteint
+   * @return <code>true</code> s'il n'y a pas eu de problÃ¨me, <code>false</code>
+   *         si l'Ã©vÃ©nement est en conflit de calendrier avec un Ã©vÃ©nement
+   *         auquel est dÃ©jÃ  inscrit le membre ou si le nombre de participants
+   *         maximum est dÃ©jÃ  atteint
    */
   boolean inscriptionEvenement(Evenement evt, InterMembre mbr);
 
   /**
-   * Désincrit un membre d'un événement.
+   * DÃ©sincrit un membre d'un Ã©vÃ©nement.
    *
-   * @param evt l'événement auquel se désinscrire
-   * @param mbr le membre qui se désincrit
-   * @return si le membre était bien inscrit à l'événement, renvoie
-   *         <code>true</code> pour préciser que l'annulation est effective,
-   *         sinon <code>false</code> si le membre n'était pas inscrit à
-   *         l'événement
+   * @param evt l'Ã©vÃ©nement auquel se dÃ©sinscrire
+   * @param mbr le membre qui se dÃ©sincrit
+   * @return si le membre Ã©tait bien inscrit Ã  l'Ã©vÃ©nement, renvoie
+   *         <code>true</code> pour prÃ©ciser que l'annulation est effective,
+   *         sinon <code>false</code> si le membre n'Ã©tait pas inscrit Ã 
+   *         l'Ã©vÃ©nement
    */
   boolean annulerEvenement(Evenement evt, InterMembre mbr);
 }
