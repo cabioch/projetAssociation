@@ -164,12 +164,16 @@ public class Evenement implements java.io.Serializable {
   //</editor-fold>
 
   /**
-   * Ajoute un participant à la liste de participants.
+   * Ajoute un participant à la liste de participants si le nombre maximum de particpants
+   * n'est pas déjà atteint.
    *
    * @param participant Un participant
    * @return Vrai si le participant a bien pu être ajouté
    */
   public boolean ajouterParticipant(InterMembre participant) {
+    if (participants.size() >= nbParticipantsMax) {
+      return false;
+    }
     return this.participants.add(participant);
   }
 
