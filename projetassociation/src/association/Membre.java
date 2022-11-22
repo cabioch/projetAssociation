@@ -12,23 +12,28 @@ public class Membre implements InterMembre {
   
   
   /**
-   * L'âge de la personne (la valeur 0 correspond à un âge non défini).
+   * L'âge de la personne.
    */
   private int age;
   
   /**
-   * L'adresse de la personne (une chaine vide "" correspond à une adresse non
-   * définie).
+   * L'adresse de la personne.
    */
   private String adresse;
   
-  // private Evenement evenements;
   private InterGestionEvenements evenements;
   
   private InformationPersonnelle infos;
   
   private InterGestionMembres membres;
   
+  
+  /**
+   * Creer un membre avec ses informations corrélées à ses InformationPersonnelle.
+   *
+   * @param adresse l'adresse de la personne
+   * @param age l'age de la personne
+   */
   public Membre(int age, String adresse) {
     String prenom = infos.getPrenom();
     String nom = infos.getNom();
