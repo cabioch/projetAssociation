@@ -53,11 +53,11 @@ public class TestMembre {
    */
   @Test
   void testConstructeur() {
-    Membre membreTest =
-        new Membre(25, "15 rue de partout");
-    assertTrue(membreTest.getInformationPersonnelle().getNom() != null);
+    InformationPersonnelle infos = new InformationPersonnelle("jean-andre", "thomas");
+    Membre membreTest = new Membre(infos);
     assertTrue(membreTest.getInformationPersonnelle().getPrenom() != null);
-    assertEquals(membreTest.getInformationPersonnelle().getAdresse(), "15 rue de partout");
-    assertEquals(membreTest.getInformationPersonnelle().getAge(), 25);
+    assertEquals(membreTest.getInformationPersonnelle().getNom(), "jean-andre");
+    assertEquals(membreTest.getInformationPersonnelle().getNom(), "thomas");
+    
   }
 }
