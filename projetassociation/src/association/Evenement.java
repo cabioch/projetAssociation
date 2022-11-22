@@ -52,9 +52,9 @@ public class Evenement implements java.io.Serializable {
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps et en lieu avec celui-ci
    */
   public boolean pasDeChevauchementLieu(Evenement evt) {
-    // J'ai un doute sur le fonctionnement de la m�thode
-    // -> Les 2 conditions doivent etre v�rifi�es ou juste une ?
-    // Pris le fonctionnement a une condition v�rifi�e
+    // J'ai un doute sur le fonctionnement de la méthode
+    // -> Les 2 conditions doivent etre vérifiées ou juste une ?
+    // Pris le fonctionnement a une condition vérifiée
     return (!Objects.equals(evt.lieu, this.lieu) || pasDeChevauchementTemps(evt));
 
   }
