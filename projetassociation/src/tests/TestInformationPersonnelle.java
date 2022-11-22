@@ -18,36 +18,36 @@ import org.junit.jupiter.api.Test;
 class TestInformationPersonnelle {
   
   /**
-   * Une information basique : prénom et nom.
+   * Une information basique : prÃ©nom et nom.
    */
   private InformationPersonnelle infoBasique;
   /**
-   * Une information complète : prénom, nom, adresse et age.
+   * Une information complÃ¨te : prÃ©nom, nom, adresse et age.
    */
   private InformationPersonnelle infoComplete;
   
   /**
-   * Instancie une information basique et une complète pour les tests.
+   * Instancie une information basique et une complÃ¨te pour les tests.
    *
-   * @throws Exception ne peut pas être levée ici
+   * @throws Exception ne peut pas Ãªtre levÃ©e ici
    */
   @BeforeEach
   void setUp() throws Exception {
     infoBasique = new InformationPersonnelle("Skywalker", "Luke");
     infoComplete =
-        new InformationPersonnelle("Skywalker", "Luke", "Planète Tatooine", 20);
+        new InformationPersonnelle("Skywalker", "Luke", "PlanÃ¨te Tatooine", 20);
   }
   
   /**
-   * Ne fait rien après les tests : à modifier au besoin.
+   * Ne fait rien aprÃ¨s les tests : Ã  modifier au besoin.
    *
-   * @throws Exception ne peut pas être levée ici
+   * @throws Exception ne peut pas Ãªtre levÃ©e ici
    */
   @AfterEach
   void tearDown() throws Exception {}
   
   /**
-   * Vérifie que l'on peut positionner un age de 25 ans.
+   * VÃ©rifie que l'on peut positionner un age de 25 ans.
    */
   @Test
   void testAge25Basique() {
@@ -56,7 +56,7 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * Vérifie qu'on ne peut pas positionner un age négatif sur une information
+   * VÃ©rifie qu'on ne peut pas positionner un age nÃ©gatif sur une information
    * basique.
    */
   @Test
@@ -66,8 +66,8 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * Vérifie qu'on ne peut pas positionner un age négatif sur une information
-   * complète.
+   * VÃ©rifie qu'on ne peut pas positionner un age nÃ©gatif sur une information
+   * complÃ¨te.
    */
   @Test
   void testAgeNegatifComplet() {
@@ -77,7 +77,7 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * Vérifie qu'une adresse n'est pas null quand on crée une information
+   * VÃ©rifie qu'une adresse n'est pas null quand on crÃ©e une information
    * personnelle.
    */
   @Test
@@ -87,7 +87,7 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * Vérifie qu'on ne peut pas positionner une adresse null sur une information
+   * VÃ©rifie qu'on ne peut pas positionner une adresse null sur une information
    * existante.
    */
   @Test
@@ -97,7 +97,7 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * Vérifie que les paramètres des constructeurs sont correctement gérés.
+   * VÃ©rifie que les paramÃ¨tres des constructeurs sont correctement gÃ©rÃ©s.
    */
   @Test
   void testConstructeur() {
