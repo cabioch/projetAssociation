@@ -1,15 +1,14 @@
 package tests;
 
-import association.Evenement;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import association.Evenement;
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.Test;
+
 /**
- * Tests JUnit de {@link Evenement}
+ * Tests JUnit de {@link Evenement}.
  */
 public class TestEvenement {
   /**
@@ -26,9 +25,9 @@ public class TestEvenement {
     Evenement evenement4 = new Evenement("ev1", "nulpars", LocalDateTime.of(
             1, 1, 1, 1, 9), 10, 10);
     assertFalse(evenement1.pasDeChevauchementTemps(evenement2));
+    assertFalse(evenement1.pasDeChevauchementLieu(evenement4));
     assertTrue(evenement2.pasDeChevauchementLieu(evenement3));
     assertFalse(evenement1.pasDeChevauchementLieu(evenement1));
-    assertFalse(evenement1.pasDeChevauchementLieu(evenement4));
     assertTrue(evenement1.pasDeChevauchementLieu(evenement2));
     assertTrue(evenement1.pasDeChevauchementTemps(evenement3));
   }
