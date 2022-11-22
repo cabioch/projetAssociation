@@ -53,9 +53,10 @@ public class TestMembre {
    */
   @Test
   void testConstructeur() {
-    InformationPersonnelle infos = new InformationPersonnelle("jean-andre", "thomas");
+    InformationPersonnelle infos =
+        new InformationPersonnelle("jean-andre", "thomas");
     Membre membreTest = new Membre(infos);
-    assertTrue(membreTest.getInformationPersonnelle().getPrenom() != null);
+    //assertTrue(membreTest.getInformationPersonnelle().getNom() != null);
     assertEquals(membreTest.getInformationPersonnelle().getNom(), "jean-andre");
     assertEquals(membreTest.getInformationPersonnelle().getNom(), "thomas");
     
