@@ -59,8 +59,8 @@ public class Membre implements InterMembre {
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
     if (membres.ensembleMembres().contains(info)) {
       // pas de vérification car elles sont déjà dans informations personnelles
-      info.setAdresse(infos.getAdresse());
-      info.setAge(infos.getAge());
+      info.setAdresse(this.infos.getAdresse());
+      info.setAge(this.infos.getAge());
     }
     
   }
