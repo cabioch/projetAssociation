@@ -64,7 +64,7 @@ class TestGestionMembres {
   
   /**
    * Test d'ajout d'un membre non présent dans l'ensemble.
-   * 
+   *
    * @param membre_test un membre
    */
   @Test
@@ -103,6 +103,7 @@ class TestGestionMembres {
   @Test
   void TestDesignerUnPresident(InterMembre membre_test) {
     assertTrue(membre_test, gt.designerPresident(membre_test));
+    assertTrue(membre_test, gt.president());
   }
   
   /**
@@ -115,7 +116,8 @@ class TestGestionMembres {
   void TestDesignerUnPresidentNonMembre(InterMembre membre_test) {
     gt.supprimerMembre(membre_test);
     assertFalse(membre_test, gt.designerPresident(membre_test));
-    
+    assertFalse(membre_test, gt.president());
+    assertTrue(null, gt.president());
   }
   
   /**
@@ -127,8 +129,9 @@ class TestGestionMembres {
   @Test
   void TestRemplacerUnPresidentAvecUnMembre(InterMembre membre_test) {
     gt.designerPresident(membre_test2);
+    assertTrue(membre_test2, gt.president());
     assertTrue(membre_test, gt.designerPresident(membre_test));
-    
+    assertTrue(membre_test, gt.president());
   }
   
   /**
@@ -141,7 +144,8 @@ class TestGestionMembres {
   void TestRemplacerUnPresidentAvecUnNonMembre(InterMembre membre_test) {
     gt.designerPresident(membre_test2);
     gt.supprimerMembre(membre_test);
+    assertTrue(membre_test2, gt.president());
     assertFalse(membre_test, gt.designerPresident(membre_test));
-    
+    assertTrue(membre_test2, gt.president());
   }
 }
