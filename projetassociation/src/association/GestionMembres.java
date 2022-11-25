@@ -5,42 +5,41 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 
- * @author Nicolas RENARD
- * 
- * @version 1.0.0 Classe d'implémentation de l'interface de Gestion des Membres
- *          {@link InterGestionMembres}
+ * Classe d'implémentation de l'interface de Gestion des
+ * Membres.{@link InterGestionMembres}
  *
+ * @author Nicolas RENARD
+ * @version 1.0.0
  */
-
 public class GestionMembres implements InterGestionMembres {
   
   /**
-   * Ensemble des membres présents
+   * Ensemble des membres de l'association.
    */
-  private static final Set<InterMembre> MEMBRES = new HashSet<>();
+  
+  private Set<InterMembre> membres = null;
+  
   /**
-   * Le président de l'association
+   * Le rôle du président de l'association.
    */
-  private static final Set<InterMembre> PRESIDENT = new HashSet<>();
+  
+  private InterMembre president = null;
   
   /**
    * Ajoute un membre dans l'association. Ne fait rien si le membre était déja
    * présent dans l'association.
    *
-   * @param membre le membre à rajouter
+   * @param membre le membre à  rajouter
    * @return <code>true</code> si le membre a bien été ajouté,
-   *         <code>false</code> si le membre était déjà présent (dans ce cas il
-   *         n'est pas ajouté à nouveau)
+   *         <code>false</code> si le membre était déjà  présent (dans ce cas il
+   *         n'est pas ajoutÃ© Ã  nouveau)
    */
   
   @Override
   public boolean ajouterMembre(InterMembre membre) {
-    // verifie dans le set si les membres sont présent.
-    // present => ne fait rien
-    // ajoute sinon
-    if (!MEMBRES.contains(membre)) {
-      MEMBRES.add(membre);
+    
+    if (!membres.contains(membre)) {
+      membres.add(membre);
       return true;
     }
     return false;
@@ -49,14 +48,14 @@ public class GestionMembres implements InterGestionMembres {
   /**
    * Supprime un membre de l'association.
    *
-   * @param membre le membre à supprimer
-   * @return <code>true</code> si le membre àtait présent et a été supprimé,
-   *         <code>false</code> si le membre n'était pas dans l'association
+   * @param membre le membre à supprimer
+   * @return <code>true</code> si le membre était présent et a été supprimé,
+   *         <code>false</code> si le membre n'était pas dans l'association.
    */
   @Override
   public boolean supprimerMembre(InterMembre membre) {
-    if (MEMBRES.contains(membre)) {
-      MEMBRES.remove(membre);
+    if (membres.contains(membre)) {
+      membres.remove(membre);
       return true;
     }
     return false;
@@ -66,18 +65,18 @@ public class GestionMembres implements InterGestionMembres {
    * Désigne le président de l'association. Il doit être un des membres de
    * l'association.
    *
-   * @param membre le membre à désigner comme président.
+   * @param membre le membre à  désigner comme prÃ©sident.
    * @return <code>false</code> si le membre n'était pas dans l'association (le
    *         président n'est alors pas positionné), <code>true</code> si le
    *         membre a été nommé président
    */
   @Override
   public boolean designerPresident(InterMembre membre) {
-    if (MEMBRES.contains(membre) && PRESIDENT.isEmpty()) {
-      PRESIDENT.add(membre);
-      return true;
+    if (!membres.contains(membre)) {
+      return false;
     }
-    return false;
+    president = membre;
+    return true;
   }
   
   /**
@@ -87,11 +86,10 @@ public class GestionMembres implements InterGestionMembres {
    */
   @Override
   public Set<InterMembre> ensembleMembres() {
-    for (InterMembre m : MEMBRES) {
-      
-      return m;
+    if (membres == null) {
+      membres = new HashSet<>();
     }
-    return null;
+    return membres;
   }
   
   /**
@@ -102,11 +100,7 @@ public class GestionMembres implements InterGestionMembres {
    */
   @Override
   public InterMembre president() {
-    if (!PRESIDENT.isEmpty()) {
-      
-      return PRESIDENT;
-    }
-    return null;
+    
+    return president;
   }
-  
 }
