@@ -5,16 +5,20 @@ import java.util.List;
 /**
  * Gestion du membre ainsi que les évènements du membres et ses infos persos.
  * 
- * @author Jeant
- *
+ * @author Jean
  */
 public class Membre implements InterMembre {
   
+  
+  /**
+   * Les evenements aux quels participe ou participera le membre.
+   */
   private InterGestionEvenements evenements;
   
+  /**
+   * Les informations personnelles du membre.
+   */
   private InformationPersonnelle infos;
-  
-  private InterGestionMembres membres;
   
   
   /**
@@ -26,7 +30,6 @@ public class Membre implements InterMembre {
   public Membre(InformationPersonnelle info) {
     this.infos = info;
   }
-  
   
   
   /**
@@ -51,19 +54,21 @@ public class Membre implements InterMembre {
   }
   
   /**
-   * Définit les informations personnelles du membre.
+   * Définit les informations personnelles (adresse et age) du membre en
+   * vérifant si c'est bien lui.
    *
    * @param info les informations personnelles du membre
    */
   @Override
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
-    if (membres.ensembleMembres().contains(info)) {
-      // pas de vérification car elles sont déjà dans informations personnelles
+    if (this.infos.getNom() == info.getNom()
+        && this.infos.getPrenom() == infos.getPrenom()) {
       info.setAdresse(this.infos.getAdresse());
       info.setAge(this.infos.getAge());
     }
-    
   }
+  
+  
   
   /**
    * Renvoie les informations personnelles du membre.
