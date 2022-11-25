@@ -1,13 +1,19 @@
 package tests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.sql.ClientInfoStatus;
+import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import association.InformationPersonnelle;
+import association.InterGestionMembres;
+import association.InterMembre;
 import association.Membre;
+import junit.framework.AssertionFailedError;
 
 
 
@@ -19,33 +25,52 @@ import association.Membre;
  */
 public class TestMembre {
   
+  /**
+   * Création d'un membre non complet pour les tests.
+   */
   private Membre membre;
   
   /**
-   * Instancie un membre pour les tests.
-   *
-   * @throws Exception ne peut pas être levée ici
+   * Création d'un membre complet pour les tests.
+   */
+  private Membre membreComplet;
+  
+  /**
+   * Une information basique: nom, prenom.
+   */
+  private InformationPersonnelle infos;
+  
+  /**
+   * Un appel à la méthode gestion membre.
+   */
+  private InterGestionMembres gestionMembres;
+  
+  /**
+   * Une information complete: nom, prenom, adresse, age.
+   */
+  private InformationPersonnelle infosComplet;
+  
+  /**
+   * Initialisation des tests en definissant les deux types d'infos et le
+   * membre.
+   * 
    */
   @BeforeEach
   void setUp() throws Exception {
-    membre = new Membre(25, "2 rue Nulle part");
+    infos = new InformationPersonnelle("thomas", "jean-andre");
+    membre = new Membre(infos);
+    infosComplet = new InformationPersonnelle("thomas", "jean-andre",
+        "14 rue Archives", 20);
+    membreComplet = new Membre(infosComplet);
     
   }
-  
-  /**
-   * Ne fait rien après les tests.
-   *
-   * @throws Exception ne peut pas être levée ici
-   */
-  @AfterEach
-  void tearDown() throws Exception {}
   
   /**
    * Vérifie que l'on peut récuperer les informations d'un membre.
    */
   @Test
-  void getInformationPersonnelle() {
-    assertTrue(membre.getInformationPersonnelle() != null);
+  void testgetInformationPersonnelle() {
+    assertEquals(membre.getInformationPersonnelle(), infos);
   }
   
   /**
@@ -53,12 +78,44 @@ public class TestMembre {
    */
   @Test
   void testConstructeur() {
-    InformationPersonnelle infos =
-        new InformationPersonnelle("jean-andre", "thomas");
-    Membre membreTest = new Membre(infos);
-    //assertTrue(membreTest.getInformationPersonnelle().getNom() != null);
-    assertEquals(membreTest.getInformationPersonnelle().getNom(), "jean-andre");
+    InformationPersonnelle infosConstructeur =
+        new InformationPersonnelle("thomas", "jean-andre");
+    Membre membreTest = new Membre(infosConstructeur);
+    assertEquals(membreTest.getInformationPersonnelle().getPrenom(),
+        "jean-andre");
     assertEquals(membreTest.getInformationPersonnelle().getNom(), "thomas");
+    
+  }
+  
+  /**
+   * Vérifie que la definitionInformationPersonnelle rend vrai en ajoutant un
+   * membre dans l'association puis en modifiant ses informations personnelles.
+   * 
+   */
+  @Test
+  void testdefinirInformationPersonnelleAvecAssociation() {
+    InformationPersonnelle infoModif =
+        new InformationPersonnelle("thomas", "jean-andre", "test_valide", 80);
+    gestionMembres.ajouterMembre(membreComplet);
+    membreComplet.definirInformationPersonnnelle(infoModif);
+    assertEquals("test_valide",
+        membreComplet.getInformationPersonnelle().getAdresse());
+    assertEquals(membre.getInformationPersonnelle().getAge(), 80);
+    
+  }
+  
+  /**
+   * Vérifie que la definitionInformationPersonnelle ne fonctionne pas en
+   * donnant un nom et un prenom qui ne correspond pas à l'instance de classe.
+   */
+  @Test
+  void testdefinirInformationPersonnelleSansAssociation() {
+    InformationPersonnelle infoModif = new InformationPersonnelle("mauvais_nom",
+        "mauvais_prenom", "changement_adresse", 40);
+    membreComplet.definirInformationPersonnnelle(infoModif);
+    assertFalse("changement_adresse" == membreComplet
+        .getInformationPersonnelle().getAdresse());
+    assertFalse(40 != membreComplet.getInformationPersonnelle().getAge());
     
   }
 }
