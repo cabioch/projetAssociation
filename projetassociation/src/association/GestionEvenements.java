@@ -6,23 +6,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Gestion des événements
+ * Gestion des événements.
  * 
  * @author romain
  *
  */
 public class GestionEvenements implements InterGestionEvenements {
-  
+
   /**
-   * La liste des événements
+   * La liste des événements.
    *
    */
   List<Evenement> listeEvenements = new ArrayList<Evenement>();
   
+  
   /**
-   * On créer un événement. On vérifie que l'événement ne chevauche pas en temps
-   * et en lieu un autre événement ainsi que les dates et les heures sont
-   * cohérentes.
+   * Getters/Setters de la liste des événements.
+   * @return listeEvenements La liste des événements
+   */
+  public List<Evenement> getListeEvenements() {
+    return listeEvenements;
+  }
+
+
+  public void setListeEvenements(List<Evenement> listeEvenements) {
+    this.listeEvenements = listeEvenements;
+  }
+  
+  /**
+   * Crée un nouvel événement. Plusieurs vérifications sont effectuées : que les
+   * dates et heures sont cohérentes et qu'il n'y a pas un chevauchement sur la
+   * même période avec un autre événement dans le même lieu.
    * 
    * @param nom le nom de l'événement
    * @param lieu le lieu
@@ -136,6 +150,9 @@ public class GestionEvenements implements InterGestionEvenements {
   public boolean annulerEvenement(Evenement evt, InterMembre mbr) {
     return evt.enleverParticipant(mbr);
   }
+
+
+ 
   
   
   
