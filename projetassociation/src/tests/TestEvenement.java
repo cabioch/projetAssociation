@@ -34,14 +34,22 @@ public class TestEvenement {
    * Tests de chevauchement.
    */
   @Test
-  void testChevauchement() {
+  void testChevauchementTemps() {
     assertFalse(evenement1.pasDeChevauchementTemps(evenement2));
-    assertFalse(evenement4.pasDeChevauchementLieu(evenement5));
-    assertFalse(evenement1.pasDeChevauchementLieu(evenement4));
-    assertTrue(evenement2.pasDeChevauchementLieu(evenement3));
-    assertFalse(evenement1.pasDeChevauchementLieu(evenement1));
-    assertTrue(evenement1.pasDeChevauchementLieu(evenement2));
+    assertFalse(evenement4.pasDeChevauchementTemps(evenement5));
+    assertFalse(evenement1.pasDeChevauchementTemps(evenement4));
+    assertTrue(evenement2.pasDeChevauchementTemps(evenement3));
+    assertFalse(evenement1.pasDeChevauchementTemps(evenement1));
     assertTrue(evenement1.pasDeChevauchementTemps(evenement3));
+    assertTrue(evenement3.pasDeChevauchementTemps(evenement1));
+  }
+
+  @Test
+  void testChevauchementLieu() {
+    assertFalse(evenement1.pasDeChevauchementLieu(evenement4));
+    assertTrue(evenement1.pasDeChevauchementLieu(evenement2));
+    assertTrue(evenement2.pasDeChevauchementLieu(evenement3));
+    assertTrue(evenement2.pasDeChevauchementLieu(evenement5));
   }
 
   @Test

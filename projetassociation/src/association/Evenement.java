@@ -67,7 +67,7 @@ public class Evenement implements java.io.Serializable {
    */
   public boolean pasDeChevauchementTemps(Evenement evt) {
     LocalDateTime finThis = date.plusMinutes(duree);
-    LocalDateTime finEvt = date.plusMinutes(evt.duree);
+    LocalDateTime finEvt = evt.date.plusMinutes(evt.duree);
 
     // Pas supperposé en temps
     return (finThis.compareTo(evt.date) < 0 || date.compareTo(finEvt) > 0);
