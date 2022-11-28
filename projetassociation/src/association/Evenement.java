@@ -46,7 +46,8 @@ public class Evenement implements java.io.Serializable {
   private final Set<InterMembre> participants;
 
   /**
-   * Vérifie que 2 Evenements ne se passent pas en même temps et au même endroit.
+   * Vérifie que 2 Evenements ne se passent pas en même temps et au même endroit. On considère un
+   * évenement qui commence exactement à la fin d'un autre comme un chevauchement.
    *
    * @param evt Un evenement
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps et en lieu avec celui-ci
@@ -60,7 +61,8 @@ public class Evenement implements java.io.Serializable {
   }
 
   /**
-   * Vérifie si 2 Evenements ne se passent pas en même temps.
+   * Vérifie si 2 Evenements ne se passent pas en même temps. On considère un évenement qui commence
+   * exactement à la fin d'un autre comme un chevauchement.
    *
    * @param evt Un evenement
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps avec celui-ci
