@@ -51,22 +51,45 @@ public class TestEvenement {
    */
   @Test
   void testChevauchementTemps() {
-    // TODO Refaire les tests
-    assertFalse(evenement1.pasDeChevauchementTemps(evenement2));
-    assertFalse(evenement4.pasDeChevauchementTemps(evenement5));
-    assertFalse(evenement1.pasDeChevauchementTemps(evenement4));
-    assertTrue(evenement2.pasDeChevauchementTemps(evenement3));
-    assertFalse(evenement1.pasDeChevauchementTemps(evenement1));
-    assertTrue(evenement1.pasDeChevauchementTemps(evenement3));
-    assertTrue(evenement3.pasDeChevauchementTemps(evenement1));
+    assertFalse(compareChevauchement(0, 10, 10, 20));
+    assertFalse(compareChevauchement(0, 15, 10, 20));
+    assertFalse(compareChevauchement(0, 20, 10, 20));
+    assertFalse(compareChevauchement(0, 30, 10, 20));
+    assertFalse(compareChevauchement(10, 15, 10, 20));
+    assertFalse(compareChevauchement(10, 20, 10, 20));
+    assertFalse(compareChevauchement(10, 30, 10, 20));
+    assertFalse(compareChevauchement(15, 18, 10, 20));
+    assertFalse(compareChevauchement(15, 20, 10, 20));
+    assertFalse(compareChevauchement(15, 30, 10, 20));
+    assertFalse(compareChevauchement(20, 40, 10, 20));
+    assertTrue(compareChevauchement(0, 5, 10, 20));
+    assertTrue(compareChevauchement(25, 30, 10, 20));
+  }
+
+  /**
+   * Fonction intermédiaire pour testChevauchementTemps.
+   *
+   * @param debut1 Debut evenement 1 minutes
+   * @param fin1   Fin evenement 1 minutes
+   * @param debut2 Debut evenement 2 minutes
+   * @param fin2   Fin evenement 2 minutes
+   * @return la valeur de pasDeChevauchementTemps
+   */
+  private boolean compareChevauchement(int debut1, int fin1, int debut2, int fin2) {
+    Evenement ev1 = new Evenement("test", "test", LocalDateTime.of(2022, 10, 10, 0, debut1), (fin1 - debut1), 10);
+    Evenement ev2 = new Evenement("test", "test", LocalDateTime.of(2022, 10, 10, 0, debut2), (fin2 - debut2), 10);
+    return ev1.pasDeChevauchementTemps(ev2) || ev2.pasDeChevauchementTemps(ev1);
   }
 
   @Test
   void testChevauchementLieu() {
-    // TODO Documenter les tests
+    // Se chevauchent en temps & en lieu
     assertFalse(evenement1.pasDeChevauchementLieu(evenement4));
+    // Se chevauchent uniquement en temps
     assertTrue(evenement1.pasDeChevauchementLieu(evenement2));
+    // Se chevauchent uniquement en lieu
     assertTrue(evenement2.pasDeChevauchementLieu(evenement3));
+    // Ne se chevauchent pas du tout
     assertTrue(evenement2.pasDeChevauchementLieu(evenement5));
   }
 
