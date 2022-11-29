@@ -105,17 +105,62 @@ public class TestMembre {
   }
   
   /**
+   * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs 
+   * si l'âge est négatif.
+   * 
+   */
+  @Test
+  void testdefinirInformationPersonnelleAgeNegatif() {
+    InformationPersonnelle infoModif =
+        new InformationPersonnelle("thomas", "jean-andre", "test_invalide", -30);
+    membreComplet.definirInformationPersonnnelle(infoModif);
+    assertEquals(20, membreComplet.getInformationPersonnelle().getAge());
+    
+  }
+  
+  
+  /**
    * Vérifie que la definitionInformationPersonnelle ne fonctionne pas en
    * donnant un nom et un prenom qui ne correspond pas à l'instance de classe.
    */
   @Test
-  void testdefinirInformationPersonnelleSansAssociation() {
+  void testdefinirInformationPersonnelleNomPrenomFaux() {
     InformationPersonnelle infoModif = new InformationPersonnelle("mauvais_nom",
         "mauvais_prenom", "changement_adresse", 40);
     membreComplet.definirInformationPersonnnelle(infoModif);
     assertFalse("changement_adresse" == membreComplet
         .getInformationPersonnelle().getAdresse());
-    assertFalse(40 != membreComplet.getInformationPersonnelle().getAge());
+    assertFalse(membreComplet.getInformationPersonnelle().getAge() == 40);
+    
+  }
+  
+  /**
+   * Vérifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
+   * l'age si le nom ne correspond pas au nom de l'instance de membre.
+   * 
+   */
+  @Test
+  void testdefinirInformationPersonnelleNomInvalide() {
+    InformationPersonnelle infoModif =
+        new InformationPersonnelle("invalide", "jean-andre", "test_valide", 80);
+    membreComplet.definirInformationPersonnnelle(infoModif);
+    assertFalse(
+        membreComplet.getInformationPersonnelle().getNom() == "invalide");
+    
+  }
+  
+  /**
+   * Vérifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
+   * l'age si le prenom ne correspond pas au prenom de l'instance de membre.
+   * 
+   */
+  @Test
+  void testdefinirInformationPersonnellePrenomInvalide() {
+    InformationPersonnelle infoModif =
+        new InformationPersonnelle("thomas", "invalide", "test_valide", 80);
+    membreComplet.definirInformationPersonnnelle(infoModif);
+    assertFalse(
+        membreComplet.getInformationPersonnelle().getNom() == "invalide");
     
   }
 }
