@@ -1,6 +1,6 @@
 package association;
 
-import java.io.Serial;
+
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.HashSet;
@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class Evenement implements java.io.Serializable {
 
-  @Serial
+  
   private static final long serialVersionUID = 7414938932769654866L;
 
   /**
