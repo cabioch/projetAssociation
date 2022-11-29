@@ -96,7 +96,7 @@ public class TestMembre {
   void testdefinirInformationPersonnelleAvecAssociation() {
     InformationPersonnelle infoModif =
         new InformationPersonnelle("thomas", "jean-andre", "test_valide", 80);
-    gestionMembres.ajouterMembre(membreComplet);
+    //gestionMembres.ajouterMembre(membreComplet);
     membreComplet.definirInformationPersonnnelle(infoModif);
     assertEquals("test_valide",
         membreComplet.getInformationPersonnelle().getAdresse());
@@ -110,7 +110,7 @@ public class TestMembre {
    * 
    */
   @Test
-  void testdefinirInformationPersonnelleAgeNegatif() {
+  void testdefinirInformationpersonnelleAgeNegatif() {
     InformationPersonnelle infoModif =
         new InformationPersonnelle("thomas", "jean-andre", "test_invalide", -30);
     membreComplet.definirInformationPersonnnelle(infoModif);
