@@ -26,12 +26,12 @@ import junit.framework.AssertionFailedError;
 public class TestMembre {
   
   /**
-   * Création d'un membre non complet pour les tests.
+   * Crï¿½ation d'un membre non complet pour les tests.
    */
   private Membre membre;
   
   /**
-   * Création d'un membre complet pour les tests.
+   * Crï¿½ation d'un membre complet pour les tests.
    */
   private Membre membreComplet;
   
@@ -41,7 +41,7 @@ public class TestMembre {
   private InformationPersonnelle infos;
   
   /**
-   * Un appel à la méthode gestion membre.
+   * Un appel ï¿½ la mï¿½thode gestion membre.
    */
   private InterGestionMembres gestionMembres;
   
@@ -66,7 +66,7 @@ public class TestMembre {
   }
   
   /**
-   * Vérifie que l'on peut récuperer les informations d'un membre.
+   * Vï¿½rifie que l'on peut rï¿½cuperer les informations d'un membre.
    */
   @Test
   void testgetInformationPersonnelle() {
@@ -74,7 +74,7 @@ public class TestMembre {
   }
   
   /**
-   * Vérifie que les informations du constructeur sont bien instanciées.
+   * Vï¿½rifie que les informations du constructeur sont bien instanciï¿½es.
    */
   @Test
   void testConstructeur() {
@@ -88,7 +88,7 @@ public class TestMembre {
   }
   
   /**
-   * Vérifie que la definitionInformationPersonnelle rend vrai en ajoutant un
+   * Vï¿½rifie que la definitionInformationPersonnelle rend vrai en ajoutant un
    * membre dans l'association puis en modifiant ses informations personnelles.
    * 
    */
@@ -106,7 +106,7 @@ public class TestMembre {
   
   /**
    * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs 
-   * si l'âge est négatif.
+   * si l'ï¿½ge est nï¿½gatif.
    * 
    */
   @Test
@@ -120,8 +120,8 @@ public class TestMembre {
   
   
   /**
-   * Vérifie que la definitionInformationPersonnelle ne fonctionne pas en
-   * donnant un nom et un prenom qui ne correspond pas à l'instance de classe.
+   * Vï¿½rifie que la definitionInformationPersonnelle ne fonctionne pas en
+   * donnant un nom et un prenom qui ne correspond pas ï¿½ l'instance de classe.
    */
   @Test
   void testdefinirInformationPersonnelleNomPrenomFaux() {
@@ -135,7 +135,7 @@ public class TestMembre {
   }
   
   /**
-   * Vérifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
+   * Vï¿½rifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
    * l'age si le nom ne correspond pas au nom de l'instance de membre.
    * 
    */
@@ -150,7 +150,7 @@ public class TestMembre {
   }
   
   /**
-   * Vérifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
+   * Vï¿½rifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
    * l'age si le prenom ne correspond pas au prenom de l'instance de membre.
    * 
    */
