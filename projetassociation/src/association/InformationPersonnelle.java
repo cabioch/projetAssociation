@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Description des informations personnelles d'un membre de l'association :
- * identité, age et adresse.
+ * identitÃ©, age et adresse.
  *
  * @author Eric Cariou
  */
@@ -14,25 +14,25 @@ public final class InformationPersonnelle implements java.io.Serializable {
    * Version de la classe.
    */
   private static final long serialVersionUID = 1L;
-  
+
   /**
-   * Le nom de la personne (ne peut pas être modifié).
+   * Le nom de la personne (ne peut pas Ãªtre modifiÃ©).
    */
   private final String nom;
-  
+
   /**
-   * Le prénom de la personne (ne peut pas être modifié).
+   * Le prÃ©nom de la personne (ne peut pas Ãªtre modifiÃ©).
    */
   private final String prenom;
-  
+
   /**
-   * L'âge de la personne (la valeur 0 correspond à un âge non défini).
+   * L'Ã¢ge de la personne (la valeur 0 correspond Ã  un Ã¢ge non dÃ©fini).
    */
   private int age;
-  
+
   /**
-   * L'adresse de la personne (une chaine vide "" correspond à une adresse non
-   * définie).
+   * L'adresse de la personne (une chaine vide "" correspond Ã  une adresse non
+   * dÃ©finie).
    */
   private String adresse;
   
@@ -44,29 +44,29 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public String getNom() {
     return nom;
   }
-  
+
   /**
-   * Renvoie le prénom de la personne.
+   * Renvoie le prÃ©nom de la personne.
    *
-   * @return le prénom de la personne
+   * @return le prÃ©nom de la personne
    */
   public String getPrenom() {
     return prenom;
   }
-  
+
   /**
-   * Renvoie l'âge de la personne.
+   * Renvoie l'Ã¢ge de la personne.
    *
-   * @return l'âge de la personne
+   * @return l'Ã¢ge de la personne
    */
   public int getAge() {
     return age;
   }
-  
+
   /**
-   * Modifie l'âge de la personne.
+   * Modifie l'Ã¢ge de la personne.
    *
-   * @param age le nouvel age (doit être supérieur à 0)
+   * @param age le nouvel age (doit Ãªtre supÃ©rieur Ã  0)
    */
   public void setAge(int age) {
     if (age > 0) {
@@ -82,33 +82,33 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public String getAdresse() {
     return adresse;
   }
-  
+
   /**
    * Modifie l'adresse de la personne.
    *
-   * @param adresse la nouvelle adresse (doit être différente de null)
+   * @param adresse la nouvelle adresse (doit Ãªtre diffÃ©rente de null)
    */
   public void setAdresse(String adresse) {
     if (adresse != null) {
       this.adresse = adresse;
     }
   }
-  
+
   /**
-   * Crée une personne avec ses informations obligatoires.
+   * CrÃ©e une personne avec ses informations obligatoires.
    *
    * @param nom le nom de la personne
-   * @param prenom le prénom de la personne
+   * @param prenom le prÃ©nom de la personne
    */
   public InformationPersonnelle(String nom, String prenom) {
     this(nom, prenom, "", 0);
   }
-  
+
   /**
-   * Crée une personne avec toutes ses informations.
+   * CrÃ©e une personne avec toutes ses informations.
    *
    * @param nom le nom de la personne
-   * @param prenom le prénom de la personne
+   * @param prenom le prÃ©nom de la personne
    * @param adresse l'adresse de la personne
    * @param age l'age de la personne
    */
@@ -117,7 +117,13 @@ public final class InformationPersonnelle implements java.io.Serializable {
     super();
     this.nom = nom;
     this.prenom = prenom;
+    if (adresse == null) {
+      adresse = "";
+    }
     this.adresse = adresse;
+    if (age < 0) {
+      age = 0;
+    }
     this.age = age;
   }
   

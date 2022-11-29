@@ -5,42 +5,31 @@ import java.util.List;
 /**
  * Gestion du membre ainsi que les évènements du membres et ses infos persos.
  * 
- * @author Jeant
- *
+ * @author Jean
  */
 public class Membre implements InterMembre {
   
   
   /**
-   * L'âge de la personne.
+   * Les evenements aux quels participe ou participera le membre.
    */
-  private int age;
-  
-  /**
-   * L'adresse de la personne.
-   */
-  private String adresse;
-  
   private InterGestionEvenements evenements;
   
+  /**
+   * Les informations personnelles du membre.
+   */
   private InformationPersonnelle infos;
-  
-  private InterGestionMembres membres;
   
   
   /**
-   * Creer un membre avec ses informations corrélées à ses InformationPersonnelle.
+   * Creer un membre avec ses informations corrélées à ses
+   * InformationPersonnelle.
    *
-   * @param adresse l'adresse de la personne
-   * @param age l'age de la personne
+   * @param info l'objet informationPersonnelle du membre
    */
-  public Membre(int age, String adresse) {
-    String prenom = infos.getPrenom();
-    String nom = infos.getNom();
-    age = infos.getAge();
-    adresse = infos.getAdresse();
+  public Membre(InformationPersonnelle info) {
+    this.infos = info;
   }
-  
   
   
   /**
@@ -65,21 +54,21 @@ public class Membre implements InterMembre {
   }
   
   /**
-   * Définit les informations personnelles du membre.
+   * Définit les informations personnelles (adresse et age) du membre en
+   * vérifant si c'est bien lui.
    *
    * @param info les informations personnelles du membre
    */
   @Override
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
-    if (membres.ensembleMembres().contains(info)) {
-      if (this.adresse != null)
-        info.setAdresse(this.adresse);
-      if (this.age < 0)
-        this.age = 0;
-      info.setAge(this.age);
+    if (this.infos.getNom() == info.getNom()
+        && this.infos.getPrenom() == infos.getPrenom()) {
+      info.setAdresse(this.infos.getAdresse());
+      info.setAge(this.infos.getAge());
     }
-    
   }
+  
+  
   
   /**
    * Renvoie les informations personnelles du membre.
