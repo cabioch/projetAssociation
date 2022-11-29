@@ -39,7 +39,7 @@ public class GestionMembres implements InterGestionMembres {
   public boolean ajouterMembre(InterMembre membre) {
     // verifie que le membre ajouté n'est pas égale a un membre déja existant
     // par verification du nom et prénom.
-    for (InterMembre m : this.membres) {
+    for (InterMembre m : membres) {
       if (m.getInformationPersonnelle().getNom()
           .equals(membre.getInformationPersonnelle().getNom())
           && m.getInformationPersonnelle().getPrenom()
@@ -47,13 +47,13 @@ public class GestionMembres implements InterGestionMembres {
         return false;
       }
       // verifie que le membre ajouté n'a pas un attribut null en prénom ou nom.
-      if (m.getInformationPersonnelle().getPrenom().equals(null)
-          || m.getInformationPersonnelle().getNom().equals(null)) {
+      if (m.getInformationPersonnelle().getNom().equals(null)
+          || m.getInformationPersonnelle().getPrenom().equals(null)) {
         return false;
       }
       // verifie que le membre ajouté n'a pas une chaine vide en nom ou prénom.
-      if (m.getInformationPersonnelle().getPrenom().equals("")
-          || m.getInformationPersonnelle().getNom().equals("")) {
+      if (m.getInformationPersonnelle().getNom().equals(" ")
+          || m.getInformationPersonnelle().getPrenom().equals(" ")) {
         return false;
       }
     }

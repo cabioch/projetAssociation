@@ -10,6 +10,7 @@ import association.InformationPersonnelle;
 import association.InterMembre;
 import association.Membre;
 
+
 /**
  * Tests JUnit de la classe {@link association.GestionMembres GestionMembres}.
  *
@@ -74,6 +75,9 @@ class TestGestionMembres {
     
     infoC2 = new InformationPersonnelle("Tilia", "EMILE", "Belgique", 35);
     infoC = new InformationPersonnelle("Alan", "PARKER", "France", 20);
+    infovide = new InformationPersonnelle("", "", "Luxembourg", 50);
+    infovidenom = new InformationPersonnelle("Eliot", "", "Allemagne", 20);
+    infovideprenom = new InformationPersonnelle("", "PATINSON", "USA", 20);
     membreT1 = new Membre(infoC);
     membreT2 = new Membre(infoC2);
     membreT3 = new Membre(infoC2);
@@ -123,7 +127,7 @@ class TestGestionMembres {
   }
   
   /**
-   * Test d'ajout d'un membre ayant aucun nom.
+   * Test d'ajout d'un membre une chaine vide pour nom.
    */
   @Test
   void testAjouterUnMembreAvecAucunPrenom() {
@@ -131,7 +135,7 @@ class TestGestionMembres {
   }
   
   /**
-   * Test d'ajout d'un membre ayant aucun prénom.
+   * Test d'ajout d'un membre avec une chaine vide pour prénom.
    */
   @Test
   void testAjouterUnMembreAvecAucunNom() {
@@ -178,8 +182,7 @@ class TestGestionMembres {
   void testDesignerUnPresidentNonMembre() {
     gt.supprimerMembre(membreT1);
     assertFalse(gt.designerPresident(membreT1));
-    assertFalse(gt.president().equals(membreT1));
-    assertTrue(gt.president().equals(null));
+    assertTrue(gt.president() == null);
   }
   
   /**
