@@ -28,7 +28,7 @@ public class GestionAssociation implements InterGestionAssociation {
    * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
    * c'est la référence sur cet objet qui est retournée.
    *
-   * @return le gestionnaire d'�v�nements de l'association
+   * @return le gestionnaire d'évènements de l'association
    */
   @Override
   public InterGestionEvenements gestionnaireEvenements() {
@@ -73,13 +73,13 @@ public class GestionAssociation implements InterGestionAssociation {
   }
 
   /**
-   * Charge à partir d'un fichier toutes les donn�es de l'association,
-   * c'est-�-dire un ensemble de membres et d'�v�nements. Si des membres et des
-   * �v�n�ments avaient d�j� �t� d�finis, ils sont �cras�s par le contenu trouv�
+   * Charge à partir d'un fichier toutes les données de l'association,
+   * c'est-à-dire un ensemble de membres et d'évènements. Si des membres et des
+   * évènements avaient déjà été définis, ils sont écrasés par le contenu trouvé
    * dans le fichier.
    *
-   * @param nomFichier le fichier � partir duquel charger les donn�es
-   * @throws IOException en cas de probl�me de lecture dans le fichier
+   * @param nomFichier le fichier à partir duquel charger les données
+   * @throws IOException en cas de problème de lecture dans le fichier
    */
   @Override
   public void chargerDonnees(String nomFichier) throws IOException {
