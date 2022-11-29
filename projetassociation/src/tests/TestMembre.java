@@ -1,20 +1,12 @@
 package tests;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.sql.ClientInfoStatus;
-import java.util.Set;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import association.InformationPersonnelle;
 import association.InterGestionMembres;
-import association.InterMembre;
 import association.Membre;
-import junit.framework.AssertionFailedError;
-
 
 
 /**
@@ -74,7 +66,7 @@ public class TestMembre {
   }
   
   /**
-   * V�rifie que les informations du constructeur sont bien instanci�es.
+   * Vérifie que les informations du constructeur sont bien instanci�es.
    */
   @Test
   void testConstructeur() {
@@ -88,7 +80,7 @@ public class TestMembre {
   }
   
   /**
-   * V�rifie que la definitionInformationPersonnelle rend vrai en ajoutant un
+   * Vérifie que la definitionInformationPersonnelle rend vrai en ajoutant un
    * membre dans l'association puis en modifiant ses informations personnelles.
    * 
    */
@@ -96,31 +88,28 @@ public class TestMembre {
   void testdefinirInformationPersonnelleAvecAssociation() {
     InformationPersonnelle infoModif =
         new InformationPersonnelle("thomas", "jean-andre", "test_valide", 80);
-    //gestionMembres.ajouterMembre(membreComplet);
+    // gestionMembres.ajouterMembre(membreComplet);
     membreComplet.definirInformationPersonnnelle(infoModif);
     assertEquals("test_valide",
         membreComplet.getInformationPersonnelle().getAdresse());
     assertEquals(membre.getInformationPersonnelle().getAge(), 80);
-    
   }
   
   /**
-   * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs 
+   * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs
    * si l'�ge est n�gatif.
    * 
    */
   @Test
   void testdefinirInformationpersonnelleAgeNegatif() {
-    InformationPersonnelle infoModif =
-        new InformationPersonnelle("thomas", "jean-andre", "test_invalide", -30);
+    InformationPersonnelle infoModif = new InformationPersonnelle("thomas",
+        "jean-andre", "test_invalide", -30);
     membreComplet.definirInformationPersonnnelle(infoModif);
     assertEquals(20, membreComplet.getInformationPersonnelle().getAge());
-    
   }
   
-  
   /**
-   * V�rifie que la definitionInformationPersonnelle ne fonctionne pas en
+   * Vérifie que la definitionInformationPersonnelle ne fonctionne pas en
    * donnant un nom et un prenom qui ne correspond pas � l'instance de classe.
    */
   @Test
@@ -131,11 +120,10 @@ public class TestMembre {
     assertFalse("changement_adresse" == membreComplet
         .getInformationPersonnelle().getAdresse());
     assertFalse(membreComplet.getInformationPersonnelle().getAge() == 40);
-    
   }
   
   /**
-   * V�rifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
+   * Vérifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
    * l'age si le nom ne correspond pas au nom de l'instance de membre.
    * 
    */
@@ -146,7 +134,6 @@ public class TestMembre {
     membreComplet.definirInformationPersonnnelle(infoModif);
     assertFalse(
         membreComplet.getInformationPersonnelle().getNom() == "invalide");
-    
   }
   
   /**

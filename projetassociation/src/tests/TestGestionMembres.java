@@ -2,14 +2,13 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import association.GestionMembres;
 import association.InformationPersonnelle;
 import association.InterMembre;
 import association.Membre;
-import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 /**
  * Tests JUnit de la classe {@link association.GestionMembres GestionMembres}.
@@ -37,13 +36,30 @@ class TestGestionMembres {
   private InformationPersonnelle infoC2;
   
   /**
-   * Un premier membre pour les tests.
+   * Des informations personnels qui auront une chaine vide dans le nom et le
+   * prénom.
+   */
+  private InformationPersonnelle infovide;
+  
+  /**
+   * Des informations personnels qui aura une chaine vide dans le nom.
+   */
+  private InformationPersonnelle infovidenom;
+  
+  /**
+   * Des informations personnels qui auront une chaine vide dans le prénom.
+   */
+  private InformationPersonnelle infovideprenom;
+  
+  /**
+   * Des membres pour les tests.
    */
   private Membre membreT1;
-  /**
-   * Un second membre pour les tests.
-   */
   private Membre membreT2;
+  private Membre membreT3;
+  private Membre membreT4;
+  private Membre membreT5;
+  private Membre membreT6;
   
   /**
    * Un ensemble de membres pour les tests. L'ensemble est vide par défaut.
@@ -57,10 +73,13 @@ class TestGestionMembres {
   void setUp() throws Exception {
     
     infoC2 = new InformationPersonnelle("Tilia", "EMILE", "Belgique", 35);
-    ensembleM.add(membreT1);
     infoC = new InformationPersonnelle("Alan", "PARKER", "France", 20);
     membreT1 = new Membre(infoC);
     membreT2 = new Membre(infoC2);
+    membreT3 = new Membre(infoC2);
+    membreT4 = new Membre(infovide);
+    membreT5 = new Membre(infovidenom);
+    membreT6 = new Membre(infovideprenom);
     ensembleM.add(membreT1);
     ensembleM.add(membreT2);
   }
@@ -72,7 +91,6 @@ class TestGestionMembres {
    */
   
   @Test
-  
   void testAjouterUnMembreDejaPresent() {
     assertFalse(gt.ajouterMembre(membreT1));
   }
@@ -89,9 +107,40 @@ class TestGestionMembres {
   }
   
   /**
+   * Test d'ajout d'un membre ayant les même noms et prénoms qu'un autre.
+   */
+  @Test
+  void testAjouterUnMembreIdentique() {
+    assertFalse(gt.ajouterMembre(membreT3));
+  }
+  
+  /**
+   * Test d'ajout d'un membre ayant aucun prénom ou nom.
+   */
+  @Test
+  void testAjouterUnMembreAvecAucunPrenomEtNom() {
+    assertFalse(gt.ajouterMembre(membreT4));
+  }
+  
+  /**
+   * Test d'ajout d'un membre ayant aucun nom.
+   */
+  @Test
+  void testAjouterUnMembreAvecAucunPrenom() {
+    assertFalse(gt.ajouterMembre(membreT6));
+  }
+  
+  /**
+   * Test d'ajout d'un membre ayant aucun prénom.
+   */
+  @Test
+  void testAjouterUnMembreAvecAucunNom() {
+    assertFalse(gt.ajouterMembre(membreT5));
+  }
+  
+  /**
    * Test de suppression d'un membre déja présent dans l'ensemble.
    *
-   * @param membre_test un membre
    */
   @Test
   void testSupprimerUnMembrePresent() {
@@ -101,7 +150,6 @@ class TestGestionMembres {
   /**
    * Test de suppression d'un membre non présent dans l'ensemble.
    *
-   * @param membre_test un membre
    */
   @Test
   void testsupprimerUnMembreNonPresent() {
@@ -110,57 +158,56 @@ class TestGestionMembres {
   }
   
   /**
-   * Test d'ajout de désignation d'un président. Le rôle de président par défaut
-   * est <code>null</code>. Le membre est inclus dans l'ensemble de membres.
-   *
-   * @param membre_test un membre
+   * Test de désignation d'un président. Le rôle de président par défaut est
+   * <code>null</code>. Le membre est inclus dans l'ensemble de membres. Le
+   * président est le membre ajouté.
+   * 
    */
   @Test
   void testDesignerUnPresident() {
     assertTrue(gt.designerPresident(membreT1));
-    assertTrue(gt.president() == membreT1);
+    assertTrue(gt.president().equals(membreT1));
   }
   
   /**
-   * Test d'ajout de désignation d'un président. Le rôle de président par défaut
-   * est <code>null</code>. Le membre n'appartient pas à l'ensemble de membres.
-   *
-   * @param membre_test un membre
+   * Test de désignation d'un président. Le rôle de président par défaut est
+   * <code>null</code>. Le membre n'appartient pas à l'ensemble de membres. Le
+   * président reste a la valeur <code>null</code>.
    */
   @Test
   void testDesignerUnPresidentNonMembre() {
     gt.supprimerMembre(membreT1);
     assertFalse(gt.designerPresident(membreT1));
-    assertFalse(gt.president() == membreT1);
-    assertTrue(gt.president() == null);
+    assertFalse(gt.president().equals(membreT1));
+    assertTrue(gt.president().equals(null));
   }
   
   /**
-   * Test d'ajout de désignation d'un président. Le rôle de président est
-   * occupé. Le membre appartient à l'ensemble de membres.
+   * Test de remplacement du président. Le rôle de président est occupé par un
+   * membre. Le membre qui remplace l'ancien président appartient à l'ensemble
+   * de membres.
    *
-   * @param membre_test un membre
    */
   @Test
   void testRemplacerUnPresidentAvecUnMembre() {
     gt.designerPresident(membreT2);
-    assertTrue(gt.president() == membreT2);
+    assertTrue(gt.president().equals(membreT2));
     assertTrue(gt.designerPresident(membreT1));
-    assertTrue(gt.president() == membreT1);
+    assertTrue(gt.president().equals(membreT1));
   }
   
   /**
-   * Test d'ajout de désignation d'un président. Le rôle de président est
-   * occupé. Le membre n'appartient pas à l'ensemble de membres.
+   * Test de remplacement du président. Le rôle de président est occupé par un
+   * membre. Le membre qui remplace l'ancien président n'appartient pas à
+   * l'ensemble de membres. Le président reste inchangé.
    *
-   * @param membre_test un membre
    */
   @Test
   void testRemplacerUnPresidentAvecUnNonMembre() {
     gt.designerPresident(membreT2);
     gt.supprimerMembre(membreT1);
-    assertTrue(gt.president() == membreT2);
+    assertTrue(gt.president().equals(membreT2));
     assertFalse(gt.designerPresident(membreT1));
-    assertTrue(gt.president() == membreT2);
+    assertTrue(gt.president().equals(membreT2));
   }
 }

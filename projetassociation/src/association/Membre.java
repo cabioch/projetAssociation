@@ -3,7 +3,8 @@ package association;
 import java.util.List;
 
 /**
- * Gestion du membre ainsi que les �v�nements du membres et ses infos persos.
+ * Gestion du membre ainsi que les évènements du membres et ses infos
+ * personnels.
  *
  * @author Jean
  */
@@ -11,7 +12,7 @@ public class Membre implements InterMembre {
   
   
   /**
-   * Les evenements aux quels participe ou participera le membre.
+   * Les evenements auxquels participe ou participera le membre.
    */
   private InterGestionEvenements evenements;
   
@@ -22,10 +23,11 @@ public class Membre implements InterMembre {
   
   
   /**
-   * Creer un membre avec ses informations corr�l�es � ses
-   * InformationPersonnelle.
+   * Creer un membre avec ses informations corrélées à ses informations
+   * personnelles.
    *
-   * @param info l'objet informationPersonnelle du membre
+   * @param info les informations personnelles du membre
+   * @see informationPersonnelle
    */
   public Membre(InformationPersonnelle info) {
     this.infos = info;
@@ -33,9 +35,9 @@ public class Membre implements InterMembre {
   
   
   /**
-   * La liste des �v�nements auquel le membre est inscrit ou a particip�.
+   * La liste des évènements auquel le membre est inscrit ou a participé.
    *
-   * @return la liste des �v�nements du membre
+   * @return la liste des événements du membre
    */
   @Override
   public List<Evenement> ensembleEvenements() {
@@ -43,10 +45,10 @@ public class Membre implements InterMembre {
   }
   
   /**
-   * La liste des �v�nements auquel le membre est inscrit et qui n'ont pas
+   * La liste des événements auquel le membre est inscrit et qui n'ont pas
    * encore eu lieu.
    *
-   * @return la liste des �v�nements � venir du memmbre
+   * @return la liste des évènements é venir du membre
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {

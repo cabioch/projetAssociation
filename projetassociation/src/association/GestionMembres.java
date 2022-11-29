@@ -27,23 +27,39 @@ public class GestionMembres implements InterGestionMembres {
   
   /**
    * Ajoute un membre dans l'association. Ne fait rien si le membre était déja
-   * présent dans l'association (meme nom et meme prenom).
+   * présent dans l'association (meme nom et meme prenom) ou que l'une des
+   * informations personnelles est une chaine vide ou <code>null</code>.
    *
    * @param membre le membre à rajouter
    * @return <code>true</code> si le membre a bien été ajouté,
-   *         <code>false</code> si le membre était déjà  présent (dans ce cas il
-   *         n'est pas ajouté à nouveau)
+   *         <code>false</code> dans le cas contraire.
    */
   
   @Override
   public boolean ajouterMembre(InterMembre membre) {
-    //ajout le cas des equals via les strings mom et prenom et si c'est vide.
-    //via methode foreach.
-    if (!membres.contains(membre)) {
-      membres.add(membre);
-      return true;
+    // verifie que le membre ajouté n'est pas égale a un membre déja existant
+    // par verification du nom et prénom.
+    for (InterMembre m : this.membres) {
+      if (m.getInformationPersonnelle().getNom()
+          .equals(membre.getInformationPersonnelle().getNom())
+          && m.getInformationPersonnelle().getPrenom()
+              .equals(membre.getInformationPersonnelle().getPrenom())) {
+        return false;
+      }
+      // verifie que le membre ajouté n'a pas un attribut null en prénom ou nom.
+      if (m.getInformationPersonnelle().getPrenom().equals(null)
+          || m.getInformationPersonnelle().getNom().equals(null)) {
+        return false;
+      }
+      // verifie que le membre ajouté n'a pas une chaine vide en nom ou prénom.
+      if (m.getInformationPersonnelle().getPrenom().equals("")
+          || m.getInformationPersonnelle().getNom().equals("")) {
+        return false;
+      }
     }
-    return false;
+    membres.add(membre);
+    return true;
+    
   }
   
   /**
@@ -81,8 +97,8 @@ public class GestionMembres implements InterGestionMembres {
   }
   
   /**
-   * Renvoie l'ensemble des membres de l'association.
-   * Si l'ensemble est null, créer un ensemble vide.
+   * Renvoie l'ensemble des membres de l'association. Si l'ensemble est null, un
+   * ensemble vide est créé.
    *
    * @return l'ensemble des membres de l'association.
    */
@@ -102,7 +118,6 @@ public class GestionMembres implements InterGestionMembres {
    */
   @Override
   public InterMembre president() {
-    
     return president;
   }
 }
