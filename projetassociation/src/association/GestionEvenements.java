@@ -12,7 +12,7 @@ import java.util.List;
  *
  */
 public class GestionEvenements implements InterGestionEvenements {
-
+  
   /**
    * La liste des événements.
    *
@@ -22,13 +22,15 @@ public class GestionEvenements implements InterGestionEvenements {
   
   /**
    * Getters/Setters de la liste des événements.
-   * @return listeEvenements La liste des événements
+   * 
+   * @return listeEvenements La liste des événements.
+   * 
    */
   public List<Evenement> getListeEvenements() {
     return listeEvenements;
   }
-
-
+  
+  
   public void setListeEvenements(List<Evenement> listeEvenements) {
     this.listeEvenements = listeEvenements;
   }
@@ -107,13 +109,13 @@ public class GestionEvenements implements InterGestionEvenements {
    */
   @Override
   public List<Evenement> ensembleEvenementAvenir() {
-    List<Evenement> aVenir = new ArrayList<>();
+    List<Evenement> avenir = new ArrayList<>();
     for (Evenement e : listeEvenements) {
       if (e.getDate().isAfter(LocalDateTime.now())) {
-        aVenir.add(e);
+        avenir.add(e);
       }
     }
-    return aVenir;
+    return avenir;
   }
   
   /**
@@ -148,11 +150,9 @@ public class GestionEvenements implements InterGestionEvenements {
    */
   @Override
   public boolean annulerEvenement(Evenement evt, InterMembre mbr) {
-    return evt.enleverParticipant(mbr);
+    evt.enleverParticipant(mbr);
+    return listeEvenements.remove(evt);
   }
-
-
- 
   
   
   
