@@ -47,7 +47,7 @@ public class Evenement implements java.io.Serializable {
 
   /**
    * Vérifie que 2 Evenements ne se passent pas en même temps et au même endroit. On considère un
-   * chevauchement si un évenement commence à la fin exacte d'un autre.
+   * évenement qui commence exactement à la fin d'un autre comme un chevauchement.
    *
    * @param evt Un evenement
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps et en lieu avec celui-ci
@@ -61,15 +61,15 @@ public class Evenement implements java.io.Serializable {
   }
 
   /**
-   * Vérifie si 2 Evenements ne se passent pas en même temps. On considère un
-   * chevauchement si un évenement commence à la fin exacte d'un autre.
+   * Vérifie si 2 Evenements ne se passent pas en même temps. On considère un évenement qui commence
+   * exactement à la fin d'un autre comme un chevauchement.
    *
    * @param evt Un evenement
    * @return vrai si l'evenement en parametre ne se chevauche pas en temps avec celui-ci
    */
   public boolean pasDeChevauchementTemps(Evenement evt) {
     LocalDateTime finThis = date.plusMinutes(duree);
-    LocalDateTime finEvt = date.plusMinutes(evt.duree);
+    LocalDateTime finEvt = evt.date.plusMinutes(evt.duree);
 
     // Pas supperposé en temps
     return (finThis.compareTo(evt.date) < 0 || date.compareTo(finEvt) > 0);
