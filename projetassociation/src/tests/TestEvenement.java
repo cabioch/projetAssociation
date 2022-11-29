@@ -1,12 +1,16 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import association.Evenement;
-import java.time.LocalDateTime;
+import association.InformationPersonnelle;
+import association.InterMembre;
+import association.Membre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests JUnit de {@link Evenement}.
@@ -18,6 +22,10 @@ public class TestEvenement {
   private Evenement evenement3;
   private Evenement evenement4;
   private Evenement evenement5;
+
+  private InterMembre membre1;
+  private InterMembre membre2;
+  private InterMembre membre3;
 
   @BeforeEach
   void setUp() {
@@ -31,6 +39,10 @@ public class TestEvenement {
             1, 1, 1, 1, 9), 10, 10);
     evenement5 = new Evenement("ev1", "nulpars", LocalDateTime.of(
             1, 1, 1, 1, 19), 10, 10);
+
+    membre1 = new Membre(new InformationPersonnelle("Jean", "Pierre"));
+    membre2 = new Membre(new InformationPersonnelle("Jean2", "Pierre2"));
+    membre3 = new Membre(new InformationPersonnelle("Jean3", "Pierre3"));
   }
 
 
@@ -39,6 +51,7 @@ public class TestEvenement {
    */
   @Test
   void testChevauchementTemps() {
+    // TODO Refaire les tests
     assertFalse(evenement1.pasDeChevauchementTemps(evenement2));
     assertFalse(evenement4.pasDeChevauchementTemps(evenement5));
     assertFalse(evenement1.pasDeChevauchementTemps(evenement4));
@@ -50,6 +63,7 @@ public class TestEvenement {
 
   @Test
   void testChevauchementLieu() {
+    // TODO Documenter les tests
     assertFalse(evenement1.pasDeChevauchementLieu(evenement4));
     assertTrue(evenement1.pasDeChevauchementLieu(evenement2));
     assertTrue(evenement2.pasDeChevauchementLieu(evenement3));
@@ -58,26 +72,77 @@ public class TestEvenement {
 
   @Test
   void testAjoutParticipants() {
-    // Ajoute 2 particpants différents
-    // Puis teste l'ajout d'un troisième
-    // assertTrue(evenement1.ajouterParticipant());
+
+    // evenement1 a un max de 2 participants
+    evenement1.ajouterParticipant(membre1);
+    evenement1.ajouterParticipant(membre2);
+
+    // Teste qu'on ne peut pas ajouter un troisième
+    assertFalse(evenement1.ajouterParticipant(membre3));
+    assertTrue(evenement1.getParticipants().contains(membre1));
+    assertTrue(evenement1.getParticipants().contains(membre2));
+    assertEquals(2, evenement1.getParticipants().size());
   }
 
+  @Test
   void testDoubleAjout() {
-    // Ajoute 2 fois le meme participants
+    evenement1.ajouterParticipant(membre1);
+    assertFalse(evenement1.ajouterParticipant(membre1));
   }
 
   @Test
   void testEnleverParticipants() {
-    // Ajoute puis enleve 2 particpants a ev1
-  }
+    evenement1.ajouterParticipant(membre1);
+    evenement1.ajouterParticipant(membre2);
+    evenement1.enleverParticipant(membre1);
+    evenement1.enleverParticipant(membre2);
 
-  void testEnleverNonParticipant() {
-    // Essaye d'enelver un participant qui n'appartient pas a l'evenement
+    assertFalse(evenement1.getParticipants().contains(membre1));
+    assertFalse(evenement1.getParticipants().contains(membre2));
+    assertEquals(0, evenement1.getParticipants().size());
   }
 
   @Test
-  void testConstructeur() {
-    // Construit des objets et vérifie avec les getters qu'ils sont conformes
+  void testEnleverNonParticipant() {
+    assertFalse(evenement1.enleverParticipant(membre1));
+    assertFalse(evenement1.getParticipants().contains(membre1));
+    assertEquals(0, evenement1.getParticipants().size());
+  }
+
+  @Test
+  void testConstructeur1() {
+    LocalDateTime date = LocalDateTime.of(2022, 11, 29, 15, 23);
+    Evenement ev = new Evenement("test", "endroit", date, 60, 20);
+    assertEquals(ev.getNom(), "test");
+    assertEquals(ev.getLieu(), "endroit");
+    assertEquals(ev.getDate(), date);
+    assertEquals(ev.getDuree(), 60);
+    assertEquals(ev.getNbParticipantsMax(), 20);
+  }
+
+  @Test
+  void testConstructeur2() {
+    LocalDateTime date = LocalDateTime.of(2022, 11, 29, 15, 23);
+    Evenement ev = new Evenement("test", "endroit", 2022, Month.NOVEMBER, 29, 15, 23, 60, 20);
+    assertEquals(ev.getNom(), "test");
+    assertEquals(ev.getLieu(), "endroit");
+    assertEquals(ev.getDate(), date);
+    assertEquals(ev.getDuree(), 60);
+    assertEquals(ev.getNbParticipantsMax(), 20);
+  }
+
+  @Test
+  void testConstructeurMauvaiseDates() {
+    String nom = "test";
+    String lieu = "endroit";
+    int annee = 2022;
+    Month mois = Month.NOVEMBER;
+    int jour = 29;
+    int heure = 15;
+    int minutes = 23;
+    int duree = 60;
+    int participants = 60;
+
+    // TODO Réécrire tout le test sur chaque paramètre
   }
 }
