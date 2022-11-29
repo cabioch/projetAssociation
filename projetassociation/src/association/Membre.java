@@ -3,8 +3,8 @@ package association;
 import java.util.List;
 
 /**
- * Gestion du membre ainsi que les évènements du membres et ses infos persos.
- * 
+ * Gestion du membre ainsi que les ï¿½vï¿½nements du membres et ses infos persos.
+ *
  * @author Jean
  */
 public class Membre implements InterMembre {
@@ -22,7 +22,7 @@ public class Membre implements InterMembre {
   
   
   /**
-   * Creer un membre avec ses informations corrélées à ses
+   * Creer un membre avec ses informations corrï¿½lï¿½es ï¿½ ses
    * InformationPersonnelle.
    *
    * @param info l'objet informationPersonnelle du membre
@@ -33,9 +33,9 @@ public class Membre implements InterMembre {
   
   
   /**
-   * La liste des événements auquel le membre est inscrit ou a participé.
+   * La liste des ï¿½vï¿½nements auquel le membre est inscrit ou a participï¿½.
    *
-   * @return la liste des événements du membre
+   * @return la liste des ï¿½vï¿½nements du membre
    */
   @Override
   public List<Evenement> ensembleEvenements() {
@@ -43,10 +43,10 @@ public class Membre implements InterMembre {
   }
   
   /**
-   * La liste des événements auquel le membre est inscrit et qui n'ont pas
+   * La liste des ï¿½vï¿½nements auquel le membre est inscrit et qui n'ont pas
    * encore eu lieu.
    *
-   * @return la liste des événements à venir du memmbre
+   * @return la liste des ï¿½vï¿½nements ï¿½ venir du memmbre
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
@@ -54,8 +54,8 @@ public class Membre implements InterMembre {
   }
   
   /**
-   * Définit les informations personnelles (adresse et age) du membre en
-   * vérifant si c'est bien lui.
+   * Dï¿½finit les informations personnelles (adresse et age) du membre en
+   * vï¿½rifant si c'est bien lui (nom et prÃ©nom).
    *
    * @param info les informations personnelles du membre
    */
@@ -74,7 +74,7 @@ public class Membre implements InterMembre {
    * Renvoie les informations personnelles du membre.
    *
    * @return l'objet contenant les informations personnelles du membre ou
-   *         <code>null</code> si elles n'ont pas été définies
+   *         <code>null</code> si elles n'ont pas ï¿½tï¿½ dï¿½finies
    */
   @Override
   public InformationPersonnelle getInformationPersonnelle() {
@@ -83,7 +83,5 @@ public class Membre implements InterMembre {
     } else {
       return infos;
     }
-    
   }
-  
 }
