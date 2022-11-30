@@ -1,9 +1,11 @@
 package association;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Gestion du membre ainsi que les évènements du membres et ses infos persos.
+ * (nom et prenom et vide)
  * 
  * @author Jean
  */
@@ -19,6 +21,7 @@ public class Membre implements InterMembre {
    * Les informations personnelles du membre.
    */
   private InformationPersonnelle infos;
+  
   
   
   /**
@@ -61,8 +64,7 @@ public class Membre implements InterMembre {
    */
   @Override
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
-    if (this.infos.getNom() == info.getNom()
-        && this.infos.getPrenom() == infos.getPrenom()) {
+    if (this.infos.equals(info)) {
       info.setAdresse(this.infos.getAdresse());
       info.setAge(this.infos.getAge());
     }
@@ -84,6 +86,42 @@ public class Membre implements InterMembre {
       return infos;
     }
     
+  }
+  
+  /**
+   * Retourne un hashcode des infos du membre.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(infos);
+  }
+  
+  /**
+   * Retourne en string les infos du membre.
+   */
+  @Override
+  public String toString() {
+    return infos.getNom() + " " + infos.getPrenom() + " " + infos.getAdresse()
+        + " " + infos.getAge();
+  }
+  
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Membre other = (Membre) obj;
+    return Objects.equals(infos.getAdresse(), other.infos.getAdresse())
+        && infos.getAge() == other.infos.getAge()
+        && Objects.equals(infos.getNom(), other.infos.getNom())
+        && Objects.equals(infos.getPrenom(), other.infos.getPrenom());
   }
   
 }
