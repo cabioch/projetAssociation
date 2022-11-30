@@ -35,6 +35,25 @@ public class Membre implements InterMembre {
   }
   
   /**
+   * Getters de la liste des événements.
+   *
+   * @return listeEvenements La liste des événements.
+   * 
+   */
+  public List<Evenement> getListeEvenements() {
+    return listeEvenements;
+  }
+  
+  /**
+   * Setters de la liste évènements.
+   *
+   * @param listeEvenements.
+   */
+  public void setListeEvenements(List<Evenement> listeEvenements) {
+    this.listeEvenements = listeEvenements;
+  }
+  
+  /**
    * La liste des évènements auquel le membre est inscrit ou a participÃ©.
    *
    * @return la liste des évènements auxquels participe le membre
@@ -62,6 +81,15 @@ public class Membre implements InterMembre {
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
     
+    // regarde pour chaque evenement dans la liste d'évènement
+    for (Evenement e : listeEvenements) {
+      // si la liste contient l'objet infos du membre
+      if (e.getParticipants().contains(infos)) {
+        
+        listeEvenements.add(e);
+      }
+    }
+    return listeEvenements;
   }
   
   /**
