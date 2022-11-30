@@ -1,5 +1,6 @@
 package association;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.xml.catalog.CatalogManager;
@@ -60,7 +61,7 @@ public class Membre implements InterMembre {
    */
   @Override
   public List<Evenement> ensembleEvenements() {
-    
+    listeEvenements = new ArrayList<>();
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listeEvenements) {
       // si la liste contient l'objet infos du membre
@@ -80,7 +81,7 @@ public class Membre implements InterMembre {
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
-    
+    listeEvenements = new ArrayList<>();
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listeEvenements) {
       // si la liste contient l'objet infos du membre
@@ -103,9 +104,7 @@ public class Membre implements InterMembre {
     if (this.infos.equals(info)) {
       info.setAdresse(this.infos.getAdresse());
       info.setAge(this.infos.getAge());
-    } else if (this.infos != null) {
-      
-    }
+    } 
   }
   
   /**
