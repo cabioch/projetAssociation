@@ -6,7 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import association.Evenement;
 import association.GestionEvenements;
+import association.InformationPersonnelle;
+import association.InterGestionMembres;
 import association.InterMembre;
+import association.Membre;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +22,61 @@ import org.junit.jupiter.api.Test;
  */
 public class TestGestionEvenements {
   
-  
+  /**
+   * gevent est l'instance de la classe GestionEvenements.
+   */
   private GestionEvenements gevent;
+  
+  /**
+   * listeEvenements est la liste des Evenements.
+   */
   private List<Evenement> listeEvenements = new ArrayList<Evenement>();
   
+  /**
+   *  Création d'un premier événement appelé event1.
+   */
   private Evenement event1;
+  
+  /**
+   *  Création d'un deuxième événement appelé event2.
+   */
   private Evenement event2;
+  
+  /**
+   *  Création d'un troisème événement appelé event3.
+   */
   private Evenement event3;
+  
+  /**
+   *  Création d'un quatrième événement appelé event4.
+   */
   private Evenement event4;
+  
+  /**
+   *  Création d'un cinquième événement appelé event5.
+   */
   private Evenement event5;
   
+  /**
+   *  Création d'un premier membre appelé membre1.
+   */
   private InterMembre membre1;
+  
+  /**
+   *  Création d'un deuxième membre appelé membre2.
+   */
   private InterMembre membre2;
+  
+  /**
+   *  Création des informations personnelles pour le premier membre.
+   */
+  private InformationPersonnelle infoC;
+  
+  /**
+   *  Création des informations personnelles pour le deuxième membre.
+   */
+  private InformationPersonnelle infoD;
+  
  
   /**
    * On instancie plusieurs événements afin de les ajouter à la liste
@@ -40,6 +86,7 @@ public class TestGestionEvenements {
   @BeforeEach
   void setUp() {
     
+    //Instanciation de gevent implémentant l'interface GestionEvenements
     gevent = new GestionEvenements();
     
     
@@ -73,6 +120,20 @@ public class TestGestionEvenements {
     // de la création d'un événement
     event5 = new Evenement("Classe", "Lannion", 2022, Month.MARCH, 15, 19, 00, 60, 23);
     
+    // Ajout du prénom Titi et nom Beau comme nom pour le premier membre
+    infoC = new InformationPersonnelle("Titi", "Beau");
+    
+    // Ajout du prénom Toche et nom Rapide comme nom pour le deuxième membre
+    infoD = new InformationPersonnelle("Toche", "Rapide");
+    
+    // On créer le membre1 avec ses infos personnelles correspondantes
+    membre1 = new Membre(infoC);
+    
+    // On créer le membre2 avec ses infos personnelles correspondantes
+    membre2 = new Membre(infoD);
+    
+    listeEvenements = gevent.ensembleEvenements();
+    
     // On ajoute l'événement 1.
     listeEvenements.add(event1);
     // On ajoute l'événement 2.
@@ -80,9 +141,12 @@ public class TestGestionEvenements {
     // On ajoute l'événement 3.
     listeEvenements.add(event3); 
     
+    // On inscrit le membre1 au deuxième événement 
     gevent.inscriptionEvenement(event2, membre1);
     
+    // On ajoute le membre 2 à la liste des participants de l'événement 1
     event1.ajouterParticipant(membre2);
+    membre2.ensembleEvenements().add(event1);
     
   }
   
@@ -105,7 +169,7 @@ public class TestGestionEvenements {
    */
   @Test
   void testInscriptionEvenementChevauchementTemps() {
-    assertFalse(gevent.annulerEvenement(event5, membre1));
+    assertFalse(gevent.inscriptionEvenement(event5, membre1));
   }
   
   /**
@@ -114,7 +178,7 @@ public class TestGestionEvenements {
    */
   @Test
   void testInscriptionEvtDepMaxParticipant() {
-    assertFalse(gevent.annulerEvenement(event2, membre2));
+    assertFalse(gevent.inscriptionEvenement(event2, membre2));
   }
   
   /**

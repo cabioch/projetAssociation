@@ -17,7 +17,7 @@ public class GestionEvenements implements InterGestionEvenements {
    * La liste des événements.
    *
    */
-  List<Evenement> listeEvenements = new ArrayList<Evenement>();
+  List<Evenement> listeEvenements;
   
   
   /**
@@ -57,14 +57,18 @@ public class GestionEvenements implements InterGestionEvenements {
   @Override
   public Evenement creerEvenement(String nom, String lieu, int jour, Month mois,
       int annee, int heure, int minutes, int duree, int nbParticipants) {
-    
+    //Instanciation de l'événement avec les paramètres donnés 
     Evenement newEvent = new Evenement(nom, lieu, annee, mois, jour, heure,
         minutes, duree, nbParticipants);
+    //On parcours la liste de tous les événements et on compare
+    //l'événement avec les autres pour voir si il y a un chevauchement en 
+    //lieu et en temps.
     for (Evenement e : listeEvenements) {
       if (!e.pasDeChevauchementLieu(newEvent)) {
         return null;
       }
     }
+    //On ajoute cet événement dans la liste des événements
     listeEvenements.add(newEvent);
     return newEvent;
   }
@@ -80,14 +84,11 @@ public class GestionEvenements implements InterGestionEvenements {
   @Override
   public void supprimerEvenement(Evenement evt) {
     
-    if (listeEvenements.remove(evt)) {
-      for (InterMembre e : evt.getParticipants()) {
-        // TODO Placeholder
-        e.ensembleEvenements().remove(evt);
-      }
+    
+    for (InterMembre m : evt.getParticipants()) {
+      m.ensembleEvenements().remove(evt);
     }
-    
-    
+    listeEvenements.remove(evt);
   }
   
   
@@ -98,6 +99,9 @@ public class GestionEvenements implements InterGestionEvenements {
    */
   @Override
   public List<Evenement> ensembleEvenements() {
+    if (listeEvenements == null) {
+      listeEvenements = new ArrayList<>();
+    }
     
     return listeEvenements;
   }
@@ -130,12 +134,18 @@ public class GestionEvenements implements InterGestionEvenements {
    */
   @Override
   public boolean inscriptionEvenement(Evenement evt, InterMembre mbr) {
-    for (Evenement e : listeEvenements) {
+    if (mbr.ensembleEvenements().contains(evt)) {
+      return false;
+    }
+    for (Evenement e : mbr.ensembleEvenements()) {
       if (!e.pasDeChevauchementTemps(evt)) {
         return false;
       }
     }
+
+    mbr.ensembleEvenements().add(evt); // A Changer ?
     return evt.ajouterParticipant(mbr);
+    
   }
   
   /**
