@@ -51,7 +51,8 @@ public class TestEvenement {
 
 
   /**
-   * Tests de chevauchement. Utilise la fonction compareChevauchement et compare à un évenement qui va de 10 à 20
+   * Tests de chevauchement. Utilise la fonction compareChevauchement et 
+   * compare à un évenement qui va de 10 à 20
    * minutes.
    */
   @Test
@@ -238,7 +239,8 @@ public class TestEvenement {
   }
 
   /**
-   * Fonction intermédiaire pour testConstructeurMauvaisesDates, qui permet de savoir si la date d'un évenement est bien
+   * Fonction intermédiaire pour testConstructeurMauvaisesDates, 
+   * qui permet de savoir si la date d'un évenement est bien
    * la date nulle. (Année 0, Mois 1, Jour 1, Heure 0, Minute 0)
    *
    * @param ev L'évenement qu'on souhaite tester
