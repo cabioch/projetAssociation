@@ -2,13 +2,15 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import association.GestionMembres;
 import association.InformationPersonnelle;
 import association.InterMembre;
 import association.Membre;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 
 /**
@@ -26,31 +28,31 @@ class TestGestionMembres {
   private GestionMembres gt = new GestionMembres();
   
   /**
-   * Des informations personnels pour un membre.
+   * Des informations personnelles pour un membre.
    */
   
   private InformationPersonnelle infoC;
   /**
-   * Des informations personnels pour un deuxième membre.
+   * Des informations personnelles pour un deuxième membre.
    */
   
   private InformationPersonnelle infoC2;
   
   /**
-   * Des informations personnels qui auront une chaine vide dans le nom et le
+   * Des informations personnelles qui auront une chaine vide dans le nom et le
    * prénom.
    */
-  private InformationPersonnelle infovide;
+  private InformationPersonnelle infoVide;
   
   /**
-   * Des informations personnels qui aura une chaine vide dans le nom.
+   * Des informations personnelles qui aura une chaine vide dans le nom.
    */
-  private InformationPersonnelle infovidenom;
+  private InformationPersonnelle infoVideNom;
   
   /**
-   * Des informations personnels qui auront une chaine vide dans le prénom.
+   * Des informations personnelles qui auront une chaine vide dans le prénom.
    */
-  private InformationPersonnelle infovideprenom;
+  private InformationPersonnelle infoVidePrenom;
   
   /**
    * Des membres pour les tests.
@@ -77,15 +79,15 @@ class TestGestionMembres {
     
     infoC2 = new InformationPersonnelle("Tilia", "EMILE", "Belgique", 35);
     infoC = new InformationPersonnelle("Alan", "PARKER", "France", 20);
-    infovide = new InformationPersonnelle("", "", "Luxembourg", 50);
-    infovidenom = new InformationPersonnelle("Eliot", "", "Allemagne", 20);
-    infovideprenom = new InformationPersonnelle("", "PATINSON", "USA", 20);
+    infoVide = new InformationPersonnelle("", "", "Luxembourg", 50);
+    infoVideNom = new InformationPersonnelle("Eliot", "", "Allemagne", 20);
+    infoVidePrenom = new InformationPersonnelle("", "PATINSON", "USA", 20);
     membreT1 = new Membre(infoC);
     membreT2 = new Membre(infoC2);
     membreT3 = new Membre(infoC2);
-    membreT4 = new Membre(infovide);
-    membreT5 = new Membre(infovidenom);
-    membreT6 = new Membre(infovideprenom);
+    membreT4 = new Membre(infoVide);
+    membreT5 = new Membre(infoVideNom);
+    membreT6 = new Membre(infoVidePrenom);
     ensembleM.add(membreT1);
     ensembleM.add(membreT2);
   }
@@ -141,9 +143,7 @@ class TestGestionMembres {
     assertFalse(gt.ajouterMembre(membreT5));
   }
   
-  /**
-   * Test de suppression d'un membre déja présent dans l'association.
-   */
+  
   @Test
   void testSupprimerUnMembrePresent() {
     assertTrue(gt.supprimerMembre(membreT1));

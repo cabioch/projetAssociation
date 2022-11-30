@@ -1,9 +1,7 @@
-
 package association;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 /**
  * Classe d'implémentation de l'interface de Gestion des
@@ -56,25 +54,12 @@ public class GestionMembres implements InterGestionMembres {
     }
     // verifie que le membre ajouté n'a pas une chaine vide ou de caractères
     // vide en nom ou prénom.
-    if (membre.getInformationPersonnelle().getNom().equals("")
-        || membre.getInformationPersonnelle().getPrenom().equals("")
-        || membre.getInformationPersonnelle().getNom().equals(" ")
-        || membre.getInformationPersonnelle().getPrenom().equals("")) {
+    if (membre.getInformationPersonnelle().getNom().isBlank()
+        || membre.getInformationPersonnelle().getPrenom().isBlank()) {
       return false;
     }
-    boolean matcher1 =
-        Pattern.matches("\\d", membre.getInformationPersonnelle().getNom());
-    boolean matcher2 =
-        Pattern.matches("\\d", membre.getInformationPersonnelle().getPrenom());
-    boolean matchFound = matcher.find();
-    // verifie que le membre ajouté n'a pas une chaine de symbol en nom ou
-    // prénom.
-    
-    // verifie que le membre n'a pas de chiffre dans son prenom et nom
-    
     membres.add(membre);
     return true;
-    
   }
   
   /**
