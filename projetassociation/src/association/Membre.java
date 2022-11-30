@@ -1,19 +1,17 @@
 package association;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
- * Gestion du membre ainsi que les évènements du membres et ses infos persos.
- * (nom et prenom et vide)
- * 
+ * Gestion du membre ainsi que les Ã©vÃ¨nements du membres et ses informations
+ * personnelles.
+ *
  * @author Jean
  */
 public class Membre implements InterMembre {
   
-  
   /**
-   * Les evenements aux quels participe ou participera le membre.
+   * Les evenements auxquels participe ou participera le membre.
    */
   private InterGestionEvenements evenements;
   
@@ -23,22 +21,21 @@ public class Membre implements InterMembre {
   private InformationPersonnelle infos;
   
   
-  
   /**
-   * Creer un membre avec ses informations corrélées à ses
-   * InformationPersonnelle.
+   * Creer un membre avec ses informations corrÃ©lÃ©es Ã  ses informations
+   * personnelles.
    *
-   * @param info l'objet informationPersonnelle du membre
+   * @param info les informations personnelles du membre
+   * @see informationPersonnelle
    */
   public Membre(InformationPersonnelle info) {
     this.infos = info;
   }
   
-  
   /**
-   * La liste des événements auquel le membre est inscrit ou a participé.
+   * La liste des Ã©vÃ¨nements auquel le membre est inscrit ou a participÃ©.
    *
-   * @return la liste des événements du membre
+   * @return la liste des Ã©vÃ©nements du membre
    */
   @Override
   public List<Evenement> ensembleEvenements() {
@@ -46,10 +43,10 @@ public class Membre implements InterMembre {
   }
   
   /**
-   * La liste des événements auquel le membre est inscrit et qui n'ont pas
+   * La liste des Ã©vÃ©nements auquel le membre est inscrit et qui n'ont pas
    * encore eu lieu.
    *
-   * @return la liste des événements à venir du memmbre
+   * @return la liste des Ã©vÃ¨nements Ã© venir du membre
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
@@ -57,26 +54,25 @@ public class Membre implements InterMembre {
   }
   
   /**
-   * Définit les informations personnelles (adresse et age) du membre en
-   * vérifant si c'est bien lui.
+   * Dï¿½finit les informations personnelles (adresse et age) du membre en
+   * vï¿½rifant si c'est bien lui (nom et prÃ©nom).
    *
    * @param info les informations personnelles du membre
    */
   @Override
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
-    if (this.infos.equals(info)) {
+    if (this.infos.getNom() == info.getNom()
+        && this.infos.getPrenom() == infos.getPrenom()) {
       info.setAdresse(this.infos.getAdresse());
       info.setAge(this.infos.getAge());
     }
   }
   
-  
-  
   /**
    * Renvoie les informations personnelles du membre.
    *
    * @return l'objet contenant les informations personnelles du membre ou
-   *         <code>null</code> si elles n'ont pas été définies
+   *         <code>null</code> si aucune information n'a Ã©tÃ© dÃ©finie.
    */
   @Override
   public InformationPersonnelle getInformationPersonnelle() {
@@ -85,43 +81,5 @@ public class Membre implements InterMembre {
     } else {
       return infos;
     }
-    
   }
-  
-  /**
-   * Retourne un hashcode des infos du membre.
-   */
-  @Override
-  public int hashCode() {
-    return Objects.hash(infos);
-  }
-  
-  /**
-   * Retourne en string les infos du membre.
-   */
-  @Override
-  public String toString() {
-    return infos.getNom() + " " + infos.getPrenom() + " " + infos.getAdresse()
-        + " " + infos.getAge();
-  }
-  
-
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    Membre other = (Membre) obj;
-    return Objects.equals(infos.getAdresse(), other.infos.getAdresse())
-        && infos.getAge() == other.infos.getAge()
-        && Objects.equals(infos.getNom(), other.infos.getNom())
-        && Objects.equals(infos.getPrenom(), other.infos.getPrenom());
-  }
-  
 }

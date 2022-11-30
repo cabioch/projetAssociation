@@ -1,6 +1,5 @@
 package association;
 
-import java.io.Serial;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.HashSet;
@@ -12,7 +11,6 @@ import java.util.Set;
  */
 public class Evenement implements java.io.Serializable {
 
-  @Serial
   private static final long serialVersionUID = 7414938932769654866L;
 
   /**
@@ -43,7 +41,7 @@ public class Evenement implements java.io.Serializable {
   /**
    * Les participants.
    */
-  private final Set<InterMembre> participants;
+  private final Set<InterMembre> participants = new HashSet<>();
 
   /**
    * Vérifie que 2 Evenements ne se passent pas en même temps et au même endroit. On considère un
@@ -193,29 +191,24 @@ public class Evenement implements java.io.Serializable {
    * Crée un évenement a partir d'un nom, d'un lieu, d'un objet LocalDateTime, d'une dur�e et
    * d'un nombre de participants maximum.
    *
-   * @param nom               Le nom de l'evenement
-   * @param lieu              Le lieu de l'evenement
-   * @param date              La date de l'evenement
+   * @param nom               Le nom de l'evenement (non nul)
+   * @param lieu              Le lieu de l'evenement (non nul)
+   * @param date              La date de l'evenement (non nulle)
    * @param duree             La duree de l'evenement en minutes
    * @param nbParticipantsMax Le nombre maximum de participants
    */
   public Evenement(String nom, String lieu, LocalDateTime date, int duree, int nbParticipantsMax) {
-    this.nom = nom;
-    this.lieu = lieu;
-    this.date = date;
-    this.duree = duree;
-    this.nbParticipantsMax = nbParticipantsMax;
-    this.participants = new HashSet<>();
+    builder(nom, lieu, date, duree, nbParticipantsMax);
   }
 
   /**
    * Crée un évenement a partir d'un nom, d'un lieu, d'une année, mois, jour, heure, minute,
    * d'une durée en minutes et d'un nombre maximum de participants.
    *
-   * @param nom               Le nom de l'evenement
-   * @param lieu              Le lieu de l'evenement
+   * @param nom               Le nom de l'evenement (non nul)
+   * @param lieu              Le lieu de l'evenement (non nul)
    * @param annee             L'année de l'evenement
-   * @param mois              Le mois auquel l'evenement debute
+   * @param mois              Le mois auquel l'evenement debute (non nul)
    * @param jour              Le jour auquel l'evenement debute
    * @param heure             L'heure à laquelle l'evenement debute
    * @param minutes           La minute à laquelle l'evenement debute
@@ -225,16 +218,32 @@ public class Evenement implements java.io.Serializable {
   public Evenement(
           String nom, String lieu, int annee, Month mois, int jour, int heure, int minutes,
           int duree, int nbParticipantsMax) {
-    this.participants = new HashSet<>();
-    // En cas de paramètres non valides (potentiellement inutile car déjà faite par LocalDateTime ??
-    if (!(jour >= 1 && jour <= 31 && heure >= 0 && heure <= 23 && minutes >= 0 && minutes <= 59)) {
-      return;
+    date = LocalDateTime.of(annee, mois, jour, heure, minutes);
+    builder(nom, lieu, date, duree, nbParticipantsMax);
+  }
+
+  /**
+   * Méthode intermédiaire pour les constructeurs. Permet de centraliser la logique de validation.
+   *
+   * @param nom               Le nom de l'evenement (non nul)
+   * @param lieu              Le lieu de l'evenement (non nul)
+   * @param date              La date de l'evenement (non nulle)
+   * @param duree             La duree de l'evenement en minutes
+   * @param nbParticipantsMax Le nombre maximum de participants
+   */
+  private void builder(String nom, String lieu, LocalDateTime date, int duree,
+                       int nbParticipantsMax) {
+
+    if (duree < 0) {
+      duree = 0;
     }
-    this.date = LocalDateTime.of(annee, mois, jour, heure, minutes);
+    if (nbParticipantsMax < 0) {
+      nbParticipantsMax = 0;
+    }
     this.nom = nom;
     this.lieu = lieu;
+    this.date = date;
     this.duree = duree;
     this.nbParticipantsMax = nbParticipantsMax;
-
   }
 }
