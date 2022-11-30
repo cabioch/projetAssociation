@@ -1,7 +1,9 @@
 package association;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -11,7 +13,7 @@ import java.util.Set;
  * @author Nicolas RENARD
  * @version 1.0.0
  */
-public class GestionMembres implements InterGestionMembres {
+public class GestionMembres implements InterGestionMembres, Serializable {
 
   @Serial
   private static final long serialVersionUID = 37L;
@@ -113,12 +115,36 @@ public class GestionMembres implements InterGestionMembres {
     }
     return membres;
   }
-  
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    GestionMembres that = (GestionMembres) o;
+
+    if (!Objects.equals(membres, that.membres)) {
+      return false;
+    }
+    return Objects.equals(president, that.president);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = membres != null ? membres.hashCode() : 0;
+    result = 31 * result + (president != null ? president.hashCode() : 0);
+    return result;
+  }
+
   /**
    * Renvoie le président de l'association.
    *
    * @return le membre président de l'association s'il avait été désigné sinon
-   *         retourne <code>null</code>.
+   * retourne <code>null</code>.
    */
   @Override
   public InterMembre president() {

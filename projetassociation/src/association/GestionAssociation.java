@@ -2,6 +2,7 @@ package association;
 
 
 import java.io.*;
+import java.util.Objects;
 
 
 /**
@@ -14,8 +15,8 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
   /**
    * Le gestionnaire d'evenements.
    */
-  private static InterGestionEvenements gestionEvenements = null;
-  private static InterGestionMembres gestionMembres = null;
+  private GestionEvenements gestionEvenements = null;
+  private GestionMembres gestionMembres = null;
 
   /**
    * Renvoie le gestionnaire d'événements de l'association. L'objet retourné est
@@ -66,8 +67,7 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
   public void sauvegarderDonnees(String nomFichier) throws IOException {
     OutputStream output = new BufferedOutputStream(new FileOutputStream(nomFichier));
     ObjectOutputStream outObjStream = new ObjectOutputStream(output);
-    outObjStream.writeObject(gestionMembres);
-    outObjStream.writeObject(gestionEvenements);
+    outObjStream.writeObject(this);
     outObjStream.close();
     output.close();
   }
@@ -86,17 +86,39 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
     InputStream input = new BufferedInputStream(new FileInputStream(nomFichier));
     ObjectInputStream inObjStream = new ObjectInputStream(input);
     try {
-      gestionMembres = (InterGestionMembres) inObjStream.readObject();
+      GestionAssociation tmp = (GestionAssociation) inObjStream.readObject();
+      gestionEvenements = tmp.gestionEvenements;
+      gestionMembres = tmp.gestionMembres;
     } catch (ClassNotFoundException e) {
       gestionMembres = null;
-    }
-    try {
-      gestionEvenements = (InterGestionEvenements) inObjStream.readObject();
-    } catch (ClassNotFoundException e) {
       gestionEvenements = null;
     }
 
     input.close();
     inObjStream.close();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    GestionAssociation that = (GestionAssociation) o;
+
+    if (!Objects.equals(gestionEvenements, that.gestionEvenements)) {
+      return false;
+    }
+    return Objects.equals(gestionMembres, that.gestionMembres);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = gestionEvenements != null ? gestionEvenements.hashCode() : 0;
+    result = 31 * result + (gestionMembres != null ? gestionMembres.hashCode() : 0);
+    return result;
   }
 }

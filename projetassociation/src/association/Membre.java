@@ -131,7 +131,7 @@ public class Membre implements InterMembre, Serializable {
       return infos;
     }
   }
-  
+
   /**
    * Retourne un hashcode des infos du membre.
    */
@@ -139,7 +139,7 @@ public class Membre implements InterMembre, Serializable {
   public int hashCode() {
     return Objects.hash(infos);
   }
-  
+
   /**
    * Retourne en string les infos du membre.
    */
@@ -148,8 +148,8 @@ public class Membre implements InterMembre, Serializable {
     return infos.getNom() + " " + infos.getPrenom() + " " + infos.getAdresse()
         + " " + infos.getAge();
   }
-  
-  
+
+
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -167,6 +167,7 @@ public class Membre implements InterMembre, Serializable {
         && Objects.equals(infos.getNom(), other.infos.getNom())
         && Objects.equals(infos.getPrenom(), other.infos.getPrenom());
   }
-  
+
+
 }
 

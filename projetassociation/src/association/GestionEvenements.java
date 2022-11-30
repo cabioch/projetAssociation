@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Gestion des événements.
@@ -186,7 +187,23 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
     //Sinon on retourne false.
     return false;
   }
-  
-  
-  
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    GestionEvenements that = (GestionEvenements) o;
+
+    return Objects.equals(listeEvenements, that.listeEvenements);
+  }
+
+  @Override
+  public int hashCode() {
+    return listeEvenements != null ? listeEvenements.hashCode() : 0;
+  }
 }
