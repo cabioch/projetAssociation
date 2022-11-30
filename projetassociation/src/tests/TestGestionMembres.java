@@ -92,7 +92,6 @@ class TestGestionMembres {
   
   /**
    * Test d'ajout d'un membre déja présent dans l'ensemble.
-   *
    */
   
   @Test
