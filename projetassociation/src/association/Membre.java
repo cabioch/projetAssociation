@@ -17,7 +17,7 @@ public class Membre implements InterMembre {
   /**
    * Les evenements auxquels participe ou a participé le membre.
    */
-  private List<Evenement> listeEvenements;
+  private List<Evenement> listEvenements;
   
   /**
    * Les informations personnelles du membre.
@@ -42,8 +42,8 @@ public class Membre implements InterMembre {
    * @return listeEvenements La liste des événements.
    * 
    */
-  public List<Evenement> getListeEvenements() {
-    return listeEvenements;
+  public List<Evenement> getListEvenements() {
+    return listEvenements;
   }
   
   /**
@@ -51,8 +51,8 @@ public class Membre implements InterMembre {
    *
    * @param listeEvenements.
    */
-  public void setListeEvenements(List<Evenement> listeEvenements) {
-    this.listeEvenements = listeEvenements;
+  public void setListeEvenements(List<Evenement> listEvenements) {
+    this.listEvenements = listEvenements;
   }
   
   /**
@@ -62,18 +62,18 @@ public class Membre implements InterMembre {
    */
   @Override
   public List<Evenement> ensembleEvenements() {
-    if (listeEvenements == null) {
-      listeEvenements = new ArrayList<>();
+    if (listEvenements == null) {
+      listEvenements = new ArrayList<>();
     }
     // regarde pour chaque evenement dans la liste d'évènement
-    for (Evenement e : listeEvenements) {
+    for (Evenement e : listEvenements) {
       // si la liste contient l'objet infos du membre
       if (e.getParticipants().contains(infos)) {
         
-        listeEvenements.add(e);
+        listEvenements.add(e);
       }
     }
-    return listeEvenements;
+    return listEvenements;
   }
   
   /**
@@ -84,18 +84,19 @@ public class Membre implements InterMembre {
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
-      listeEvenements = new ArrayList<>();
-    
+    if (listEvenements == null) {
+      listEvenements = new ArrayList<>();
+    }
     // regarde pour chaque evenement dans la liste d'évènement
-    for (Evenement e : listeEvenements) {
+    for (Evenement e : listEvenements) {
       // si la liste contient l'objet infos du membre ET si l'évènement est
       // après la date locale, donc à venir.
       if (e.getParticipants().contains(infos)
           && e.getDate().isAfter(LocalDateTime.now())) {
-        listeEvenements.add(e);
+        listEvenements.add(e);
       }
     }
-    return listeEvenements;
+    return listEvenements;
   }
   
   /**
