@@ -1,5 +1,6 @@
 package association;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.HashSet;
@@ -70,6 +71,7 @@ public class Evenement implements java.io.Serializable {
     LocalDateTime finEvt = evt.date.plusMinutes(evt.duree);
 
     // Pas supperposé en temps
+    // TODO a réécrire
     return (finThis.compareTo(evt.date) < 0 || date.compareTo(finEvt) > 0);
   }
 
@@ -189,24 +191,28 @@ public class Evenement implements java.io.Serializable {
 
   /**
    * Crée un évenement a partir d'un nom, d'un lieu, d'un objet LocalDateTime, d'une dur�e et
-   * d'un nombre de participants maximum.
+   * d'un nombre de participants maximum. L'année ne peut pas être inférieure à l'année en cours.
    *
-   * @param nom               Le nom de l'evenement (non nul)
-   * @param lieu              Le lieu de l'evenement (non nul)
+   * @param nom               Le nom de l'evenement (non nul & non vide)
+   * @param lieu              Le lieu de l'evenement (non nul & non vide)
    * @param date              La date de l'evenement (non nulle)
    * @param duree             La duree de l'evenement en minutes
    * @param nbParticipantsMax Le nombre maximum de participants
    */
   public Evenement(String nom, String lieu, LocalDateTime date, int duree, int nbParticipantsMax) {
+    if (date.getYear() < 2022) {
+      date = date.withYear(0);
+    }
     builder(nom, lieu, date, duree, nbParticipantsMax);
   }
 
   /**
    * Crée un évenement a partir d'un nom, d'un lieu, d'une année, mois, jour, heure, minute,
-   * d'une durée en minutes et d'un nombre maximum de participants.
+   * d'une durée en minutes et d'un nombre maximum de participants. La date doit être une date valide.
+   * L'année ne peut pas être inférieure à l'année en cours.
    *
-   * @param nom               Le nom de l'evenement (non nul)
-   * @param lieu              Le lieu de l'evenement (non nul)
+   * @param nom               Le nom de l'evenement (non nul & non vide)
+   * @param lieu              Le lieu de l'evenement (non nul & non vide)
    * @param annee             L'année de l'evenement
    * @param mois              Le mois auquel l'evenement debute (non nul)
    * @param jour              Le jour auquel l'evenement debute
@@ -218,15 +224,22 @@ public class Evenement implements java.io.Serializable {
   public Evenement(
           String nom, String lieu, int annee, Month mois, int jour, int heure, int minutes,
           int duree, int nbParticipantsMax) {
-    date = LocalDateTime.of(annee, mois, jour, heure, minutes);
+    try {
+      // Si les arguments ne sont pas valables, LocalDateTime enverra une DateTimeException
+      // On définit alors une date nulle
+      date = LocalDateTime.of(annee, mois, jour, heure, minutes);
+    } catch (DateTimeException e) {
+      date = LocalDateTime.of(0, 1, 1, 0, 0);
+    }
     builder(nom, lieu, date, duree, nbParticipantsMax);
   }
 
   /**
    * Méthode intermédiaire pour les constructeurs. Permet de centraliser la logique de validation.
+   * (durée et nbParticipants max > 0, année au minimum 2022).
    *
-   * @param nom               Le nom de l'evenement (non nul)
-   * @param lieu              Le lieu de l'evenement (non nul)
+   * @param nom               Le nom de l'evenement (non nul & non vide)
+   * @param lieu              Le lieu de l'evenement (non nul & non vide)
    * @param date              La date de l'evenement (non nulle)
    * @param duree             La duree de l'evenement en minutes
    * @param nbParticipantsMax Le nombre maximum de participants
@@ -237,9 +250,20 @@ public class Evenement implements java.io.Serializable {
     if (duree < 0) {
       duree = 0;
     }
-    if (nbParticipantsMax < 0) {
-      nbParticipantsMax = 0;
+    if (nbParticipantsMax <= 0) {
+      nbParticipantsMax = -1;
     }
+    // Date nulle si l'année précède 2022
+    if (date.getYear() < 2022) {
+      date = LocalDateTime.of(0, 1, 1, 0, 0);
+    }
+    if (nom == null) {
+      nom = "";
+    }
+    if (lieu == null) {
+      lieu = "";
+    }
+
     this.nom = nom;
     this.lieu = lieu;
     this.date = date;
