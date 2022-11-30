@@ -62,7 +62,9 @@ public class Membre implements InterMembre {
    */
   @Override
   public List<Evenement> ensembleEvenements() {
-    listeEvenements = new ArrayList<>();
+    if (listeEvenements == null) {
+      listeEvenements = new ArrayList<>();
+    }
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listeEvenements) {
       // si la liste contient l'objet infos du membre
@@ -82,9 +84,8 @@ public class Membre implements InterMembre {
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
-    if (listeEvenements == null) {
       listeEvenements = new ArrayList<>();
-    }
+    
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listeEvenements) {
       // si la liste contient l'objet infos du membre ET si l'évènement est
