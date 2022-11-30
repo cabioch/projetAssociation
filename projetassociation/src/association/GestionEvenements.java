@@ -84,10 +84,11 @@ public class GestionEvenements implements InterGestionEvenements {
   @Override
   public void supprimerEvenement(Evenement evt) {
     
-    
+    //Avant de supprimer l'événement de l'ensemble des événements des participants
     for (InterMembre m : evt.getParticipants()) {
       m.ensembleEvenements().remove(evt);
     }
+    //Puis on enlève l'événement de la liste des événements de l'association.
     listeEvenements.remove(evt);
   }
   
@@ -113,12 +114,18 @@ public class GestionEvenements implements InterGestionEvenements {
    */
   @Override
   public List<Evenement> ensembleEvenementAvenir() {
+    //On créer une nouvelle liste qui comportera tous les événements
+    //à venir.
     List<Evenement> avenir = new ArrayList<>();
+    //On parcours les événements de l'association et si l'événement
+    // a lieu après la date à l'instanté. Alors on l'ajoute à la liste
+    // des événements à venir.
     for (Evenement e : listeEvenements) {
       if (e.getDate().isAfter(LocalDateTime.now())) {
         avenir.add(e);
       }
     }
+    //On retourne cette liste des événements à venir.
     return avenir;
   }
   
@@ -134,16 +141,23 @@ public class GestionEvenements implements InterGestionEvenements {
    */
   @Override
   public boolean inscriptionEvenement(Evenement evt, InterMembre mbr) {
+    //On regarde pour le membre si il est déjà inscrit à cet événement. Si oui,
+    //On retourne false.
     if (mbr.ensembleEvenements().contains(evt)) {
       return false;
     }
+    //Ensuite, on regarde l'ensemble des événements du membre 
+    //et pour l'ensemble des événements, on regarde si il y a un chevauchement
+    //en temps et en lieu avec l'événement auquel on veut qu'il s'inscrive.
     for (Evenement e : mbr.ensembleEvenements()) {
       if (!e.pasDeChevauchementTemps(evt)) {
         return false;
       }
     }
-
+    //Si toutes l'événement passe toutes les vérifications, on l'ajoute à la 
+    //liste des événements du membre.
     mbr.ensembleEvenements().add(evt); // A Changer ?
+    //Puis on ajoute le membre aux participants de l'événement.
     return evt.ajouterParticipant(mbr);
     
   }
@@ -160,8 +174,15 @@ public class GestionEvenements implements InterGestionEvenements {
    */
   @Override
   public boolean annulerEvenement(Evenement evt, InterMembre mbr) {
-    evt.enleverParticipant(mbr);
-    return listeEvenements.remove(evt);
+    //On regarde si on peut enlever le membre à l'événement
+    if (evt.enleverParticipant(mbr)) {
+      //Si on peut, on enlève cet événement de la liste des événements 
+      //de l'association et on retourne True
+      listeEvenements.remove(evt);
+      return true;
+    }
+    //Sinon on retourne false.
+    return false;
   }
   
   
