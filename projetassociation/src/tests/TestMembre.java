@@ -50,6 +50,7 @@ public class TestMembre {
    */
   private InformationPersonnelle infosComplet;
   
+  private 
   /**
    * Initialisation des tests en definissant les deux types d'infos et le
    * membre.
@@ -66,7 +67,7 @@ public class TestMembre {
   }
   
   /**
-   * V�rifie que l'on peut r�cuperer les informations d'un membre.
+   * Verifie que l'on peut recuperer les informations d'un membre.
    */
   @Test
   void testgetInformationPersonnelle() {
@@ -74,7 +75,7 @@ public class TestMembre {
   }
   
   /**
-   * V�rifie que les informations du constructeur sont bien instanci�es.
+   * Verifie que les informations du constructeur sont bien instanci�es.
    */
   @Test
   void testConstructeur() {
@@ -88,7 +89,7 @@ public class TestMembre {
   }
   
   /**
-   * V�rifie que la definitionInformationPersonnelle rend vrai en ajoutant un
+   *Verefie que la definitionInformationPersonnelle rend vrai en ajoutant un
    * membre dans l'association puis en modifiant ses informations personnelles.
    * 
    */
@@ -100,13 +101,29 @@ public class TestMembre {
     membreComplet.definirInformationPersonnnelle(infoModif);
     assertEquals("test_valide",
         membreComplet.getInformationPersonnelle().getAdresse());
-    assertEquals(membre.getInformationPersonnelle().getAge(), 80);
+    assertEquals(membreComplet.getInformationPersonnelle().getAge(), 80);
+    
+  }
+  
+  
+  /**
+   *Verifie que la definitionInformationPersonnelle ne fonctionne pas en
+   * donnant un nom valide et un prenom null.
+   */
+  @Test
+  void testdefinirInformationPersonnellePrenomNull() {
+    InformationPersonnelle infoModif = new InformationPersonnelle("thomas",
+        null, "changement_adresse", 40);
+    membreComplet.definirInformationPersonnnelle(infoModif);
+    assertFalse("changement_adresse" == membreComplet
+        .getInformationPersonnelle().getAdresse());
+    assertFalse(membreComplet.getInformationPersonnelle().getAge() == 40);
     
   }
   
   /**
    * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs 
-   * si l'�ge est n�gatif.
+   * si l'age est negatif.
    * 
    */
   @Test
@@ -120,8 +137,8 @@ public class TestMembre {
   
   
   /**
-   * V�rifie que la definitionInformationPersonnelle ne fonctionne pas en
-   * donnant un nom et un prenom qui ne correspond pas � l'instance de classe.
+   * Verifie que la definitionInformationPersonnelle ne fonctionne pas en
+   * donnant un nom et un prenom qui ne correspond pas a l'instance de classe.
    */
   @Test
   void testdefinirInformationPersonnelleNomPrenomFaux() {
@@ -133,6 +150,8 @@ public class TestMembre {
     assertFalse(membreComplet.getInformationPersonnelle().getAge() == 40);
     
   }
+  
+ 
   
   /**
    * V�rifie que la definitionInformationPersonnelle ne modifie pas l'adresse et
@@ -163,4 +182,5 @@ public class TestMembre {
         membreComplet.getInformationPersonnelle().getNom() == "invalide");
     
   }
+  
 }
