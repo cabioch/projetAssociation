@@ -29,12 +29,6 @@ public class TestGestionEvenements {
   private GestionEvenements gevent;
   
   /**
-   * gevent est l'instance de la classe GestionEvenements auquel on affectera
-   * pas d'événements.
-   */
-  private GestionEvenements geventNull;
-  
-  /**
    * listeEvenements est la liste des Evenements.
    */
   private List<Evenement> listeEvenements = new ArrayList<Evenement>();
@@ -115,10 +109,6 @@ public class TestGestionEvenements {
     
     //Instanciation de gevent implémentant l'interface GestionEvenements
     gevent = new GestionEvenements();
-    
-    //Instanciation de geventNull implémentant l'interface GestionEvenements
-    geventNull = new GestionEvenements();
-    
     
     //Ajout d'un premier événement nommé Bowling se trouvant à Lannion et ayant
     //la particularité de commencé le 14 Mars 2022 durant 120 minutes et
@@ -286,7 +276,8 @@ public class TestGestionEvenements {
    */
   @Test
   void testEnsembleEvenementsNull() {
-    assertEquals(0, geventNull.ensembleEvenements().size());
+    gevent.ensembleEvenements().clear();
+    assertEquals(0, gevent.ensembleEvenements().size());
   }
   
   /**
@@ -305,7 +296,8 @@ public class TestGestionEvenements {
    */
   @Test
   void testEnsembleEvenementsAvenirNull() {
-    assertEquals(0, geventNull.ensembleEvenementAvenir().size());
+    listeEvenements.clear();
+    assertEquals(0, gevent.ensembleEvenementAvenir().size());
   }
   
   /**
