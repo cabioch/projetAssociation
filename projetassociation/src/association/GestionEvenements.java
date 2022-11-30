@@ -14,15 +14,15 @@ import java.util.Objects;
  * @author romain
  */
 public class GestionEvenements implements InterGestionEvenements, Serializable {
-
+  
   @Serial
   private static final long serialVersionUID = 210393L;
-
+  
   /**
    * La liste des événements.
    */
   List<Evenement> listeEvenements;
-
+  
   /**
    * Getters/Setters de la liste des événements.
    *
@@ -60,18 +60,18 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
   @Override
   public Evenement creerEvenement(String nom, String lieu, int jour, Month mois,
       int annee, int heure, int minutes, int duree, int nbParticipants) {
-    //Instanciation de l'événement avec les paramètres donnés 
+    // Instanciation de l'événement avec les paramètres donnés
     Evenement newEvent = new Evenement(nom, lieu, annee, mois, jour, heure,
         minutes, duree, nbParticipants);
-    //On parcours la liste de tous les événements et on compare
-    //l'événement avec les autres pour voir si il y a un chevauchement en 
-    //lieu et en temps.
+    // On parcours la liste de tous les événements et on compare
+    // l'événement avec les autres pour voir si il y a un chevauchement en
+    // lieu et en temps.
     for (Evenement e : listeEvenements) {
       if (!e.pasDeChevauchementLieu(newEvent)) {
         return null;
       }
     }
-    //On ajoute cet événement dans la liste des événements
+    // On ajoute cet événement dans la liste des événements
     listeEvenements.add(newEvent);
     return newEvent;
   }
@@ -87,11 +87,12 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
   @Override
   public void supprimerEvenement(Evenement evt) {
     
-    //Avant de supprimer l'événement de l'ensemble des événements des participants
+    // Avant de supprimer l'événement de l'ensemble des événements des
+      // participants
     for (InterMembre m : evt.getParticipants()) {
       m.ensembleEvenements().remove(evt);
     }
-    //Puis on enlève l'événement de la liste des événements de l'association.
+    // Puis on enlève l'événement de la liste des événements de l'association.
     listeEvenements.remove(evt);
   }
   
@@ -106,7 +107,6 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
     if (listeEvenements == null) {
       listeEvenements = new ArrayList<>();
     }
-    
     return listeEvenements;
   }
   
@@ -117,10 +117,10 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
    */
   @Override
   public List<Evenement> ensembleEvenementAvenir() {
-    //On créer une nouvelle liste qui comportera tous les événements
-    //à venir.
+    // On créer une nouvelle liste qui comportera tous les événements
+    // à venir.
     List<Evenement> avenir = new ArrayList<>();
-    //On parcours les événements de l'association et si l'événement
+    // On parcours les événements de l'association et si l'événement
     // a lieu après la date à l'instanté. Alors on l'ajoute à la liste
     // des événements à venir.
     for (Evenement e : listeEvenements) {
@@ -128,7 +128,7 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
         avenir.add(e);
       }
     }
-    //On retourne cette liste des événements à venir.
+    // On retourne cette liste des événements à venir.
     return avenir;
   }
   
@@ -144,25 +144,24 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
    */
   @Override
   public boolean inscriptionEvenement(Evenement evt, InterMembre mbr) {
-    //On regarde pour le membre si il est déjà inscrit à cet événement. Si oui,
-    //On retourne false.
+    // On regarde pour le membre si il est déjà inscrit à cet événement. Si oui,
+    // On retourne false.
     if (mbr.ensembleEvenements().contains(evt)) {
       return false;
     }
-    //Ensuite, on regarde l'ensemble des événements du membre 
-    //et pour l'ensemble des événements, on regarde si il y a un chevauchement
-    //en temps et en lieu avec l'événement auquel on veut qu'il s'inscrive.
+    // Ensuite, on regarde l'ensemble des événements du membre
+    // et pour l'ensemble des événements, on regarde si il y a un chevauchement
+    // en temps et en lieu avec l'événement auquel on veut qu'il s'inscrive.
     for (Evenement e : mbr.ensembleEvenements()) {
       if (!e.pasDeChevauchementTemps(evt)) {
         return false;
       }
     }
-    //Si toutes l'événement passe toutes les vérifications, on l'ajoute à la 
-    //liste des événements du membre.
+    // Si toutes l'événement passe toutes les vérifications, on l'ajoute à la
+    // liste des événements du membre.
     mbr.ensembleEvenements().add(evt); // A Changer ?
-    //Puis on ajoute le membre aux participants de l'événement.
+    // Puis on ajoute le membre aux participants de l'événement.
     return evt.ajouterParticipant(mbr);
-    
   }
   
   /**
@@ -177,17 +176,17 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
    */
   @Override
   public boolean annulerEvenement(Evenement evt, InterMembre mbr) {
-    //On regarde si on peut enlever le membre à l'événement
+    // On regarde si on peut enlever le membre à l'événement
     if (evt.enleverParticipant(mbr)) {
-      //Si on peut, on enlève cet événement de la liste des événements 
-      //de l'association et on retourne True
+      // Si on peut, on enlève cet événement de la liste des événements
+      // de l'association et on retourne True
       listeEvenements.remove(evt);
       return true;
     }
-    //Sinon on retourne false.
+    // Sinon on retourne false.
     return false;
   }
-
+  
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -196,12 +195,12 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-
+    
     GestionEvenements that = (GestionEvenements) o;
-
+    
     return Objects.equals(listeEvenements, that.listeEvenements);
   }
-
+  
   @Override
   public int hashCode() {
     return listeEvenements != null ? listeEvenements.hashCode() : 0;

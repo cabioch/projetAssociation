@@ -14,16 +14,16 @@ import java.util.Set;
  * @version 1.0.0
  */
 public class GestionMembres implements InterGestionMembres, Serializable {
-
+  
   @Serial
   private static final long serialVersionUID = 37L;
-
+  
   /**
    * Ensemble des membres de l'association.
    */
-
+  
   private Set<InterMembre> membres = null;
-
+  
   /**
    * Le rôle du président de l'association.
    */
@@ -115,7 +115,7 @@ public class GestionMembres implements InterGestionMembres, Serializable {
     }
     return membres;
   }
-
+  
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -124,27 +124,27 @@ public class GestionMembres implements InterGestionMembres, Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-
+    
     GestionMembres that = (GestionMembres) o;
-
+    
     if (!Objects.equals(membres, that.membres)) {
       return false;
     }
     return Objects.equals(president, that.president);
   }
-
+  
   @Override
   public int hashCode() {
     int result = membres != null ? membres.hashCode() : 0;
     result = 31 * result + (president != null ? president.hashCode() : 0);
     return result;
   }
-
+  
   /**
    * Renvoie le président de l'association.
    *
    * @return le membre président de l'association s'il avait été désigné sinon
-   * retourne <code>null</code>.
+   *         retourne <code>null</code>.
    */
   @Override
   public InterMembre president() {

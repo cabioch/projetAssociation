@@ -8,29 +8,28 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Gestion du membre ainsi que les Ã©vÃ¨nements du membres et ses informations
+ * Gestion du membre ainsi que les é©vènements du membres et ses informations
  * personnelles.
  *
  * @author Jean
  */
 public class Membre implements InterMembre, Serializable {
-
+  
   @Serial
   private static final long serialVersionUID = 2037L;
-
+  
   /**
    * Les evenements auxquels participe ou a participé le membre.
    */
   private List<Evenement> listEvenements;
-
+  
   /**
    * Les informations personnelles du membre.
    */
   private InformationPersonnelle infos;
   
-  
   /**
-   * Creer un membre avec ses informations corrÃ©lÃ©es Ã  ses informations
+   * Creer un membre avec ses informations corrélées à  ses informations
    * personnelles.
    *
    * @param info les informations personnelles du membre
@@ -53,16 +52,15 @@ public class Membre implements InterMembre, Serializable {
   /**
    * Setters de la liste évènements.
    *
-   * @param listeEvenements.
    */
   public void setListeEvenements(List<Evenement> listEvenements) {
     this.listEvenements = listEvenements;
   }
   
   /**
-   * La liste des évènements auquel le membre est inscrit ou a participÃ©.
+   * La liste des évènements auquel le membre est inscrit ou a participé.
    *
-   * @return la liste des évènements auxquels participe le membre
+   * @return la liste des évènements auxquels participe le membre.
    */
   @Override
   public List<Evenement> ensembleEvenements() {
@@ -73,7 +71,6 @@ public class Membre implements InterMembre, Serializable {
     for (Evenement e : listEvenements) {
       // si la liste contient l'objet infos du membre
       if (e.getParticipants().contains(infos)) {
-        
         listEvenements.add(e);
       }
     }
@@ -81,10 +78,10 @@ public class Membre implements InterMembre, Serializable {
   }
   
   /**
-   * La liste des Ã©vÃ©nements auquel le membre est inscrit et qui n'ont pas
+   * La liste des é©vènements auquel le membre est inscrit et qui n'ont pas
    * encore eu lieu.
    *
-   * @return la liste des Ã©vÃ¨nements Ã© venir du membre
+   * @return la liste des évènements à venir du membre.
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
@@ -104,10 +101,10 @@ public class Membre implements InterMembre, Serializable {
   }
   
   /**
-   * Dï¿½finit les informations personnelles (adresse et age) du membre en
-   * vï¿½rifant si c'est bien lui (nom et prenom).
+   * Définit les informations personnelles (adresse et age) du membre en
+   * vérifant si c'est bien lui (nom et prenom).
    *
-   * @param info les informations personnelles du membre
+   * @param info les informations personnelles du membre.
    */
   @Override
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
@@ -131,7 +128,7 @@ public class Membre implements InterMembre, Serializable {
       return infos;
     }
   }
-
+  
   /**
    * Retourne un hashcode des infos du membre.
    */
@@ -139,7 +136,7 @@ public class Membre implements InterMembre, Serializable {
   public int hashCode() {
     return Objects.hash(infos);
   }
-
+  
   /**
    * Retourne en string les infos du membre.
    */
@@ -148,8 +145,8 @@ public class Membre implements InterMembre, Serializable {
     return infos.getNom() + " " + infos.getPrenom() + " " + infos.getAdresse()
         + " " + infos.getAge();
   }
-
-
+  
+  
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -167,7 +164,7 @@ public class Membre implements InterMembre, Serializable {
         && Objects.equals(infos.getNom(), other.infos.getNom())
         && Objects.equals(infos.getPrenom(), other.infos.getPrenom());
   }
-
-
+  
+  
 }
 
