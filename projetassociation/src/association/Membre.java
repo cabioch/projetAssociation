@@ -1,5 +1,6 @@
 package association;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -81,12 +82,15 @@ public class Membre implements InterMembre {
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
-    listeEvenements = new ArrayList<>();
+    if (listeEvenements == null) {
+      listeEvenements = new ArrayList<>();
+    }
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listeEvenements) {
-      // si la liste contient l'objet infos du membre
-      if (e.getParticipants().contains(infos)) {
-        
+      // si la liste contient l'objet infos du membre ET si l'évènement est
+      // après la date locale, donc à venir.
+      if (e.getParticipants().contains(infos)
+          && e.getDate().isAfter(LocalDateTime.now())) {
         listeEvenements.add(e);
       }
     }
@@ -104,7 +108,7 @@ public class Membre implements InterMembre {
     if (this.infos.equals(info)) {
       info.setAdresse(this.infos.getAdresse());
       info.setAge(this.infos.getAge());
-    } 
+    }
   }
   
   /**
