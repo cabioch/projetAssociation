@@ -3,13 +3,12 @@ package association;
 import java.util.List;
 
 /**
- * Gestion du membre ainsi que les évènements du membres et ses infos
- * personnels.
+ * Gestion du membre ainsi que les évènements du membres et ses informations
+ * personnelles.
  *
  * @author Jean
  */
 public class Membre implements InterMembre {
-  
   
   /**
    * Les evenements auxquels participe ou participera le membre.
@@ -32,7 +31,6 @@ public class Membre implements InterMembre {
   public Membre(InformationPersonnelle info) {
     this.infos = info;
   }
-  
   
   /**
    * La liste des évènements auquel le membre est inscrit ou a participé.
@@ -70,13 +68,11 @@ public class Membre implements InterMembre {
     }
   }
   
-  
-  
   /**
    * Renvoie les informations personnelles du membre.
    *
    * @return l'objet contenant les informations personnelles du membre ou
-   *         <code>null</code> si elles n'ont pas �t� d�finies
+   *         <code>null</code> si aucune information n'a été définie.
    */
   @Override
   public InformationPersonnelle getInformationPersonnelle() {
