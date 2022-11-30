@@ -1,22 +1,16 @@
 package association;
 
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 
 /**
  * Gère la sauvegarde des données de l'association.
  */
-public class GestionAssociation implements InterGestionAssociation {
+public class GestionAssociation implements InterGestionAssociation, Serializable {
 
+  @Serial
+  private static final long serialVersionUID = 392L;
   /**
    * Le gestionnaire d'evenements.
    */
@@ -34,7 +28,10 @@ public class GestionAssociation implements InterGestionAssociation {
   public InterGestionEvenements gestionnaireEvenements() {
     if (gestionEvenements == null) {
       // L'initialiser a partir de la classe
-      gestionEvenements = null;
+      gestionEvenements = new GestionEvenements();
+      // TODO A faire un constructeur
+      // Permet d'initialiser la liste interne de la classe (car pas encore de constructeur)
+      gestionEvenements.ensembleEvenements();
     }
     return gestionEvenements;
   }
@@ -50,7 +47,10 @@ public class GestionAssociation implements InterGestionAssociation {
   public InterGestionMembres gestionnaireMembre() {
     if (gestionMembres == null) {
       // L'initialiser a partir de la classe
-      gestionMembres = null;
+      gestionMembres = new GestionMembres();
+      // TODO A faire un constructeur
+      // Permet d'initialiser le Set interne de la classe (car pas encore de constructeur)
+      gestionMembres.ensembleMembres();
     }
     return gestionMembres;
   }

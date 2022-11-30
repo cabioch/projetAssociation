@@ -1,10 +1,11 @@
 package association;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.xml.catalog.CatalogManager;
 
 /**
  * Gestion du membre ainsi que les Ã©vÃ¨nements du membres et ses informations
@@ -12,13 +13,16 @@ import javax.xml.catalog.CatalogManager;
  *
  * @author Jean
  */
-public class Membre implements InterMembre {
-  
+public class Membre implements InterMembre, Serializable {
+
+  @Serial
+  private static final long serialVersionUID = 2037L;
+
   /**
    * Les evenements auxquels participe ou a participé le membre.
    */
   private List<Evenement> listEvenements;
-  
+
   /**
    * Les informations personnelles du membre.
    */

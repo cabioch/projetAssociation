@@ -1,5 +1,6 @@
 package association;
 
+import java.io.Serial;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,13 +12,16 @@ import java.util.Set;
  * @version 1.0.0
  */
 public class GestionMembres implements InterGestionMembres {
-  
+
+  @Serial
+  private static final long serialVersionUID = 37L;
+
   /**
    * Ensemble des membres de l'association.
    */
-  
+
   private Set<InterMembre> membres = null;
-  
+
   /**
    * Le rôle du président de l'association.
    */

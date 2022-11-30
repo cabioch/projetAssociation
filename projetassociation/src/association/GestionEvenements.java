@@ -1,5 +1,7 @@
 package association;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -9,17 +11,17 @@ import java.util.List;
  * Gestion des événements.
  *
  * @author romain
- *
  */
-public class GestionEvenements implements InterGestionEvenements {
-  
+public class GestionEvenements implements InterGestionEvenements, Serializable {
+
+  @Serial
+  private static final long serialVersionUID = 210393L;
+
   /**
    * La liste des événements.
-   *
    */
   List<Evenement> listeEvenements;
-  
-  
+
   /**
    * Getters/Setters de la liste des événements.
    *
