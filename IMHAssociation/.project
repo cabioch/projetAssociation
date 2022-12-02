@@ -22,6 +22,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>projasso</name>
+			<type>2</type>
+			<location>C:/Users/enzoc/Dev/JavaL3Workspace/javal3/projetassociation/src</location>
+		</link>
+		<link>
 			<name>src-gestionevent</name>
 			<type>2</type>
 			<location>C:/Users/nrenard/projetCDA/javal3/projetassociation/src</location>
