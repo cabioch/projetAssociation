@@ -110,7 +110,7 @@
                   </Label>
                   <TextArea fx:id="message" layoutX="76.0" layoutY="484.0" prefHeight="65.0" prefWidth="333.0" />
                   <Button layoutX="125.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonSupprimerMembre" text="Supprimer" />
-                  <Button layoutX="217.0" layoutY="449.0" mnemonicParsing="false" onAction="#actionBoutonIDesiscrireMembreEvenement" text="Désinscrire membre à événement" />
+                  <Button layoutX="217.0" layoutY="449.0" mnemonicParsing="false" onAction="#actionBoutonDesinscrireMembreEvenement" text="Désinscrire membre à événement" />
           </children>
         </AnchorPane>
         <AnchorPane>
