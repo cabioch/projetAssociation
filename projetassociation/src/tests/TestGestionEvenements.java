@@ -294,6 +294,7 @@ public class TestGestionEvenements {
    * n'ayant pas d'événement à venir.
    * Le test doit rien nous renvoyer.
    */
+  
   @Test
   void testEnsembleEvenementsAvenirNull() {
     listeEvenements.clear();
