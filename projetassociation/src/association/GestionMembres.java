@@ -60,8 +60,8 @@ public class GestionMembres implements InterGestionMembres, Serializable {
     }
     // verifie que le membre ajouté n'a pas une chaine vide ou de caractères
     // vide en nom ou prénom.
-    if (membre.getInformationPersonnelle().getNom().isBlank()
-        || membre.getInformationPersonnelle().getPrenom().isBlank()) {
+    if (membre.getInformationPersonnelle().getNom().isEmpty()
+        || membre.getInformationPersonnelle().getPrenom().isEmpty()) {
       return false;
     }
     membres.add(membre);

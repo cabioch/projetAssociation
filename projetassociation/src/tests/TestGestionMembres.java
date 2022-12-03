@@ -55,20 +55,39 @@ class TestGestionMembres {
   private InformationPersonnelle infoVidePrenom;
   
   /**
+   * Des informations personnelles qui auront des valeurs <code>null</code> en prénom et nom.
+   */
+  private InformationPersonnelle infoNull;
+  
+  /**
+   * Des informations personnelles qui aura une valeur <code>null</code> pour le prénom.
+   */
+  private InformationPersonnelle infoNullPrenom;
+  
+  /**
+   * Des informations personnelles qui aura une valeur <code>null</code> pour le nom.
+   */
+  private InformationPersonnelle infoNullNom;
+  
+  
+  /**
    * Des membres pour les tests.
    */
   private Membre membreT1;
   private Membre membreT2;
   private Membre membreT3;
-  private Membre membreT4;
-  private Membre membreT5;
-  private Membre membreT6;
   
   /**
    * Un ensemble de membres représentant une association pour les tests.
    * L'ensemble est vide par défaut.
    */
   private Set<InterMembre> ensembleM = gt.ensembleMembres();
+  
+  /**
+   * Un ensemble de membres représentant une association pour les tests.
+   * L'ensemble est vide par défaut.
+   */
+  private Set<InterMembre> ensembleM2;
   
   /**
    * Initialisation des tests par ajout de membres dans l'ensemble et des
@@ -82,12 +101,12 @@ class TestGestionMembres {
     infoVide = new InformationPersonnelle("", "", "Luxembourg", 50);
     infoVideNom = new InformationPersonnelle("Eliot", "", "Allemagne", 20);
     infoVidePrenom = new InformationPersonnelle("", "PATINSON", "USA", 20);
+    infoNull = new InformationPersonnelle(null, null, "Luxembourg", 60);
+    infoNullNom = new InformationPersonnelle("Marissa", null, "Pays-Bas", 32);
+    infoNullPrenom = new InformationPersonnelle(null, "JANIG", "Espagne", 70);
     membreT1 = new Membre(infoC);
     membreT2 = new Membre(infoC2);
     membreT3 = new Membre(infoC2);
-    membreT4 = new Membre(infoVide);
-    membreT5 = new Membre(infoVideNom);
-    membreT6 = new Membre(infoVidePrenom);
     ensembleM.add(membreT1);
     ensembleM.add(membreT2);
   }
@@ -120,37 +139,72 @@ class TestGestionMembres {
   }
   
   /**
-   * Test d'ajout d'un membre ayant aucun prénom ou nom.
+   * Test d'ajout d'un membre ayant une chaine vide en nom et prénom.
+   */
+  @Test
+  void testAjouterUnMembreChainevideNomEtPrenom() {
+	membreT3 = new Membre(infoVide);
+    assertFalse(gt.ajouterMembre(membreT3));
+  }
+  
+  /**
+   * Test d'ajout d'un membre ayant des valeurs <code>null</code> en nom et prénom.
    */
   @Test
   void testAjouterUnMembreAvecAucunPrenomEtNom() {
-    assertFalse(gt.ajouterMembre(membreT4));
+	  membreT3 = new Membre(infoNull);
+	  assertFalse(gt.ajouterMembre(membreT3));
   }
+  
+  /**
+   * Test d'ajout d'un membre ayant des valeurs <code>null</code> en prénom.
+   */
+  
+  @Test
+  void testAjouterUnMembreAvecAucunPrenom() {
+	  membreT3 = new Membre(infoNullPrenom);
+	    assertFalse(gt.ajouterMembre(membreT3));
+  }
+  
+  /**
+   * Test d'ajout d'un membre ayant des valeurs <code>null</code> en nom.
+   */
+  
+  @Test
+  void testAjouterUnMembreAvecAucunNom() {
+	membreT3 = new Membre(infoNullNom);
+	assertFalse(gt.ajouterMembre(membreT3));
+  }
+  
   
   /**
    * Test d'ajout d'un membre une chaine vide pour nom.
    */
   @Test
-  void testAjouterUnMembreAvecAucunPrenom() {
-    assertFalse(gt.ajouterMembre(membreT6));
+  void testAjouterUnMembreAvecChaineVidePrenom() {
+	  membreT3 = new Membre(infoVidePrenom);
+	  assertFalse(gt.ajouterMembre(membreT3));
   }
   
   /**
    * Test d'ajout d'un membre avec une chaine vide pour prénom.
    */
   @Test
-  void testAjouterUnMembreAvecAucunNom() {
-    assertFalse(gt.ajouterMembre(membreT5));
+  void testAjouterUnMembreAvecChaineVideNom() {
+	 membreT3 = new Membre(infoVideNom);
+	 assertFalse(gt.ajouterMembre(membreT3));
   }
   
-  
+  /**
+   * Test de suppression d'un membre présent dans l'association.
+   */
   @Test
   void testSupprimerUnMembrePresent() {
     assertTrue(gt.supprimerMembre(membreT1));
   }
   
   /**
-   * Test de suppression d'un membre non présent dans l'ensemble.
+   * Test de suppression d'un membre non présent dans l'association.
    */
   @Test
   void testsupprimerUnMembreNonPresent() {
@@ -208,5 +262,18 @@ class TestGestionMembres {
     assertTrue(gt.president().equals(membreT2));
     assertFalse(gt.designerPresident(membreT1));
     assertTrue(gt.president().equals(membreT2));
+  }
+  
+  /**
+   * Test du getter de construction de l'ensemble des membres.
+   * Si l'ensemble est <code>null</code>, la méthode le renvoie vide. Sinon
+   * elle renvoie la liste des membres.
+   */
+  @Test
+  void testGetterEnsembleMembre() {
+	  assertTrue(ensembleM2 == null);
+	  ensembleM2 = gt.ensembleMembres();
+	  assertTrue(ensembleM2 != null);
+	  assertTrue(!ensembleM.isEmpty());
   }
 }
