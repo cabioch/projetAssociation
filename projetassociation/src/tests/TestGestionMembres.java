@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import association.GestionMembres;
@@ -45,12 +46,12 @@ class TestGestionMembres {
   private InformationPersonnelle infoVide;
   
   /**
-   * Des informations personnelles qui aura une chaine vide dans le nom.
+   * Des informations personnelles qui aura une chaine vide dans le nom uniquement.
    */
   private InformationPersonnelle infoVideNom;
   
   /**
-   * Des informations personnelles qui auront une chaine vide dans le prénom.
+   * Des informations personnelles qui auront une chaine vide dans le prénom uniquement.
    */
   private InformationPersonnelle infoVidePrenom;
   
@@ -60,12 +61,12 @@ class TestGestionMembres {
   private InformationPersonnelle infoNull;
   
   /**
-   * Des informations personnelles qui aura une valeur <code>null</code> pour le prénom.
+   * Des informations personnelles qui aura une valeur <code>null</code> pour le prénom uniquement.
    */
   private InformationPersonnelle infoNullPrenom;
   
   /**
-   * Des informations personnelles qui aura une valeur <code>null</code> pour le nom.
+   * Des informations personnelles qui aura une valeur <code>null</code> pour le nom uniquement.
    */
   private InformationPersonnelle infoNullNom;
   
@@ -85,7 +86,7 @@ class TestGestionMembres {
   
   /**
    * Un ensemble de membres représentant une association pour les tests.
-   * L'ensemble est vide par défaut.
+   * L'ensemble est <code>null</code> par défaut.
    */
   private Set<InterMembre> ensembleM2;
   
@@ -226,13 +227,13 @@ class TestGestionMembres {
   /**
    * Test de désignation d'un président. Le rôle de président par défaut est
    * <code>null</code>. Le membre n'appartient pas à l'association. Le président
-   * reste a la valeur <code>null</code>.
+   * reste à la valeur <code>null</code>.
    */
   @Test
   void testDesignerUnPresidentNonMembre() {
     gt.supprimerMembre(membreT1);
     assertFalse(gt.designerPresident(membreT1));
-    assertTrue(gt.president() == null);
+    assertTrue(gt.president() ==null);
   }
   
   /**
@@ -274,6 +275,7 @@ class TestGestionMembres {
 	  assertTrue(ensembleM2 == null);
 	  ensembleM2 = gt.ensembleMembres();
 	  assertTrue(ensembleM2 != null);
-	  assertTrue(!ensembleM.isEmpty());
+	  assertFalse(ensembleM.isEmpty());
+	  assertFalse(ensembleM.equals(ensembleM2));
   }
 }
