@@ -68,7 +68,7 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   }
   
   /**
-   * Supprime un membre de l'association.
+   * Supprime un membre de l'association. Si le membre était président, le président devient <code>null</code>
    *
    * @param membre le membre à supprimer.
    * @return <code>true</code> si le membre était présent et a été supprimé,
@@ -78,6 +78,9 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   public boolean supprimerMembre(InterMembre membre) {
     if (membres.contains(membre)) {
       membres.remove(membre);
+      if(president() != null && president().equals(membre)) {
+    	  president = null;
+      }
       return true;
     }
     return false;
@@ -115,7 +118,6 @@ public class GestionMembres implements InterGestionMembres, Serializable {
     return membres;
   }
   
-   
   /**
    * Renvoie le président de l'association.
    *

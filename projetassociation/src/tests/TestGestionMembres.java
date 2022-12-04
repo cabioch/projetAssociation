@@ -214,6 +214,19 @@ class TestGestionMembres {
   }
   
   /**
+  * Test de suppression d'un membre présent dans l'association.
+  * Le membre avait le rôle de président.Il est retiré et la place 
+  * de président est de nouveau a valeur <code>null</code>;
+  */
+ @Test
+ void testSupprimerUnMembrePresident() {
+   gt.designerPresident(membreT1);
+   assertTrue(gt.president().equals(membreT1));
+   gt.supprimerMembre(membreT1);
+   assertTrue(gt.president() == null); 
+ }
+  
+  /**
    * Test de désignation du président. Le rôle de président par défaut est
    * <code>null</code>. Le membre appartient à l'association. Le président est
    * le membre ajouté.
@@ -233,7 +246,7 @@ class TestGestionMembres {
   void testDesignerUnPresidentNonMembre() {
     gt.supprimerMembre(membreT1);
     assertFalse(gt.designerPresident(membreT1));
-    assertTrue(gt.president() ==null);
+    assertTrue(gt.president() == null);
   }
   
   /**
