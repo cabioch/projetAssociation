@@ -1,26 +1,23 @@
 package ui;
 
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import association.Evenement;
 import association.GestionAssociation;
-import association.GestionMembres;
 import association.InformationPersonnelle;
 import association.InterGestionAssociation;
 import association.InterMembre;
 import association.Membre;
-
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -94,6 +91,9 @@ public class Controleur implements Initializable {
   
   @FXML
   private Color x2;
+  
+  @FXML
+  private CheckBox checkBoxPresident ;
   
   /**
    * Afficher le membre sélectionné : si un membre est sélectionné dans la
@@ -278,7 +278,7 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * Bouton de création d'un nouveau membre. Efface les données inscrite
+   * Bouton de création d'un nouveau membre. Efface les données inscrites
    * précédemment dans les zones de textes.
    *
    * @param event l'objet récupéré par un clique sur le bouton "Nouveau".
@@ -286,10 +286,19 @@ public class Controleur implements Initializable {
   
   @FXML
   void actionBoutonNouveauMembre(ActionEvent event) {
-    entreePrenomMembre.setText("");
-    entreeNomMembre.setText("");
-    entreAdresseMembre.setText("");
-    entreAgeMembre.setText("");
+    entreePrenomMembre.clear();
+    entreeNomMembre.clear();
+    entreAdresseMembre.clear();
+    entreAgeMembre.clear();
+  }
+  
+  /**
+   * Bouton d'affichage du président de l'association.
+   * @param event 
+   */
+  @FXML
+  void actionBoutonMontrePresident(ActionEvent event) {
+    //TODO : afficher le président dans une boite d'alerte.
   }
   
   /**
@@ -361,6 +370,9 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonValiderMembre(ActionEvent event) {
     Membre m = getMembreFromFields();
+    // gérer le cas ou la checkbox président est active. Attention un membre unique président.
+    
+    
     // Gérer
     association.gestionnaireMembre().ajouterMembre(m);
   }
@@ -375,7 +387,13 @@ public class Controleur implements Initializable {
     Alert alerte = new Alert(AlertType.INFORMATION);
     alerte.setTitle("A Propos");
     alerte.setContentText(
-        "Application réalisée par Jean-André, Enzo, Nicolas & Romain");
+        "Application réalisée par Jean-André, Enzo, Nicolas & Romain\n");
+    alerte.setContentText(
+            "Tutoriel : \n");
+    alerte.setContentText(
+            "Vous avez deux fenêtres. La fênetre de gauche permet la gestion des membres et leur importation dans l'association.\n ");
+    alerte.setContentText(
+            "La fênetre de droite permet la gestion des évènements.\n");
     alerte.showAndWait();
   }
   
@@ -405,6 +423,7 @@ public class Controleur implements Initializable {
   void actionMenuNouveau(ActionEvent event) {
     association = new GestionAssociation();
     // TODO Réinitialiser les champs ?
+    // @ Enzo -> oui il faut tout effacer les champs.
   }
   
   /**
@@ -440,11 +459,23 @@ public class Controleur implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     System.out.println("Initialisation de l'interface");
     association = new GestionAssociation();
+    configureCheckBox(checkBoxPresident);
   }
-  
   /**
-   * Essaye de créeer un object membre a partir des text field TODO A commenter
-   * et prboablement faire de la gestion d'erreur
+   * configuration de la checkbox au démarrage de l'application.
+   * @param checkBoxPresident2
+   */
+  private void configureCheckBox(CheckBox checkBoxPresident2) {
+    checkBoxPresident.setAllowIndeterminate(true);
+    // a voir si on ne fait pas une alerte box plutot qui a la validation du membre demande s'il veut etre président ou non
+    // ou autre possibilité, faire un bouton qui affiche les membres et on fait une selection du membre
+    //ou encore possibilité, on faire un scroll avec une choiceBox pour choisir s'il est président ou pas
+    //il faudra gérer le cas du remplacement en appelant la méthode designerprésident() de gestionmembre
+  }
+
+  /**
+   * Essaye de créer un object membre a partir des text field 
+   * TODO A commenter et probablement faire de la gestion d'erreur
    */
   private Membre getMembreFromFields() {
     // TODO Gerer erreurs
