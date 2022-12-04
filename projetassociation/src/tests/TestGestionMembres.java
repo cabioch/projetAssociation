@@ -276,6 +276,5 @@ class TestGestionMembres {
 	  ensembleM2 = gt.ensembleMembres();
 	  assertTrue(ensembleM2 != null);
 	  assertFalse(ensembleM.isEmpty());
-	  assertFalse(ensembleM.equals(ensembleM2));
   }
 }
