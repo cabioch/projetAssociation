@@ -277,7 +277,7 @@ public class Controleur implements Initializable {
   
   /**
    * Bouton de création d'un nouveau membre. Efface les données inscrites
-   * précédemment dans les zones de textes.
+   * précédemment dans les zones de textes.Un message indique que le
    *
    * @param event l'objet récupéré par un clique sur le bouton "Nouveau".
    */
@@ -288,17 +288,11 @@ public class Controleur implements Initializable {
     entreeNomMembre.clear();
     entreAdresseMembre.clear();
     entreAgeMembre.clear();
+    message.setText("Zone de texte \"Membre\" effacée, les données.\nVeuillez insérer les données d'un nouveau membre.");
+    
   }
   
-  /**
-   * Bouton d'affichage du président de l'association.
-   * @param event 
-   */
-  @FXML
-  void actionBoutonMontrePresident(ActionEvent event) {
-    //TODO : afficher le président dans une boite d'alerte.
-  }
-  
+
   /**
    * Supprimer : efface de la liste des événements l’événement dont les
    * informations sont affichées.
@@ -370,7 +364,7 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonValiderMembre(ActionEvent event) {
     Membre m = getMembreFromFields();
-    // gérer le cas ou la checkbox président est active. Attention un membre unique président.
+    // lire les input,
     
     
     // Gérer
