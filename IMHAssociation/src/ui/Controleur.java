@@ -223,7 +223,7 @@ public class Controleur implements Initializable {
   /**
    * Désinscrire membre à événement : si un membre est sélectionné dans la liste
    * de gauche et un événement est sélectionné dans la liste de droite, le
-   * membre est désinscrit à cet événement
+   * membre est désinscrit à cet événement.
    */
   @FXML
   void actionBoutonDesinscrireMembreEvenement(ActionEvent event) {
@@ -243,7 +243,7 @@ public class Controleur implements Initializable {
    * Inscrire membre à événement : si un membre est sélectionné dans la liste de
    * gauche et un événement est sélectionné dans la liste de droite, le membre
    * est inscrit à cet événement (dans la limite des places disponibles).
-   * 
+   *
    * @param event
    */
   @FXML
@@ -256,12 +256,12 @@ public class Controleur implements Initializable {
     Evenement e = annexeEvenements.get(idxEvenement);
     
     // TODO Encore de la gestion d'erreur
-    boolean r= association.gestionnaireEvenements().inscriptionEvenement(e, m);
+    boolean r = association.gestionnaireEvenements().inscriptionEvenement(e, m);
   }
   
   /**
    * Nouveau : efface le contenu des champs d’un événement afin de rajouter un
-   * nouvel événement
+   * nouvel événement.
    * 
    */
   @FXML
@@ -272,6 +272,7 @@ public class Controleur implements Initializable {
     entreeHeureEvt.clear();
     entreeDureeEvt.clear();
     entreeMaxParticipantsEvt.clear();
+    message.setText("Le contenu des champs d'un événement a bien été réinitialisé !");
   }
   
   /**
