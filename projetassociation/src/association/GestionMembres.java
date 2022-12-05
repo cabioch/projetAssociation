@@ -33,7 +33,7 @@ public class GestionMembres implements InterGestionMembres, Serializable {
    * Constructeur de la classe GestionMembres.
    *Initialise l'ensemble de membres.
    */
-  public GestionMembres(Set<InterMembre> membres) {
+  public GestionMembres() {
     this.membres = new HashSet<>();
   }
     

@@ -23,6 +23,14 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
   List<Evenement> listeEvenements;
   
   /**
+   * Initialise un gestionEvenements et sa liste interne.
+   */
+  public GestionEvenements() {
+    this.listeEvenements = new ArrayList<>();
+  }
+  
+  
+  /**
    * Getters/Setters de la liste des événements.
    *
    * @return listeEvenements La liste des événements.
