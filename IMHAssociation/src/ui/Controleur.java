@@ -40,48 +40,93 @@ public class Controleur implements Initializable {
   @FXML
   private InterGestionAssociation association;
   
+  /**
+   * L'input correspondant à l'adresse d'un Membre.
+   */
   @FXML
   private TextField entreAdresseMembre;
   
+  /**
+   * L'input correspondant à l'age d'un Membre.
+   */
   @FXML
   private TextField entreAgeMembre;
   
+  /**
+   * L'input correspondant à la date d'un Evènement.
+   */
   @FXML
   private TextField entreeDateEvt;
   
+  /**
+   * L'input correspondant à la durée d'un Evènement.
+   */
   @FXML
   private TextField entreeDureeEvt;
   
+  /**
+   * L'input correspondant à l'heure de début d'un Evènement.
+   */
   @FXML
   private TextField entreeHeureEvt;
   
+  /**
+   * L'input correspondant au lieu où se déroule d'un Evènement.
+   */
   @FXML
   private TextField entreeLieuEvt;
   
+  /**
+   * L'input correspondant au nombre maximum de participants à un Evènement.
+   */
   @FXML
   private TextField entreeMaxParticipantsEvt;
   
+  /**
+   * L'input correspondant au nom d'un Evènement.
+   */
   @FXML
   private TextField entreeNomEvt;
   
+  /**
+   * L'input correspondant au nom d'un Membre.
+   */
   @FXML
   private TextField entreeNomMembre;
   
+  /**
+   * L'input correspondant au prénom d'un Membre.
+   */
   @FXML
   private TextField entreePrenomMembre;
   
+  /**
+   * Le label d'affichage d'une liste d'Evenèment.
+   */
   @FXML
   private Label labelListeAfficheeEvt;
   
+  /**
+   * Le label d'affichage de la liste des Membres.
+   */
   @FXML
   private Label labelListeAfficheeMembre;
   
+  /**
+   * La liste des Evenèments.
+   */
   @FXML
   private ListView<Evenement> listeEvenements;
   
+  /**
+   * La liste des Membres.
+   */
   @FXML
-  private ListView<InterMembre> listeMembres;
+  private ListView<Membre> listeMembres;
   
+  /**
+   * La boite de dialogue qui réceptionne les "messages" d'actions.
+   */
   @FXML
   private TextArea message;
   
@@ -94,7 +139,7 @@ public class Controleur implements Initializable {
   
   /**
    * Afficher le membre sélectionné : si un membre est sélectionné dans la
-   * liste, affiche ses informations personnelles dans les 4 champs en haut de
+   * liste, affiche ses informations personnelles dans les quatres champs en haut de
    * la fenêtre.
    * 
    * @param event
@@ -120,7 +165,7 @@ public class Controleur implements Initializable {
     listeEvenements.getItems().clear();
     Evenement e = getEvenementFromFields();
     for (InterMembre m : e.getParticipants()) {
-      listeMembres.getItems().add(m);
+      listeMembres.getItems().add((Membre) m);
     }
   }
   
@@ -131,9 +176,8 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonAfficherTousMembresMembre() {
     listeMembres.getItems().clear();
-    
     for (InterMembre m : association.gestionnaireMembre().ensembleMembres()) {
-      listeMembres.getItems().add(m);
+      listeMembres.getItems().add((Membre) m);
     }
   }
   
@@ -147,7 +191,7 @@ public class Controleur implements Initializable {
   void actionBoutonEvenementSelectionneEvt(ActionEvent event) {
     Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
     if (e == null) {
-      message.setText("Aucun événement séléctionné.");
+      message.setText("Aucun événement sélectionné.");
       return;
     }
     
@@ -163,15 +207,14 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * Afficher tous les événements futurs de l’association : idem mais avec les
-   * événements à venir de l’association.
+   * Affiche tous les événements futurs de l’association. Les évènements sont
+   * listés dans la zone de texte.
    * 
    * @param event
    */
   @FXML
   void actionBoutonEvenementsFutursAssociation(ActionEvent event) {
     listeEvenements.getItems().clear();
-    
     for (Evenement e : association.gestionnaireEvenements()
         .ensembleEvenementAvenir()) {
       listeEvenements.getItems().add(e);
@@ -180,17 +223,21 @@ public class Controleur implements Initializable {
   
   /**
    * Evénements futurs : idem mais en affichant uniquement les événements à
-   * venir pour le membre
+   * venir pour le membre.
    * 
    * @param event
    */
   @FXML
   void actionBoutonEvenementsFutursMembre(ActionEvent event) {
     listeEvenements.getItems().clear();
-    
     Membre m = getMembreFromFields();
     for (Evenement e : m.ensembleEvenementsAvenir()) {
       listeEvenements.getItems().add(e);
+    }
+    if(m.ensembleEvenementsAvenir().isEmpty()) {
+      message.setText("Aucun évènements futurs à afficher.");
+    } else {
+      message.setText("Liste générée.");
     }
   }
   
@@ -203,10 +250,14 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonEvenementsMembreMembre(ActionEvent event) {
     listeEvenements.getItems().clear();
-    
     Membre m = getMembreFromFields();
     for (Evenement e : m.ensembleEvenements()) {
       listeEvenements.getItems().add(e);
+    }
+    if(m.ensembleEvenements().isEmpty()) {
+      message.setText("Aucune participation à des évènements.");
+    } else {
+      message.setText("Liste des évènements générée.");
     }
   }
   
@@ -247,7 +298,6 @@ public class Controleur implements Initializable {
   /**
    * Nouveau : efface le contenu des champs d’un événement afin de rajouter un
    * nouvel événement.
-   * 
    */
   @FXML
   void actionBoutonNouveauEvt(ActionEvent event) {
@@ -263,7 +313,8 @@ public class Controleur implements Initializable {
   
   /**
    * Bouton de création d'un nouveau membre. Efface les données inscrites
-   * précédemment dans les zones de textes.Un message indique que le
+   * précédemment dans les zones de textes.Un message indique qu'un nouveau membre
+   * peut-être créé.
    *
    * @param event l'objet récupéré par un clique sur le bouton "Nouveau".
    */
@@ -274,7 +325,7 @@ public class Controleur implements Initializable {
     entreeNomMembre.clear();
     entreAdresseMembre.clear();
     entreAgeMembre.clear();
-    message.setText("Zone de texte \"Membre\" effacée, les données.\nVeuillez insérer les données d'un nouveau membre.");
+    message.setText("Le contenu des champs d'un membre a été réinitialisés.\nVeuillez insérer les données d'un nouveau membre.");
   }
 
   /**
@@ -285,21 +336,22 @@ public class Controleur implements Initializable {
   void actionBoutonSupprimerEvt(ActionEvent event) {
     Evenement e = getEvenementFromFields();
     association.gestionnaireEvenements().supprimerEvenement(e);
-    //supprimerEvenement étant une méthode void, impossible de vérifier ?
+    //gérer la suppression en cas d'erreur. 
+    //Si l'evenement existe et a bien été supprimer comme les membre sinon un aute message.
     message.setText("La suppression a bien été prise en compte.");
   }
   
   /**
-   * Supprimer : efface de la liste des membres, le membre dont les informations
-   * sont affichées. si le membre était président, un message de place vacante pour le
-   * rôle de président est vacant.
+   * Efface de la liste des membres, le membre dont les informations
+   * sont affichées. si le membre était président, un message de "place vacante" est affiché pour le
+   * rôle de président en plus.
    */
   @FXML
   void actionBoutonSupprimerMembre(ActionEvent event) {
     Membre m = new Membre(new InformationPersonnelle(entreeNomMembre.getText(),
         entreePrenomMembre.getText()));
-    association.gestionnaireMembre().supprimerMembre(m);
-    if (association.gestionnaireMembre().president().equals(m)) {
+    if (association.gestionnaireMembre().supprimerMembre(m) && association.gestionnaireMembre().president().equals(m)) {
+      listeMembres.getItems().remove(m);
       message.setText("La suppression du membre a été faite.\n La place de président est vacante.");
     } else {
       message.setText("La suppression du membre a été faite.");
@@ -343,22 +395,23 @@ public class Controleur implements Initializable {
   }
 
   /**
-   * Essaye de créer un object membre a partir des text field 
+   * Méthode de création d'un membre via les inputs de l'interface.
    * TODO A commenter et probablement faire de la gestion d'erreur
    */
   private Membre getMembreFromFields() {
     // TODO Gerer erreurs
     int age = Integer.parseInt(entreAgeMembre.getText());
-    Membre m =
-        new Membre(new InformationPersonnelle(this.entreeNomMembre.getText(),
-            this.entreePrenomMembre.getText(),
-            this.entreAdresseMembre.getText(), age));
+    InformationPersonnelle info = new InformationPersonnelle(this.entreeNomMembre.getText(),
+        this.entreePrenomMembre.getText(),
+        this.entreAdresseMembre.getText(), age);
+    Membre m = new Membre(info);
     return m;
   }
   
   /**
    * Bouton d'action pour valider les informations d'un membre. Les informations
-   * prennent en compte, un nom, un prénom, une adresse et un age.
+   * prennent en compte un nom, un prénom, une adresse et un age.
+   * Si le membre existe déjà, ses informations sont mises à jour.
    *
    * @param event l'objet récupéré par un clique sur le bouton "Valider Membre".
    */
@@ -366,12 +419,20 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonValiderMembre(ActionEvent event) {
     Membre m = getMembreFromFields();
-    // lire les input via  get membr et gerer les conversion, demander avec uen alerte box si le président ou pas ?
-    
-    
-    // Gérer
-    association.gestionnaireMembre().ajouterMembre(m);
-  
+// problème de lajout de membre avec nom et prenom identique -> selon Antony on devrait plutot faire une mise a jour.
+    //pb la mise a jour peut se faire en selectionnant le membre.
+    if (association.gestionnaireMembre().ajouterMembre(m)) {
+      message.setText("Le membre "+ this.entreePrenomMembre.getText() + " " + this.entreeNomMembre.getText() + " à bien été créé et ajouté à l'association.");
+    } else {
+      for ( InterMembre me : association.gestionnaireMembre().ensembleMembres()) {
+        if(m.getInformationPersonnelle().getNom().equals(me.getInformationPersonnelle().getNom()) && m.getInformationPersonnelle().getPrenom().equals(me.getInformationPersonnelle().getPrenom())) {
+          m.definirInformationPersonnnelle(m.getInformationPersonnelle());
+          message.setText("Le membre n'a pas été ajouté mais ses informations ont été mise à jour.");
+        } else {
+          message.setText("Erreur sur la création du membre.\n chaine vide ou valeur nulle.");
+        }
+      }
+    }
   }
   
   /**
@@ -384,17 +445,18 @@ public class Controleur implements Initializable {
     Alert alerte = new Alert(AlertType.INFORMATION);
     alerte.setTitle("A Propos");
     String content =
-        "Application réalisée par Jean-André, Enzo, Nicolas & Romain\n"
+        "Application  de Gestion d'une Association.\n\n"
+            + "Réalisation par Jean-André, Enzo, Nicolas & Romain\n\n"
             + "Tutoriel : \n"
-            + "Vous avez deux fenêtres. La fênetre de gauche permet la gestion des membres "
+            + "Vous avez deux encarts. La fênetre de gauche permet la gestion des membres "
             + "et leur importation dans l'association.\n "
-            + "La fênetre de droite permet la gestion des évènements.\n";
+            + "La fenêtre de droite permet la gestion des évènements de l'association.\n";
     alerte.setContentText(content);
     alerte.showAndWait();
   }
   
   /**
-   * Charger : charge les membres et les événements de l’association à partir
+   * Menu Charger : charge les membres et les événements de l’association à partir
    * d’un fichier (dont on pourra optionnellement choisir l’emplacement). Une
    * fois chargé, les deux listes affichent tous les membres et tous les
    * événements.
@@ -404,14 +466,14 @@ public class Controleur implements Initializable {
     // TODO Choisir le fichier
     try {
       association.chargerDonnees("sauvegarde");
-      message.setText("Fichier de sauvegarde chargé");
+      message.setText("Fichier des données de l'Association chargé avec succès");
     } catch (IOException e) {
-      message.setText("Impossible de charger le fichier dans \"sauvegarde\".");
+      message.setText("Impossible de charger le fichier.");
     }
   }
   
   /**
-   * Réinitialise l’association (efface tous les événements et membres chargés
+   * Menu Nouveau : Réinitialise l’association (efface tous les événements et membres chargés
    * en mémoire).
    */
   @FXML
@@ -431,14 +493,13 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * Quitter : ferme l’application.
+   * Menu Quitter : Execute la fermeture de l'application.
    */
   @FXML
   void actionMenuQuitter(ActionEvent event) {
     Alert quitter = new Alert(AlertType.CONFIRMATION);
     quitter.setTitle("Quitter l'application ?");
-    quitter.setHeaderText("Voulez vous quitter l'application ?");
-    
+       
     // Retourne le type de bouton séléctionné ou null si un bouton n'a
     // pas été séléctionné ( = il a séléctionné la croix)
     ButtonType result = quitter.showAndWait().orElse(null);
@@ -457,7 +518,7 @@ public class Controleur implements Initializable {
   void actionMenuSauvegarder(ActionEvent event) {
     try {
       association.sauvegarderDonnees("sauvegarde");
-      message.setText("Données sauvegardées");
+      message.setText("Données de l'Association sauvegardées");
     } catch (IOException e) {
       message.setText(
           "Erreur lors de la sauvegarde du fichier dans \"sauvegarde\"");
@@ -472,7 +533,10 @@ public class Controleur implements Initializable {
   }
 
 
-  
+  /**
+   * 
+   * @return
+   */
   private Evenement getEvenementFromFields() {
     String nom = entreeNomEvt.getText();
     String lieu = entreeLieuEvt.getText();
