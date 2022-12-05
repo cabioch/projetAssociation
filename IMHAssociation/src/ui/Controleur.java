@@ -448,6 +448,7 @@ public class Controleur implements Initializable {
     try {
       association.sauvegarderDonnees("sauvegarde");
     } catch (IOException e) {
+      // TODO Utiliser messagebox.
       alerte.showAndWait();
     }
   }
@@ -456,19 +457,9 @@ public class Controleur implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     System.out.println("Initialisation de l'interface");
     association = new GestionAssociation();
-    configureCheckBox(checkBoxPresident);
+
   }
-  /**
-   * configuration de la checkbox au démarrage de l'application.
-   * @param checkBoxPresident2
-   */
-  private void configureCheckBox(CheckBox checkBoxPresident2) {
-    checkBoxPresident.setAllowIndeterminate(true);
-    // a voir si on ne fait pas une alerte box plutot qui a la validation du membre demande s'il veut etre président ou non
-    // ou autre possibilité, faire un bouton qui affiche les membres et on fait une selection du membre
-    //ou encore possibilité, on faire un scroll avec une choiceBox pour choisir s'il est président ou pas
-    //il faudra gérer le cas du remplacement en appelant la méthode designerprésident() de gestionmembre
-  }
+
 
   /**
    * Essaye de créer un object membre a partir des text field 
