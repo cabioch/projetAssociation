@@ -3,6 +3,7 @@ package ui;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -29,9 +30,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * Classe publique de contrôle de l'interface Utilisateur.
- *TODO Il n'y a pas encore la possibilité de mettre a jour des trucs je crois
- * (par ex changer l'age d'un membre...)
+ * Classe publique de contrôle de l'interface Utilisateur. TODO Il n'y a pas
+ * encore la possibilité de mettre a jour des trucs je crois (par ex changer
+ * l'age d'un membre...)
  */
 
 public class Controleur implements Initializable {
@@ -96,7 +97,7 @@ public class Controleur implements Initializable {
    * liste, affiche ses informations personnelles dans les 4 champs en haut de
    * la fenêtre.
    * 
-   * @param event 
+   * @param event
    */
   @FXML
   void actionBoutonAfficherMembreSelectionneMembre(ActionEvent event) {
@@ -144,16 +145,18 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonEvenementSelectionneEvt(ActionEvent event) {
-    // TODO Gestion d'erreur
     Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
+    if (e == null) {
+      message.setText("Aucun événement séléctionné.");
+      return;
+    }
     
     entreeNomEvt.setText(e.getNom());
     entreeLieuEvt.setText(e.getLieu());
-    // TODO Afficher correctement
-    entreeDateEvt.setText(e.getDate().toString());
-    // Un truc comme ça
-    // entreeHeureEvt.setText(e.getDate().format(new ...));
-    entreeHeureEvt.clear(); // A enlever
+    // Récupère la date au format YYYY-MM-DD (comme l'entrée nécessaire)
+    entreeDateEvt.setText(e.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+    // Récupère l'heure au format HH:MM (comme l'entrée nécessaire)
+    entreeHeureEvt.setText(e.getDate().format(DateTimeFormatter.ISO_LOCAL_TIME));
     entreeDureeEvt.setText(Integer.toString(e.getDuree()));
     entreeMaxParticipantsEvt
         .setText(Integer.toString(e.getNbParticipantsMax()));
@@ -254,7 +257,8 @@ public class Controleur implements Initializable {
     entreeHeureEvt.clear();
     entreeDureeEvt.clear();
     entreeMaxParticipantsEvt.clear();
-    message.setText("Le contenu des champs d'un événement a bien été réinitialisé !");
+    message.setText(
+        "Le contenu des champs d'un événement a bien été réinitialisé !");
   }
   
   /**
@@ -332,9 +336,10 @@ public class Controleur implements Initializable {
     // J'écrirais probablement une deuxième méthode dans GestionEvenements pour
     // faire ça
     LocalDateTime date = e.getDate();
-    Evenement cree = association.gestionnaireEvenements().creerEvenement(e.getNom(), e.getLieu(),
-        date.getDayOfMonth(), date.getMonth(), date.getYear(), date.getHour(),
-        date.getMinute(), e.getDuree(), e.getNbParticipantsMax());
+    Evenement cree = association.gestionnaireEvenements().creerEvenement(
+        e.getNom(), e.getLieu(), date.getDayOfMonth(), date.getMonth(),
+        date.getYear(), date.getHour(), date.getMinute(), e.getDuree(),
+        e.getNbParticipantsMax());
   }
 
   /**
@@ -378,11 +383,12 @@ public class Controleur implements Initializable {
   void actionMenuApropos(ActionEvent event) {
     Alert alerte = new Alert(AlertType.INFORMATION);
     alerte.setTitle("A Propos");
-    String content = "Application réalisée par Jean-André, Enzo, Nicolas & Romain\n" 
-        + "Tutoriel : \n"
-        + "Vous avez deux fenêtres. La fênetre de gauche permet la gestion des membres "
-        + "et leur importation dans l'association.\n "
-        + "La fênetre de droite permet la gestion des évènements.\n";
+    String content =
+        "Application réalisée par Jean-André, Enzo, Nicolas & Romain\n"
+            + "Tutoriel : \n"
+            + "Vous avez deux fenêtres. La fênetre de gauche permet la gestion des membres "
+            + "et leur importation dans l'association.\n "
+            + "La fênetre de droite permet la gestion des évènements.\n";
     alerte.setContentText(content);
     alerte.showAndWait();
   }
@@ -432,11 +438,11 @@ public class Controleur implements Initializable {
     Alert quitter = new Alert(AlertType.CONFIRMATION);
     quitter.setTitle("Quitter l'application ?");
     quitter.setHeaderText("Voulez vous quitter l'application ?");
-
-    // Retourne le type de bouton séléctionné ou null si un bouton n'a 
+    
+    // Retourne le type de bouton séléctionné ou null si un bouton n'a
     // pas été séléctionné ( = il a séléctionné la croix)
     ButtonType result = quitter.showAndWait().orElse(null);
-
+    
     // On quitte seulement si l'utilisateur valide
     if (result == ButtonType.OK) {
       Platform.exit();
@@ -453,7 +459,8 @@ public class Controleur implements Initializable {
       association.sauvegarderDonnees("sauvegarde");
       message.setText("Données sauvegardées");
     } catch (IOException e) {
-      message.setText("Erreur lors de la sauvegarde du fichier dans \"sauvegarde\"");
+      message.setText(
+          "Erreur lors de la sauvegarde du fichier dans \"sauvegarde\"");
     }
   }
   
@@ -461,7 +468,7 @@ public class Controleur implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     System.out.println("Initialisation de l'interface");
     association = new GestionAssociation();
-
+    
   }
 
 
