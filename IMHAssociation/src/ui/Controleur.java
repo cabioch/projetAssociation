@@ -91,8 +91,6 @@ public class Controleur implements Initializable {
   @FXML
   private Color x2;
   
-  @FXML
-  private CheckBox checkBoxPresident;
   
   /**
    * Afficher le membre sélectionné : si un membre est sélectionné dans la

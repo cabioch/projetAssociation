@@ -86,7 +86,6 @@
                   <TextField fx:id="entreePrenomMembre" layoutX="97.0" layoutY="78.0" prefHeight="25.0" prefWidth="290.0" />
                   <TextField fx:id="entreAdresseMembre" layoutX="97.0" layoutY="102.0" prefHeight="25.0" prefWidth="290.0" />
                   <TextField fx:id="entreAgeMembre" layoutX="97.0" layoutY="126.0" prefHeight="25.0" prefWidth="290.0" />
-                  <CheckBox fx:id="checkBoxPresident" text="Président ?" />
                   <Button layoutX="3.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonNouveauMembre" text="Nouveau" />
                   <Button layoutX="70.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonValiderMembre" text="Valider" />
                   <Label layoutX="33.0" layoutY="203.0" text="La liste affiche :">
