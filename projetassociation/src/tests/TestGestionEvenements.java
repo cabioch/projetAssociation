@@ -90,6 +90,19 @@ public class TestGestionEvenements {
    */
   private Evenement event11;
   
+  /**
+   * Création d'un douzième événement appelé event12 pour tester la
+   * création d'un événement comportant le même nom qu'un autre événement.
+   */
+  private Evenement event12;
+  
+  /**
+   * Création d'un treizième événement appelé event13 pour tester la
+   * création d'un événement comportant le même nom, les mêmes horraire
+   *  qu'un autre événement avec un lieu différent pour les différencier.
+   */
+  private Evenement event13;
+  
   
   /**
    *  Création d'un premier membre appelé membre1.
@@ -185,6 +198,14 @@ public class TestGestionEvenements {
     //une valeur négative pour les minutes ou les heures.
     event11 = new Evenement("Mer", "Lannion", 1, Month.JANUARY, 0000, 0,
             0, 100, 23);
+    
+    // Ajout d'un événement comportant le même nom qu'un événement issue de l'association
+    // ayant tout comme point de différence les horraires de l'événement.
+    event12 = new Evenement("Bowling", "Lannion", 2022, Month.MARCH, 14, 22,
+            00, 20, 16);
+    
+    // Ajout d'un événement "clône" à l'événement 1 ayant juste le lieu de différent de celui-ci.
+    event13 = new Evenement("Bowling", "Brest", 2022, Month.MARCH, 14, 14, 0, 120, 10);
     
     // Ajout du prénom Titi et nom Beau comme nom pour le premier membre
     infoC = new InformationPersonnelle("Titi", "Beau");
@@ -315,12 +336,12 @@ public class TestGestionEvenements {
   void testEnsembleEvenementsAvenir() {
     assertEquals(2, gevent.ensembleEvenementAvenir().size());
   }
+  
   /**
    * Test de retour de tous les événements à venir de l'association
    * n'ayant pas d'événement à venir.
    * Le test doit rien nous renvoyer.
    */
-  
   @Test
   void testEnsembleEvenementsAvenirNull() {
     listeEvenements.clear();
@@ -365,6 +386,7 @@ public class TestGestionEvenements {
     assertEquals(null, gevent.creerEvenement("Mer", "Lannion", 15, Month.MARCH, 2022, 18,
         45, 100, 23));
   }
+  
   
   /**
    * Test de la création d'un événement comportant un nom d'événement null.
@@ -418,6 +440,29 @@ public class TestGestionEvenements {
   void testCreationEvenementErreurDureeNegatif() {
     assertEquals(null, gevent.creerEvenement("Mer", "Lannion", 15, Month.MARCH, 2022, 18,
         45, -100, 23));
+  }
+  
+  /**
+   * Test de la création d'un événement comportant un nom déjà existant
+   * dans la liste des événements de l'association mais comportant des horraires
+   * différentes. N'ayant ni de chevauchement en lieu ni de chevauchement en temps.
+   */
+  @Test
+  void testCreationEvenementMemeNomHorrairesDifferentes() {
+    assertEquals(event12, gevent.creerEvenement("Bowling", "Lannion", 14, Month.MARCH, 2022, 22,
+        00, 20, 16));
+  }
+  
+  /**
+   * Test de la création d'un événement comportant un nom déjà existant
+   * dans la liste des événements de l'association, ayant les mêmes horraires.
+   * Cependant, l'événement comporte un lieu différent de celui déjà existant 
+   * dans les événeùments de l'association.
+   */
+  @Test
+  void testCreationEvenementMemeNomMemeHorrairesLieuDifferents() {
+    assertEquals(event13, gevent.creerEvenement("Bowling", "Brest", 14, Month.MARCH, 2022, 14,
+        00, 120, 10));
   }
   
   /**

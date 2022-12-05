@@ -28,19 +28,8 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
   public GestionEvenements() {
     this.listeEvenements = new ArrayList<>();
   }
-  
-  
-  /**
-   * Getters/Setters de la liste des événements.
-   *
-   * @return listeEvenements La liste des événements.
-   * 
-   */
-  public List<Evenement> getListeEvenements() {
-    return listeEvenements;
-  }
-  
-  
+
+
   public void setListeEvenements(List<Evenement> listeEvenements) {
     this.listeEvenements = listeEvenements;
   }
