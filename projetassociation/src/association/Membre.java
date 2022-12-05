@@ -1,6 +1,6 @@
 package association;
 
-
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,8 +15,9 @@ import java.util.Objects;
  */
 public class Membre implements InterMembre, Serializable {
   
-  private static final long serialVersionUID = 2037L;
   
+  @Serial
+  private static final long serialVersionUID = 2037L;
   /**
    * Les evenements auxquels participe ou a participé le membre.
    */
@@ -35,21 +36,8 @@ public class Membre implements InterMembre, Serializable {
    * @see informationPersonnelle
    */
   public Membre(InformationPersonnelle info) {
-    if (info.getPrenom() != null && info.getNom() != null) {
-      this.infos = info;
-    }
-  }
-  
-  // public Membre
-  
-  /**
-   * Getters de la liste des événements.
-   *
-   * @return listeEvenements La liste des événements.
-   * 
-   */
-  public List<Evenement> getListEvenements() {
-    return listEvenements;
+    this.infos = info;
+    this.listEvenements = new ArrayList<>();
   }
   
   /**
@@ -67,40 +55,31 @@ public class Membre implements InterMembre, Serializable {
    */
   @Override
   public List<Evenement> ensembleEvenements() {
-    if (listEvenements == null) {
-      listEvenements = new ArrayList<>();
-    }
-    // regarde pour chaque evenement dans la liste d'évènement
-    for (Evenement e : listEvenements) {
-      // si la liste contient l'objet infos du membre
-      if (e.getParticipants().contains(infos)) {
-        listEvenements.add(e);
-      }
-    }
     return listEvenements;
   }
   
   /**
-   * La liste des é©vènements auquel le membre est inscrit et qui n'ont pas
+   * La liste des évènements auquel le membre est inscrit et qui n'ont pas
    * encore eu lieu.
    *
    * @return la liste des évènements à venir du membre.
    */
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
-    if (listEvenements == null) {
-      listEvenements = new ArrayList<>();
-    }
+    
+    // on instancie une nouvelle liste des que la méthode est appelée pour
+    // prendre en compte la date
+    List<Evenement> avenir = new ArrayList<>();
+    
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listEvenements) {
       // si la liste contient l'objet infos du membre ET si l'évènement est
       // après la date locale, donc à venir.
-      if (e.getParticipants().contains(infos)
-          && e.getDate().isAfter(LocalDateTime.now())) {
-        listEvenements.add(e);
+      if (e.getDate().isAfter(LocalDateTime.now())) {
+        avenir.add(e);
       }
     }
-    return listEvenements;
+    return avenir;
   }
   
   /**
