@@ -45,14 +45,14 @@ public class TestEvenement {
         LocalDateTime.of(2022, 1, 1, 1, 19), 10, 10);
     
     membre1 = new Membre(new InformationPersonnelle("Jean", "Pierre"));
-    membre2 = new Membre(new InformationPersonnelle("Jean2", "Pierre2"));
-    membre3 = new Membre(new InformationPersonnelle("Jean3", "Pierre3"));
+    membre2 = new Membre(new InformationPersonnelle("Michel", "Dupont"));
+    membre3 = new Membre(new InformationPersonnelle("André", "Dupuis"));
   }
   
   
   /**
    * Tests de chevauchement. Utilise la fonction compareChevauchement et compare
-   * à un évenement qui va de 10 à 20 minutes.
+   * à un deuxième évenement qui va de 10 à 20 minutes.
    */
   @Test
   void testChevauchementTemps() {

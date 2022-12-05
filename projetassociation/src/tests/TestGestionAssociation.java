@@ -33,12 +33,12 @@ public class TestGestionAssociation {
   private GestionAssociation association;
   
   private static final Membre membre1 =
-      new Membre(new InformationPersonnelle("Nom1", "Prenom1"));
+      new Membre(new InformationPersonnelle("Jean", "Pierre"));
   private static final Membre membre2 =
-      new Membre(new InformationPersonnelle("Nom2", "Prenom2"));
+      new Membre(new InformationPersonnelle("Michel", "Dupont"));
   private static final Membre membre3 =
-      new Membre(new InformationPersonnelle("Nom3", "Prenom3"));
-  
+      new Membre(new InformationPersonnelle("André", "Dupuis"));  
+
   /** Utilisée pour écrire testChargementDonnees.txt */
   private static GestionAssociation association1;
   
