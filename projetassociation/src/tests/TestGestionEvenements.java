@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import association.Evenement;
 import association.GestionEvenements;
 import association.InformationPersonnelle;
-import association.InterGestionMembres;
 import association.InterMembre;
 import association.Membre;
 import java.time.Month;
@@ -486,13 +485,4 @@ public class TestGestionEvenements {
     gevent.supprimerEvenement(event6);
     assertEquals(4, gevent.ensembleEvenements().size());
   }
-  
-  
-  
-  
-  
-  
-  
-
-  
 }
