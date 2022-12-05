@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-
 /**
  * Tests JUnit de la classe {@link association.GestionMembres GestionMembres}.
  *
@@ -79,19 +78,7 @@ class TestGestionMembres {
   private Membre membreT3;
   
   /**
-   * Un ensemble de membres représentant une association pour les tests.
-   * L'ensemble est vide par défaut.
-   */
-  private Set<InterMembre> ensembleM;
-  
-  /**
-   * Un ensemble de membres représentant une association pour les tests.
-   * L'ensemble est <code>null</code> par défaut.
-   */
-  private Set<InterMembre> ensembleM2;
-  
-  /**
-   * Un appel à la méthode GestionMembres.
+   * appel à la classe GestionMembres.
    */
   private GestionMembres gt;
   
@@ -102,6 +89,7 @@ class TestGestionMembres {
   @BeforeEach
   void setUp() throws Exception {
     
+    gt = new GestionMembres();
     infoC2 = new InformationPersonnelle("Tilia", "EMILE", "Belgique", 35);
     infoC = new InformationPersonnelle("Alan", "PARKER", "France", 20);
     infoVide = new InformationPersonnelle("", "", "Luxembourg", 50);
@@ -113,9 +101,6 @@ class TestGestionMembres {
     membreT1 = new Membre(infoC);
     membreT2 = new Membre(infoC2);
     membreT3 = new Membre(infoC2);
-    gt = new GestionMembres(ensembleM);
-    ensembleM.add(membreT1);
-    ensembleM.add(membreT2);
   }
   
   /**
@@ -124,16 +109,15 @@ class TestGestionMembres {
   
   @Test
   void testAjouterUnMembreDejaPresent() {
+    gt.ajouterMembre(membreT1);
     assertFalse(gt.ajouterMembre(membreT1));
   }
   
   /**
    * Test d'ajout d'un membre non présent dans l'ensemble.
-   *
    */
   @Test
   void testAjouterUnMembreNonPresent() {
-    ensembleM.clear();
     assertTrue(gt.ajouterMembre(membreT1));
   }
   
@@ -142,6 +126,7 @@ class TestGestionMembres {
    */
   @Test
   void testAjouterUnMembreIdentique() {
+    gt.ajouterMembre(membreT2);
     assertFalse(gt.ajouterMembre(membreT3));
   }
   
@@ -208,6 +193,7 @@ class TestGestionMembres {
    */
   @Test
   void testSupprimerUnMembrePresent() {
+    gt.ajouterMembre(membreT1);
     assertTrue(gt.supprimerMembre(membreT1));
   }
   
@@ -227,6 +213,7 @@ class TestGestionMembres {
    */
   @Test
   void testSupprimerUnMembrePresident() {
+    gt.ajouterMembre(membreT1);
     gt.designerPresident(membreT1);
     assertTrue(gt.president().equals(membreT1));
     gt.supprimerMembre(membreT1);
@@ -240,7 +227,8 @@ class TestGestionMembres {
    */
   @Test
   void testDesignerUnPresident() {
-    assertTrue(gt.designerPresident(membreT1));
+    gt.ajouterMembre(membreT1);
+    gt.designerPresident(membreT1);
     assertTrue(gt.president().equals(membreT1));
   }
   
@@ -264,6 +252,8 @@ class TestGestionMembres {
    */
   @Test
   void testRemplacerUnPresidentAvecUnMembre() {
+    gt.ajouterMembre(membreT1);
+    gt.ajouterMembre(membreT2);
     gt.designerPresident(membreT2);
     assertTrue(gt.president().equals(membreT2));
     assertTrue(gt.designerPresident(membreT1));
@@ -278,8 +268,8 @@ class TestGestionMembres {
    */
   @Test
   void testRemplacerUnPresidentAvecUnNonMembre() {
+    gt.ajouterMembre(membreT2);
     gt.designerPresident(membreT2);
-    gt.supprimerMembre(membreT1);
     assertTrue(gt.president().equals(membreT2));
     assertFalse(gt.designerPresident(membreT1));
     assertTrue(gt.president().equals(membreT2));
@@ -292,7 +282,7 @@ class TestGestionMembres {
    */
   @Test
   void testGetterEnsembleMembre() {
-    assertTrue(ensembleM2 == null);
-    assertFalse(ensembleM.isEmpty());
+    assertTrue(gt.ensembleMembres() != null);
+    ;
   }
 }

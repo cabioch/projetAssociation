@@ -31,7 +31,7 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   
   /**
    * Constructeur de la classe GestionMembres.
-   *Initialise l'ensemble de membres.
+   * Initialise l'ensemble de membres.
    */
   public GestionMembres() {
     this.membres = new HashSet<>();
@@ -51,8 +51,7 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   @Override
   public boolean ajouterMembre(InterMembre membre) {   
     // verifie que le membre ajouté n'a pas un attribut null en prénom ou nom.
-    if (membre.getInformationPersonnelle().getNom() == null
-        || membre.getInformationPersonnelle().getPrenom() == null) {
+    if (membre.getInformationPersonnelle() == null) {
       return false;
     }
     // verifie que le membre ajouté n'est pas égale a un membre déja existant
