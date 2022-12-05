@@ -30,6 +30,15 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   private InterMembre president = null;
   
   /**
+   * Constructeur de la classe GestionMembres.
+   *Initialise l'ensemble de membres.
+   */
+  public GestionMembres(Set<InterMembre> membres) {
+    this.membres = new HashSet<>();
+  }
+    
+  
+  /**
    * Ajoute un membre dans l'association. Ne fait rien si le membre était déja
    * présent dans l'association (meme nom et meme prenom) ou que l'une des
    * informations personnelles est une chaine vide ou <code>null</code>.
@@ -105,16 +114,12 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   }
   
   /**
-   * Renvoie l'ensemble des membres de l'association. Si l'ensemble est <code>null</code>, un
-   * ensemble vide est créé.
+   * Renvoie l'ensemble des membres de l'association. 
    *
    * @return l'ensemble des membres de l'association.
    */
   @Override
   public Set<InterMembre> ensembleMembres() {
-    if (membres == null) {
-      membres = new HashSet<>();
-    }
     return membres;
   }
   

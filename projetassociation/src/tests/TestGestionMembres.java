@@ -24,11 +24,6 @@ import org.junit.jupiter.api.Test;
 class TestGestionMembres {
   
   /**
-   * Un appel à la méthode GestionMembres.
-   */
-  private GestionMembres gt = new GestionMembres();
-  
-  /**
    * Des informations personnelles pour un membre.
    */
   
@@ -46,27 +41,32 @@ class TestGestionMembres {
   private InformationPersonnelle infoVide;
   
   /**
-   * Des informations personnelles qui aura une chaine vide dans le nom uniquement.
+   * Des informations personnelles qui aura une chaine vide dans le nom
+   * uniquement.
    */
   private InformationPersonnelle infoVideNom;
   
   /**
-   * Des informations personnelles qui auront une chaine vide dans le prénom uniquement.
+   * Des informations personnelles qui auront une chaine vide dans le prénom
+   * uniquement.
    */
   private InformationPersonnelle infoVidePrenom;
   
   /**
-   * Des informations personnelles qui auront des valeurs <code>null</code> en prénom et nom.
+   * Des informations personnelles qui auront des valeurs <code>null</code> en
+   * prénom et nom.
    */
   private InformationPersonnelle infoNull;
   
   /**
-   * Des informations personnelles qui aura une valeur <code>null</code> pour le prénom uniquement.
+   * Des informations personnelles qui aura une valeur <code>null</code> pour le
+   * prénom uniquement.
    */
   private InformationPersonnelle infoNullPrenom;
   
   /**
-   * Des informations personnelles qui aura une valeur <code>null</code> pour le nom uniquement.
+   * Des informations personnelles qui aura une valeur <code>null</code> pour le
+   * nom uniquement.
    */
   private InformationPersonnelle infoNullNom;
   
@@ -82,13 +82,18 @@ class TestGestionMembres {
    * Un ensemble de membres représentant une association pour les tests.
    * L'ensemble est vide par défaut.
    */
-  private Set<InterMembre> ensembleM = gt.ensembleMembres();
+  private Set<InterMembre> ensembleM;
   
   /**
    * Un ensemble de membres représentant une association pour les tests.
    * L'ensemble est <code>null</code> par défaut.
    */
   private Set<InterMembre> ensembleM2;
+  
+  /**
+   * Un appel à la méthode GestionMembres.
+   */
+  private GestionMembres gt;
   
   /**
    * Initialisation des tests par ajout de membres dans l'ensemble et des
@@ -108,6 +113,7 @@ class TestGestionMembres {
     membreT1 = new Membre(infoC);
     membreT2 = new Membre(infoC2);
     membreT3 = new Membre(infoC2);
+    gt = new GestionMembres(ensembleM);
     ensembleM.add(membreT1);
     ensembleM.add(membreT2);
   }
@@ -144,17 +150,18 @@ class TestGestionMembres {
    */
   @Test
   void testAjouterUnMembreChainevideNomEtPrenom() {
-	membreT3 = new Membre(infoVide);
+    membreT3 = new Membre(infoVide);
     assertFalse(gt.ajouterMembre(membreT3));
   }
   
   /**
-   * Test d'ajout d'un membre ayant des valeurs <code>null</code> en nom et prénom.
+   * Test d'ajout d'un membre ayant des valeurs <code>null</code> en nom et
+   * prénom.
    */
   @Test
   void testAjouterUnMembreAvecAucunPrenomEtNom() {
-	  membreT3 = new Membre(infoNull);
-	  assertFalse(gt.ajouterMembre(membreT3));
+    membreT3 = new Membre(infoNull);
+    assertFalse(gt.ajouterMembre(membreT3));
   }
   
   /**
@@ -163,8 +170,8 @@ class TestGestionMembres {
   
   @Test
   void testAjouterUnMembreAvecAucunPrenom() {
-	  membreT3 = new Membre(infoNullPrenom);
-	    assertFalse(gt.ajouterMembre(membreT3));
+    membreT3 = new Membre(infoNullPrenom);
+    assertFalse(gt.ajouterMembre(membreT3));
   }
   
   /**
@@ -173,8 +180,8 @@ class TestGestionMembres {
   
   @Test
   void testAjouterUnMembreAvecAucunNom() {
-	membreT3 = new Membre(infoNullNom);
-	assertFalse(gt.ajouterMembre(membreT3));
+    membreT3 = new Membre(infoNullNom);
+    assertFalse(gt.ajouterMembre(membreT3));
   }
   
   
@@ -183,8 +190,8 @@ class TestGestionMembres {
    */
   @Test
   void testAjouterUnMembreAvecChaineVidePrenom() {
-	  membreT3 = new Membre(infoVidePrenom);
-	  assertFalse(gt.ajouterMembre(membreT3));
+    membreT3 = new Membre(infoVidePrenom);
+    assertFalse(gt.ajouterMembre(membreT3));
   }
   
   /**
@@ -192,8 +199,8 @@ class TestGestionMembres {
    */
   @Test
   void testAjouterUnMembreAvecChaineVideNom() {
-	 membreT3 = new Membre(infoVideNom);
-	 assertFalse(gt.ajouterMembre(membreT3));
+    membreT3 = new Membre(infoVideNom);
+    assertFalse(gt.ajouterMembre(membreT3));
   }
   
   /**
@@ -214,17 +221,17 @@ class TestGestionMembres {
   }
   
   /**
-  * Test de suppression d'un membre présent dans l'association.
-  * Le membre avait le rôle de président.Il est retiré et la place 
-  * de président est de nouveau a valeur <code>null</code>;
-  */
- @Test
- void testSupprimerUnMembrePresident() {
-   gt.designerPresident(membreT1);
-   assertTrue(gt.president().equals(membreT1));
-   gt.supprimerMembre(membreT1);
-   assertTrue(gt.president() == null); 
- }
+   * Test de suppression d'un membre présent dans l'association. Le membre avait
+   * le rôle de président.Il est retiré et la place de président est de nouveau
+   * a valeur <code>null</code>;
+   */
+  @Test
+  void testSupprimerUnMembrePresident() {
+    gt.designerPresident(membreT1);
+    assertTrue(gt.president().equals(membreT1));
+    gt.supprimerMembre(membreT1);
+    assertTrue(gt.president() == null);
+  }
   
   /**
    * Test de désignation du président. Le rôle de président par défaut est
@@ -279,15 +286,13 @@ class TestGestionMembres {
   }
   
   /**
-   * Test du getter de construction de l'ensemble des membres.
-   * Si l'ensemble est <code>null</code>, la méthode le renvoie vide. Sinon
-   * elle renvoie la liste des membres.
+   * Test du getter de construction de l'ensemble des membres. Si l'ensemble est
+   * <code>null</code>, la méthode le renvoie vide. Sinon elle renvoie la liste
+   * des membres.
    */
   @Test
   void testGetterEnsembleMembre() {
-	  assertTrue(ensembleM2 == null);
-	  ensembleM2 = gt.ensembleMembres();
-	  assertTrue(ensembleM2 != null);
-	  assertFalse(ensembleM.isEmpty());
+    assertTrue(ensembleM2 == null);
+    assertFalse(ensembleM.isEmpty());
   }
 }

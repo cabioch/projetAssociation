@@ -1,4 +1,4 @@
 /**
- * Ensemble des classes de gestion des événements pour une association.
+ * Ensemble des classes de gestion des Ã©vÃ¨nements pour une association.
  */
 package association;
