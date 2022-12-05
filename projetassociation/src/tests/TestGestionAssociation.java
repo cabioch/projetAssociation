@@ -66,8 +66,9 @@ public class TestGestionAssociation {
   }
   
   /**
-   * Permet de créer une association typique avec des membres et des évenements, et des membres
-   * inscrits à des évenements.
+   * Permet de créer une association typique avec des membres et des évenements,
+   * et des membres inscrits à des évenements.
+   * 
    * @return Une association avec des membres et des évenements pour les tests.
    */
   private static GestionAssociation getAssociationTypique() {
@@ -75,8 +76,7 @@ public class TestGestionAssociation {
     GestionAssociation asso = new GestionAssociation();
     
     // On récupère les gestionnaires
-    InterGestionEvenements gestionEvenements =
-        asso.gestionnaireEvenements();
+    InterGestionEvenements gestionEvenements = asso.gestionnaireEvenements();
     InterGestionMembres gestionMembres = asso.gestionnaireMembre();
     
     // On ajoute des membres
@@ -170,9 +170,8 @@ public class TestGestionAssociation {
   }
   
   /**
-   * Vérifie que le programme ne produit pas d'erreur si on essaye de sérialiser alors que 
-   * gestionMembres et gestionEvenements sont à null.
-   * @throws IOException
+   * Vérifie que le programme ne produit pas d'erreur si on essaye de sérialiser
+   * alors que gestionMembres et gestionEvenements sont à null.
    */
   @Test
   void testSauvegardeNull() throws IOException {
@@ -183,7 +182,8 @@ public class TestGestionAssociation {
     association2.sauvegarderDonnees("testSauvegardeNull.txt");
     association2.chargerDonnees("testSauvegardeNull.txt");
     
-    assertEquals(association2.gestionnaireEvenements(), new GestionEvenements());
+    assertEquals(association2.gestionnaireEvenements(),
+        new GestionEvenements());
     assertEquals(association2.gestionnaireMembre(), new GestionMembres());
   }
 }

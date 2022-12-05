@@ -16,15 +16,16 @@ import java.util.Objects;
 /**
  * Gère la sauvegarde des données de l'association.
  */
-public class GestionAssociation implements InterGestionAssociation, Serializable {
-
+public class GestionAssociation
+    implements InterGestionAssociation, Serializable {
+  
   private static final long serialVersionUID = 392L;
   /**
    * Le gestionnaire d'evenements.
    */
   private GestionEvenements gestionEvenements = null;
   private GestionMembres gestionMembres = null;
-
+  
   /**
    * Renvoie le gestionnaire d'événements de l'association. L'objet retourné est
    * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
@@ -40,7 +41,7 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
     }
     return gestionEvenements;
   }
-
+  
   /**
    * Renvoie le gestionnaire de membres de l'association. L'objet retourné est
    * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
@@ -55,7 +56,7 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
     }
     return gestionMembres;
   }
-
+  
   /**
    * Enregistre dans un fichier toutes les données de l'association,
    * c'est-à-dire l'ensemble des membres et des événéments.
@@ -65,13 +66,14 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
    */
   @Override
   public void sauvegarderDonnees(String nomFichier) throws IOException {
-    OutputStream output = new BufferedOutputStream(new FileOutputStream(nomFichier));
+    OutputStream output =
+        new BufferedOutputStream(new FileOutputStream(nomFichier));
     ObjectOutputStream outObjStream = new ObjectOutputStream(output);
     outObjStream.writeObject(this);
     outObjStream.close();
     output.close();
   }
-
+  
   /**
    * Charge à partir d'un fichier toutes les données de l'association,
    * c'est-à-dire un ensemble de membres et d'évènements. Si des membres et des
@@ -83,7 +85,8 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
    */
   @Override
   public void chargerDonnees(String nomFichier) throws IOException {
-    InputStream input = new BufferedInputStream(new FileInputStream(nomFichier));
+    InputStream input =
+        new BufferedInputStream(new FileInputStream(nomFichier));
     ObjectInputStream inObjStream = new ObjectInputStream(input);
     try {
       GestionAssociation tmp = (GestionAssociation) inObjStream.readObject();
@@ -96,7 +99,7 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
     input.close();
     inObjStream.close();
   }
-
+  
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -105,19 +108,20 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-
+    
     GestionAssociation that = (GestionAssociation) o;
-
+    
     if (!Objects.equals(gestionEvenements, that.gestionEvenements)) {
       return false;
     }
     return Objects.equals(gestionMembres, that.gestionMembres);
   }
-
+  
   @Override
   public int hashCode() {
     int result = gestionEvenements != null ? gestionEvenements.hashCode() : 0;
-    result = 31 * result + (gestionMembres != null ? gestionMembres.hashCode() : 0);
+    result =
+        31 * result + (gestionMembres != null ? gestionMembres.hashCode() : 0);
     return result;
   }
 }
