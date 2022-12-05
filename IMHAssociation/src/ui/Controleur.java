@@ -27,8 +27,7 @@ import javafx.scene.text.Font;
 
 /**
  * Classe publique de contrôle de l'interface Utilisateur.
- *
- * TODO Il n'y a pas encore la possibilité de mettre a jour des trucs je crois
+ *TODO Il n'y a pas encore la possibilité de mettre a jour des trucs je crois
  * (par ex changer l'age d'un membre...)
  */
 
@@ -93,14 +92,14 @@ public class Controleur implements Initializable {
   private Color x2;
   
   @FXML
-  private CheckBox checkBoxPresident ;
+  private CheckBox checkBoxPresident;
   
   /**
    * Afficher le membre sélectionné : si un membre est sélectionné dans la
    * liste, affiche ses informations personnelles dans les 4 champs en haut de
    * la fenêtre.
    * 
-   * @param event
+   * @param event 
    */
   @FXML
   void actionBoutonAfficherMembreSelectionneMembre(ActionEvent event) {
@@ -132,7 +131,7 @@ public class Controleur implements Initializable {
   
   /**
    * Afficher tous les membres : affiche dans la liste tous les membres de
-   * l’association
+   * l’association.
    */
   @FXML
   void actionBoutonAfficherTousMembresMembre() {
@@ -146,8 +145,8 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * ffiche l’événement sélectionné : si un événement est sélectionné dans la
-   * liste, affiche ses informations dans les champs en haut de la fenêtre
+   * Affiche l’événement sélectionné : si un événement est sélectionné dans la
+   * liste, affiche ses informations dans les champs en haut de la fenêtre.
    * 
    * @param event
    */

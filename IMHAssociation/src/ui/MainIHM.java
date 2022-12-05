@@ -8,6 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Classe de lancement de l'IHM.
+ *
+ */
+
 public final class MainIHM extends Application {
 
   @Override
