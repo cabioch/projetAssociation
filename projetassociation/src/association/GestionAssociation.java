@@ -1,7 +1,15 @@
 package association;
 
-
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -10,7 +18,6 @@ import java.util.Objects;
  */
 public class GestionAssociation implements InterGestionAssociation, Serializable {
 
-  @Serial
   private static final long serialVersionUID = 392L;
   /**
    * Le gestionnaire d'evenements.
@@ -60,8 +67,8 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
    * Enregistre dans un fichier toutes les données de l'association,
    * c'est-à-dire l'ensemble des membres et des événéments.
    *
-   * @param nomFichier le fichier dans lequel enregistrer les données
-   * @throws IOException en cas de problème d'écriture dans le fichier
+   * @param nomFichier le fichier dans lequel enregistrer les données.
+   * @throws IOException en cas de problème d'écriture dans le fichier.
    */
   @Override
   public void sauvegarderDonnees(String nomFichier) throws IOException {
@@ -93,7 +100,6 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
       gestionMembres = null;
       gestionEvenements = null;
     }
-
     input.close();
     inObjStream.close();
   }

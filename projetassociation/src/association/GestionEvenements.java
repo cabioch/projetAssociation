@@ -1,6 +1,5 @@
 package association;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -15,7 +14,7 @@ import java.util.Objects;
  */
 public class GestionEvenements implements InterGestionEvenements, Serializable {
   
-  @Serial
+  
   private static final long serialVersionUID = 210393L;
   
   /**
@@ -88,7 +87,7 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
   public void supprimerEvenement(Evenement evt) {
     
     // Avant de supprimer l'événement de l'ensemble des événements des
-      // participants
+    // participants
     for (InterMembre m : evt.getParticipants()) {
       m.ensembleEvenements().remove(evt);
     }

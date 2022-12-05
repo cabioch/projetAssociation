@@ -1,6 +1,5 @@
 package association;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,7 +14,7 @@ import java.util.Set;
  */
 public class GestionMembres implements InterGestionMembres, Serializable {
   
-  @Serial
+  
   private static final long serialVersionUID = 37L;
   
   /**
