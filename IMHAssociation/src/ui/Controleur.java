@@ -307,6 +307,8 @@ public class Controleur implements Initializable {
   void actionBoutonSupprimerEvt(ActionEvent event) {
     Evenement e = getEvenementFromFields();
     association.gestionnaireEvenements().supprimerEvenement(e);
+    //supprimerEvenement étant une méthode void, impossible de vérifier ?
+    message.setText("La suppresion a bien été prise en compte.");
   }
   
   /**
