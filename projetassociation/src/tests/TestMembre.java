@@ -99,6 +99,7 @@ public class TestMembre {
   private Evenement evenementListeVide;
   
   private Evenement evenementAVenir1;
+  private Evenement evenementAVenir2;
   private Evenement evenementPasse;
   
   /**
@@ -113,7 +114,7 @@ public class TestMembre {
         "14 rue Archives", 20);
     infosVide = new InformationPersonnelle(" ", " ");
     infosListVide = new InformationPersonnelle("test", "test");
-    infosNonConforme = new InformationPersonnelle(null, null, "Non", -20);
+    infosNonConforme = new InformationPersonnelle(null, null, null, -20);
     
     membre = new Membre(infos);
     membreComplet = new Membre(infosComplet);
@@ -138,16 +139,39 @@ public class TestMembre {
         new Evenement("Boum", "Lannion", 2022, Month.MARCH, 25, 21, 00, 30, 10);
     evenementAVenir1 = new Evenement("Party Night", "Brest", 2023,
         Month.JANUARY, 25, 21, 00, 30, 10);
+    evenementAVenir2 = new Evenement("Beach Party", "Monaco", 2023,
+        Month.JANUARY, 25, 21, 00, 30, 10);
     evenementPasse = new Evenement("Party Sun", "Paris", 2021, Month.MARCH, 25,
         21, 00, 30, 10);
   }
   
   /**
-   * Vérifie que l'on peut récuperer les informations d'un membre.
+   * Vérifie que l'on peut récuperer les informations d'un membre avec un age
+   * négatif.
    */
   @Test
-  void testgetInformationPersonnelle() {
-    assertEquals(membre.getInformationPersonnelle(), infos);
+  void testgetInformationPersonnelleAgeNegatif() {
+    assertEquals(0, membreNonConforme.getInformationPersonnelle().getAge());
+  }
+  
+  /**
+   * Vérifie que l'on peut récuperer les informations d'un membre avec une
+   * adresse null.
+   */
+  @Test
+  void testgetInformationPersonnelleAdresseNull() {
+    assertEquals("",
+        membreNonConforme.getInformationPersonnelle().getAdresse());
+  }
+  
+  /**
+   * Vérifie que l'on peut récuperer les informations d'un membre avec un prenom
+   * null.
+   */
+  @Test
+  void testgetInformationPersonnellePrenomNull() {
+    assertEquals(null,
+        membreNonConforme.getInformationPersonnelle().getPrenom());
   }
   
   /**
@@ -171,7 +195,9 @@ public class TestMembre {
   void testConstructeurMembreNull() {
     infosNull = new InformationPersonnelle(null, null);
     membreNull = new Membre(infosNull);
-    assertFalse(null == membreNull.getInformationPersonnelle().getPrenom());
+    assertEquals(null, membreNull.getInformationPersonnelle().getPrenom());
+    assertEquals(null, membreNull.getInformationPersonnelle().getNom());
+
   }
   
   /**
@@ -270,18 +296,6 @@ public class TestMembre {
   }
   
   /**
-   * Vérifie que le.
-   */
-  @Test
-  void testensembleEvenements() {
-    // ajout d'un membre dans l'évènement créé dans le setup
-    evenements.ajouterParticipant(membreComplet);
-    membreComplet.ensembleEvenements().add(evenements);
-    assertEquals(1, evenements.getParticipants().size());
-    assertEquals(1, membreComplet.ensembleEvenements().size());
-  }
-  
-  /**
    * Ajoute 3 participations au membre et vérifie qu'il est bien inscrit dans 3
    * évènements différents.
    */
@@ -296,6 +310,20 @@ public class TestMembre {
     membreComplet.ensembleEvenements().add(evenements2);
     membreComplet.ensembleEvenements().add(evenements3);
     assertEquals(3, membreComplet.ensembleEvenements().size());
+  }
+  
+  /**
+   * Ajoute un évènement à un membre, vérifie que le membre a bien l'évènement
+   * mais n'a pas d'évènement à venir.
+   */
+  @Test
+  void testensembleEvenementsaVenirVide() {
+    // listEvenements.add(evenements);
+    // ajout d'un membre dans l'évènement créé dans le setup
+    evenements2.ajouterParticipant(membreComplet);
+    membreComplet.ensembleEvenements().add(evenements);
+    assertEquals(1, membreComplet.ensembleEvenements().size());
+    assertEquals(0, membreComplet.ensembleEvenementsAvenir().size());
   }
   
   /**
@@ -321,27 +349,16 @@ public class TestMembre {
     assertEquals(0, membreListeVide.ensembleEvenements().size());
   }
   
- /*
-  @Test
-  void testensembleEvenementsMembreNonConforme() {
-    evenements2.ajouterParticipant(membreNonConforme);
-    assertThrows(NullPointerException.class, () -> {
-      membreNonConforme.ensembleEvenements().add(evenements2);
-    });
-  }*/
-  
   /**
-   * Ajoute un évènement à venir au membre 
+   * Ajoute un évènement à venir au membre et evènement dépassé au membre. La
+   * liste de ses évènement ne doit dpnc comprendre qu'un évènement.
    */
   @Test
-  void testensembleEvenementsAVenir2Evenements() {
-    // ajout d'un membre dans l'évènement créé dans le setup
+  void testensembleEvenementsaVenir2Evenements() {
     evenementAVenir1.ajouterParticipant(membreComplet);
     membreComplet.ensembleEvenements().add(evenementAVenir1);
-    membreComplet.ensembleEvenementsAvenir();
     evenementPasse.ajouterParticipant(membreComplet);
     membreComplet.ensembleEvenements().add(evenementPasse);
-    membreComplet.ensembleEvenementsAvenir();
     assertEquals(1, membreComplet.ensembleEvenementsAvenir().size());
   }
   
@@ -350,15 +367,19 @@ public class TestMembre {
    * une liste vide.
    */
   @Test
-  void testensembleEvenementsAVenir2Evenements() {
-    // ajout d'un membre dans l'évènement créé dans le setup
+  void testensembleEvenementsaVenir2Membres() {
     evenementAVenir1.ajouterParticipant(membreComplet);
     membreComplet.ensembleEvenements().add(evenementAVenir1);
-    membreComplet.ensembleEvenementsAvenir();
     evenementPasse.ajouterParticipant(membreComplet);
     membreComplet.ensembleEvenements().add(evenementPasse);
-    membreComplet.ensembleEvenementsAvenir();
+    
+    evenementAVenir2.ajouterParticipant(membre);
+    membre.ensembleEvenements().add(evenementAVenir2);
+    evenementPasse.ajouterParticipant(membre);
+    membre.ensembleEvenements().add(evenementPasse);
+    
     assertEquals(1, membreComplet.ensembleEvenementsAvenir().size());
+    assertEquals(1, membre.ensembleEvenementsAvenir().size());
   }
   
   /**
