@@ -62,7 +62,6 @@ public class Evenement implements java.io.Serializable {
     // Pris le fonctionnement a une condition vérifiée
     return (!Objects.equals(evt.lieu, this.lieu)
         || pasDeChevauchementTemps(evt));
-    
   }
   
   /**
@@ -128,7 +127,7 @@ public class Evenement implements java.io.Serializable {
     return participants;
   }
   
-  // Juste enlev� le setter de participants
+  // Juste enleve le setter de participants
   // </editor-fold>
   
   

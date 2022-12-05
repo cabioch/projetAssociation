@@ -1,6 +1,6 @@
 package association;
 
-import java.io.Serial;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.Objects;
  */
 public class Membre implements InterMembre, Serializable {
   
-  @Serial
   private static final long serialVersionUID = 2037L;
   
   /**
@@ -36,8 +35,12 @@ public class Membre implements InterMembre, Serializable {
    * @see informationPersonnelle
    */
   public Membre(InformationPersonnelle info) {
-    this.infos = info;
+    if (info.getPrenom() != null && info.getNom() != null) {
+      this.infos = info;
+    }
   }
+  
+  // public Membre
   
   /**
    * Getters de la liste des événements.
@@ -108,9 +111,10 @@ public class Membre implements InterMembre, Serializable {
    */
   @Override
   public void definirInformationPersonnnelle(InformationPersonnelle info) {
-    if (this.infos.equals(info)) {
-      info.setAdresse(this.infos.getAdresse());
-      info.setAge(this.infos.getAge());
+    if (this.infos.getNom().equals(info.getNom())
+        && this.infos.getPrenom().equals(info.getPrenom())) {
+      this.infos.setAdresse(info.getAdresse());
+      this.infos.setAge(info.getAge());
     }
   }
   
@@ -118,7 +122,7 @@ public class Membre implements InterMembre, Serializable {
    * Renvoie les informations personnelles du membre.
    *
    * @return l'objet contenant les informations personnelles du membre ou
-   *         <code>null</code> si aucune information n'a Ã©tÃ© dÃ©finie.
+   *         <code>null</code> si aucune information n'a été définie.
    */
   @Override
   public InformationPersonnelle getInformationPersonnelle() {
@@ -164,7 +168,5 @@ public class Membre implements InterMembre, Serializable {
         && Objects.equals(infos.getNom(), other.infos.getNom())
         && Objects.equals(infos.getPrenom(), other.infos.getPrenom());
   }
-  
-  
 }
 

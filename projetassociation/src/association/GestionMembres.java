@@ -50,13 +50,13 @@ public class GestionMembres implements InterGestionMembres, Serializable {
     // verifie que le membre ajouté n'est pas égale a un membre déja existant
     // par verification du nom et prénom.
     for (InterMembre m : membres) {
-        if (m.getInformationPersonnelle().getNom().toLowerCase()
+      if (m.getInformationPersonnelle().getNom().toLowerCase()
             .equals(membre.getInformationPersonnelle().getNom().toLowerCase())
             && m.getInformationPersonnelle().getPrenom().toLowerCase()
                 .equals(membre.getInformationPersonnelle().getPrenom().toLowerCase())) {
-          return false;
-        }
+        return false;
       }
+    }
     // verifie que le membre ajouté n'a pas une chaine vide ou de caractères
     // vide en nom ou prénom.
     if (membre.getInformationPersonnelle().getNom().isEmpty()
@@ -68,7 +68,8 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   }
   
   /**
-   * Supprime un membre de l'association. Si le membre était président, le président devient <code>null</code>
+   * Supprime un membre de l'association. 
+   * Si le membre était président, le président devient <code>null</code>
    *
    * @param membre le membre à supprimer.
    * @return <code>true</code> si le membre était présent et a été supprimé,
@@ -78,8 +79,8 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   public boolean supprimerMembre(InterMembre membre) {
     if (membres.contains(membre)) {
       membres.remove(membre);
-      if(president() != null && president().equals(membre)) {
-    	  president = null;
+      if (president() != null && president().equals(membre)) {
+        president = null;
       }
       return true;
     }
