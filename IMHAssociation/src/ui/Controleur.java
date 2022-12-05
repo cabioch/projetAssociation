@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import association.Evenement;
@@ -12,10 +13,12 @@ import association.InformationPersonnelle;
 import association.InterGestionAssociation;
 import association.InterMembre;
 import association.Membre;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -73,14 +76,10 @@ public class Controleur implements Initializable {
   private Label labelListeAfficheeMembre;
   
   @FXML
-  // Probablement mieux d'éviter d'utiliser une liste annexe mais dans ce cas il
-  // faut tout mettre a jour si on enlève un membre par exemple ?
-  private ListView<String> listeEvenements;
-  private ArrayList<Evenement> annexeEvenements = new ArrayList<>();
+  private ListView<Evenement> listeEvenements;
   
   @FXML
-  private ListView<String> listeMembres;
-  private ArrayList<InterMembre> annexeMembres = new ArrayList<>();
+  private ListView<InterMembre> listeMembres;
   
   @FXML
   private TextArea message;
@@ -101,8 +100,7 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonAfficherMembreSelectionneMembre(ActionEvent event) {
-    int indexSelected = listeMembres.getSelectionModel().getSelectedIndex();
-    InterMembre m = annexeMembres.get(indexSelected);
+    InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
     InformationPersonnelle info = m.getInformationPersonnelle();
     // TODO Vérifier qu'il est toujours dans l'association
     entreeNomMembre.setText(info.getNom());
@@ -119,11 +117,9 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonAfficherParticipantsEvt(ActionEvent event) {
     listeEvenements.getItems().clear();
-    annexeEvenements.clear();
     Evenement e = getEvenementFromFields();
     for (InterMembre m : e.getParticipants()) {
-      listeEvenements.getItems().add(m.toString());
-      annexeEvenements.add(e);
+      listeMembres.getItems().add(m);
     }
   }
   
@@ -134,11 +130,9 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonAfficherTousMembresMembre() {
     listeMembres.getItems().clear();
-    annexeMembres.clear();
     
     for (InterMembre m : association.gestionnaireMembre().ensembleMembres()) {
-      listeMembres.getItems().add(m.toString());
-      annexeMembres.add(m);
+      listeMembres.getItems().add(m);
     }
   }
   
@@ -151,9 +145,8 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonEvenementSelectionneEvt(ActionEvent event) {
     // TODO Gestion d'erreur
-    int idxEvenement = listeEvenements.getSelectionModel().getSelectedIndex();
+    Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
     
-    Evenement e = annexeEvenements.get(idxEvenement);
     entreeNomEvt.setText(e.getNom());
     entreeLieuEvt.setText(e.getLieu());
     // TODO Afficher correctement
@@ -175,12 +168,10 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonEvenementsFutursAssociation(ActionEvent event) {
     listeEvenements.getItems().clear();
-    annexeEvenements.clear();
     
     for (Evenement e : association.gestionnaireEvenements()
         .ensembleEvenementAvenir()) {
-      listeEvenements.getItems().add(e.toString());
-      annexeEvenements.add(e);
+      listeEvenements.getItems().add(e);
     }
   }
   
@@ -193,12 +184,10 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonEvenementsFutursMembre(ActionEvent event) {
     listeEvenements.getItems().clear();
-    annexeEvenements.clear();
     
     Membre m = getMembreFromFields();
     for (Evenement e : m.ensembleEvenementsAvenir()) {
-      listeEvenements.getItems().add(e.toString());
-      annexeEvenements.add(e);
+      listeEvenements.getItems().add(e);
     }
   }
   
@@ -211,12 +200,10 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonEvenementsMembreMembre(ActionEvent event) {
     listeEvenements.getItems().clear();
-    annexeEvenements.clear();
     
     Membre m = getMembreFromFields();
     for (Evenement e : m.ensembleEvenements()) {
-      listeEvenements.getItems().add(e.toString());
-      annexeEvenements.add(e);
+      listeEvenements.getItems().add(e);
     }
   }
   
@@ -228,11 +215,9 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonDesinscrireMembreEvenement(ActionEvent event) {
     // TODO GESTION ERREUR GESTION ERREUR
-    int idxMembre = listeMembres.getSelectionModel().getSelectedIndex();
-    int idxEvenement = listeEvenements.getSelectionModel().getSelectedIndex();
+    InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
+    Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
     
-    InterMembre m = annexeMembres.get(idxMembre);
-    Evenement e = annexeEvenements.get(idxEvenement);
     
     // TODO Encore de la gestion d'erreur
     m.ensembleEvenements().remove(e);
@@ -249,14 +234,11 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonInscrireMembreEvenement(ActionEvent event) {
     // TODO GESTION ERREUR GESTION ERREUR
-    int idxMembre = listeMembres.getSelectionModel().getSelectedIndex();
-    int idxEvenement = listeEvenements.getSelectionModel().getSelectedIndex();
-    
-    InterMembre m = annexeMembres.get(idxMembre);
-    Evenement e = annexeEvenements.get(idxEvenement);
+    InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
+    Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
     
     // TODO Encore de la gestion d'erreur
-    boolean r = association.gestionnaireEvenements().inscriptionEvenement(e, m);
+    association.gestionnaireEvenements().inscriptionEvenement(e, m);
   }
   
   /**
@@ -326,12 +308,10 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonTousEvenementsAssociationEvt(ActionEvent event) {
     listeEvenements.getItems().clear();
-    annexeEvenements.clear();
     
     for (Evenement e : association.gestionnaireEvenements()
         .ensembleEvenements()) {
-      listeEvenements.getItems().add(e.toString());
-      annexeEvenements.add(e);
+      listeEvenements.getItems().add(e);
     }
   }
   
@@ -380,14 +360,12 @@ public class Controleur implements Initializable {
   void actionMenuApropos(ActionEvent event) {
     Alert alerte = new Alert(AlertType.INFORMATION);
     alerte.setTitle("A Propos");
-    alerte.setContentText(
-        "Application réalisée par Jean-André, Enzo, Nicolas & Romain\n");
-    alerte.setContentText(
-            "Tutoriel : \n");
-    alerte.setContentText(
-            "Vous avez deux fenêtres. La fênetre de gauche permet la gestion des membres et leur importation dans l'association.\n ");
-    alerte.setContentText(
-            "La fênetre de droite permet la gestion des évènements.\n");
+    String content = "Application réalisée par Jean-André, Enzo, Nicolas & Romain\n" 
+        + "Tutoriel : \n"
+        + "Vous avez deux fenêtres. La fênetre de gauche permet la gestion des membres "
+        + "et leur importation dans l'association.\n "
+        + "La fênetre de droite permet la gestion des évènements.\n";
+    alerte.setContentText(content);
     alerte.showAndWait();
   }
   
@@ -400,12 +378,11 @@ public class Controleur implements Initializable {
   @FXML
   void actionMenuCharger(ActionEvent event) {
     // TODO Choisir le fichier
-    Alert alerte = new Alert(AlertType.ERROR);
-    alerte.setContentText("Erreur lors du chargement du fichier.");
     try {
       association.chargerDonnees("sauvegarde");
+      message.setText("Fichier de sauvegarde chargé");
     } catch (IOException e) {
-      alerte.showAndWait();
+      message.setText("Impossible de charger le fichier dans \"sauvegarde\".");
     }
   }
   
@@ -415,9 +392,18 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionMenuNouveau(ActionEvent event) {
+    // On recrée une nouvelle association
     association = new GestionAssociation();
-    // TODO Réinitialiser les champs ?
-    // @ Enzo -> oui il faut tout effacer les champs.
+    
+    // On reset les champs
+    actionBoutonNouveauEvt(event);
+    actionBoutonNouveauMembre(event);
+    
+    // On vide les listes
+    listeEvenements.getItems().clear();
+    listeMembres.getItems().clear();
+    
+    message.setText("Nouvelle association créée.");
   }
   
   /**
@@ -425,12 +411,18 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionMenuQuitter(ActionEvent event) {
-    Alert quitter = new Alert(AlertType.INFORMATION);
-    quitter.setHeaderText("Quitter l'application ");
-    quitter.setTitle("L'application va fermer.\n Merci.");
-    quitter.showAndWait();
-    // TODO Fermer l'app
-    
+    Alert quitter = new Alert(AlertType.CONFIRMATION);
+    quitter.setTitle("Quitter l'application ?");
+    quitter.setHeaderText("Voulez vous quitter l'application ?");
+
+    // Retourne le type de bouton séléctionné ou null si un bouton n'a 
+    // pas été séléctionné ( = il a séléctionné la croix)
+    ButtonType result = quitter.showAndWait().orElse(null);
+
+    // On quitte seulement si l'utilisateur valide
+    if (result == ButtonType.OK) {
+      Platform.exit();
+    }
   }
   
   /**
@@ -439,14 +431,11 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
-    // TODO Choisir le fichier
-    Alert alerte = new Alert(AlertType.ERROR);
-    alerte.setContentText("Erreur lors de la sauvegarde du fichier");
     try {
       association.sauvegarderDonnees("sauvegarde");
+      message.setText("Données sauvegardées");
     } catch (IOException e) {
-      // TODO Utiliser messagebox.
-      alerte.showAndWait();
+      message.setText("Erreur lors de la sauvegarde du fichier dans \"sauvegarde\"");
     }
   }
   
@@ -488,3 +477,4 @@ public class Controleur implements Initializable {
     return e;
   }
 }
+
