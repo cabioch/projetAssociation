@@ -271,9 +271,7 @@ public class Controleur implements Initializable {
     entreAdresseMembre.clear();
     entreAgeMembre.clear();
     message.setText("Zone de texte \"Membre\" effacée, les données.\nVeuillez insérer les données d'un nouveau membre.");
-    
   }
-  
 
   /**
    * Supprimer : efface de la liste des événements l’événement dont les
@@ -284,19 +282,24 @@ public class Controleur implements Initializable {
     Evenement e = getEvenementFromFields();
     association.gestionnaireEvenements().supprimerEvenement(e);
     //supprimerEvenement étant une méthode void, impossible de vérifier ?
-    message.setText("La suppresion a bien été prise en compte.");
+    message.setText("La suppression a bien été prise en compte.");
   }
   
   /**
    * Supprimer : efface de la liste des membres, le membre dont les informations
-   * sont affichées.
+   * sont affichées. si le membre était président, un message de place vacante pour le
+   * rôle de président est vacant.
    */
   @FXML
   void actionBoutonSupprimerMembre(ActionEvent event) {
     Membre m = new Membre(new InformationPersonnelle(entreeNomMembre.getText(),
         entreePrenomMembre.getText()));
     association.gestionnaireMembre().supprimerMembre(m);
-    // TODO Affichage réussi ou pas
+    if (association.gestionnaireMembre().president().equals(m)) {
+      message.setText("La suppression du membre a été faite.\n La place de président est vacante.");
+    } else {
+      message.setText("La suppression du membre a été faite.");
+    }
   }
   
   /**
@@ -333,6 +336,20 @@ public class Controleur implements Initializable {
         date.getDayOfMonth(), date.getMonth(), date.getYear(), date.getHour(),
         date.getMinute(), e.getDuree(), e.getNbParticipantsMax());
   }
+
+  /**
+   * Essaye de créer un object membre a partir des text field 
+   * TODO A commenter et probablement faire de la gestion d'erreur
+   */
+  private Membre getMembreFromFields() {
+    // TODO Gerer erreurs
+    int age = Integer.parseInt(entreAgeMembre.getText());
+    Membre m =
+        new Membre(new InformationPersonnelle(this.entreeNomMembre.getText(),
+            this.entreePrenomMembre.getText(),
+            this.entreAdresseMembre.getText(), age));
+    return m;
+  }
   
   /**
    * Bouton d'action pour valider les informations d'un membre. Les informations
@@ -344,11 +361,12 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonValiderMembre(ActionEvent event) {
     Membre m = getMembreFromFields();
-    // lire les input,
+    // lire les input via  get membr et gerer les conversion, demander avec uen alerte box si le président ou pas ?
     
     
     // Gérer
     association.gestionnaireMembre().ajouterMembre(m);
+  
   }
   
   /**
@@ -447,19 +465,6 @@ public class Controleur implements Initializable {
   }
 
 
-  /**
-   * Essaye de créer un object membre a partir des text field 
-   * TODO A commenter et probablement faire de la gestion d'erreur
-   */
-  private Membre getMembreFromFields() {
-    // TODO Gerer erreurs
-    int age = Integer.parseInt(entreAgeMembre.getText());
-    Membre m =
-        new Membre(new InformationPersonnelle(this.entreeNomMembre.getText(),
-            this.entreePrenomMembre.getText(),
-            this.entreAdresseMembre.getText(), age));
-    return m;
-  }
   
   private Evenement getEvenementFromFields() {
     String nom = entreeNomEvt.getText();
