@@ -16,6 +16,7 @@ import java.util.Objects;
 public class Membre implements InterMembre, Serializable {
   
   
+  private static final long serialVersionUID = 2037L;
   /**
    * Les evenements auxquels participe ou a participé le membre.
    */
