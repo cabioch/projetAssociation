@@ -37,9 +37,6 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
     if (gestionEvenements == null) {
       // L'initialiser a partir de la classe
       gestionEvenements = new GestionEvenements();
-      // TODO A faire un constructeur
-      // Permet d'initialiser la liste interne de la classe (car pas encore de constructeur)
-      gestionEvenements.ensembleEvenements();
     }
     return gestionEvenements;
   }
@@ -54,11 +51,7 @@ public class GestionAssociation implements InterGestionAssociation, Serializable
   @Override
   public InterGestionMembres gestionnaireMembre() {
     if (gestionMembres == null) {
-      // L'initialiser a partir de la classe
       gestionMembres = new GestionMembres();
-      // TODO A faire un constructeur
-      // Permet d'initialiser le Set interne de la classe (car pas encore de constructeur)
-      gestionMembres.ensembleMembres();
     }
     return gestionMembres;
   }

@@ -1,73 +1,140 @@
 package tests;
 
-import association.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.time.Month;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import association.Evenement;
+import association.GestionAssociation;
+import association.GestionEvenements;
+import association.GestionMembres;
+import association.InformationPersonnelle;
+import association.InterGestionEvenements;
+import association.InterGestionMembres;
+import association.Membre;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Month;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Tests JUnit de la classe {@link GestionAssociation}.
+ */
 public class TestGestionAssociation {
-
+  
   private GestionAssociation association;
-  private final GestionAssociation association2 = new GestionAssociation();
-
-  private final Membre membre1 = new Membre(new InformationPersonnelle("Nom1", "Prenom1"));
-  private final Membre membre2 = new Membre(new InformationPersonnelle("Nom2", "Prenom2"));
-  private final Membre membre3 = new Membre(new InformationPersonnelle("Nom3", "Prenom3"));
-
+  
+  private static final Membre membre1 =
+      new Membre(new InformationPersonnelle("Nom1", "Prenom1"));
+  private static final Membre membre2 =
+      new Membre(new InformationPersonnelle("Nom2", "Prenom2"));
+  private static final Membre membre3 =
+      new Membre(new InformationPersonnelle("Nom3", "Prenom3"));
+  
+  /** Utilisée pour écrire testChargementDonnees.txt */
+  private static GestionAssociation association1;
+  
+  /**
+   * Crée une gestionAssociation et y ajoute des membres et des évenements, puis
+   * le sérialise dans testChargementDonnees.txt.
+   */
+  @BeforeAll
+  static void setUpAll() throws FileNotFoundException, IOException {
+    association1 = getAssociationTypique();
+    
+    // On sérialise les données dans un fichier pour testChargementDonnees
+    ObjectOutputStream ois = new ObjectOutputStream(
+        new FileOutputStream("testChargementDonnees.txt"));
+    ois.writeObject(association1);
+    ois.close();
+  }
+  
+  /**
+   * Crée une gestionAssociation et y ajoute des membres et des évenements.
+   */
   @BeforeEach
-  void setUp() {
+  void setUp() throws FileNotFoundException, IOException {
+    association = getAssociationTypique();
+  }
+  
+  /**
+   * Permet de créer une association typique avec des membres et des évenements, et des membres
+   * inscrits à des évenements.
+   * @return Une association avec des membres et des évenements pour les tests.
+   */
+  private static GestionAssociation getAssociationTypique() {
     // Utilisée par les tests de sauvegarde et de chargement
-    association = new GestionAssociation();
-
+    GestionAssociation asso = new GestionAssociation();
+    
     // On récupère les gestionnaires
-    InterGestionEvenements gestionEvenements = association.gestionnaireEvenements();
-    InterGestionMembres gestionMembres = association.gestionnaireMembre();
-
+    InterGestionEvenements gestionEvenements =
+        asso.gestionnaireEvenements();
+    InterGestionMembres gestionMembres = asso.gestionnaireMembre();
+    
     // On ajoute des membres
     gestionMembres.ajouterMembre(membre1);
     gestionMembres.ajouterMembre(membre2);
     gestionMembres.ajouterMembre(membre3);
-
+    
     // On ajoute des événements
-    Evenement evenement1 = gestionEvenements.creerEvenement(
-            "Evenement1", "Endroit1", 1, Month.DECEMBER, 2022, 0, 0, 60, 10);
-    Evenement evenement2 = gestionEvenements.creerEvenement(
-            "Evenement2", "Endroit2", 1, Month.DECEMBER, 2022, 2, 0, 60, 10);
-    Evenement evenement3 = gestionEvenements.creerEvenement(
-            "Evenement3", "Endroit3", 1, Month.DECEMBER, 2022, 4, 0, 60, 10);
-
+    Evenement evenement1 = gestionEvenements.creerEvenement("Evenement1",
+        "Endroit1", 1, Month.DECEMBER, 2022, 0, 0, 60, 10);
+    Evenement evenement2 = gestionEvenements.creerEvenement("Evenement2",
+        "Endroit2", 1, Month.DECEMBER, 2022, 2, 0, 60, 10);
+    Evenement evenement3 = gestionEvenements.creerEvenement("Evenement3",
+        "Endroit3", 1, Month.DECEMBER, 2022, 4, 0, 60, 10);
+    
     // On ajoute des participants aux evenements
     gestionEvenements.inscriptionEvenement(evenement1, membre1);
     gestionEvenements.inscriptionEvenement(evenement1, membre2);
     gestionEvenements.inscriptionEvenement(evenement2, membre1);
     gestionEvenements.inscriptionEvenement(evenement3, membre2);
+    
+    return asso;
   }
-
+  
+  
   /**
-   * Teste que un GestionAssociation juste créé retourne bien un GestionEvenements vide.
+   * Supprime les fichiers utilisés pour les tests.
+   */
+  @AfterAll
+  static void teardown() throws IOException {
+    Files.delete(Path.of("testChargementDonnees.txt"));
+    Files.delete(Path.of("testSauvegardeDonnees.txt"));
+    Files.delete(Path.of("testSauvegardeNull.txt"));
+  }
+  
+  /**
+   * Teste que un GestionAssociation juste créé retourne bien un
+   * GestionEvenements vide.
    */
   @Test
   void testGetterGestionEvenements() {
-    InterGestionEvenements gestionEvenements = association2.gestionnaireEvenements();
+    GestionAssociation association2 = new GestionAssociation();
+    InterGestionEvenements gestionEvenements =
+        association2.gestionnaireEvenements();
     assertTrue(gestionEvenements.ensembleEvenements().isEmpty());
   }
-
+  
   /**
-   * Teste que un GestionAssociation juste créé retourne bien un GestionMembres vide.
+   * Teste que un GestionAssociation juste créé retourne bien un GestionMembres
+   * vide.
    */
   @Test
   void testGetterGestionMembres() {
+    GestionAssociation association2 = new GestionAssociation();
     InterGestionMembres gestionMembres = association2.gestionnaireMembre();
     assertTrue(gestionMembres.ensembleMembres().isEmpty());
   }
-
+  
   /**
    * Teste que les données écrites correspondent bien aux données du programme.
    */
@@ -75,28 +142,48 @@ public class TestGestionAssociation {
   void testSauvegardeDonnees() throws IOException, ClassNotFoundException {
     // On sauvegarde les données dans le fichier testSauvegardeDonnees.txt
     association.sauvegarderDonnees("testSauvegardeDonnees.txt");
-
+    
     // On récupère les données dans association2
     GestionAssociation association2;
-    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("testSauvegardeDonnees.txt"));
+    ObjectInputStream ois =
+        new ObjectInputStream(new FileInputStream("testSauvegardeDonnees.txt"));
     association2 = (GestionAssociation) ois.readObject();
     ois.close();
-
+    
     // On vérifie que les données sont les mêmes
     assertEquals(association, association2);
   }
-
-
-  @Test
+  
   /**
-   * Teste que les données lues par chargerDonnées correspondent bien aux données du fichier.
+   * Teste que les données lues par chargerDonnées correspondent bien aux
+   * données du fichier.
    */
+  @Test
   void testChargementDonnees() throws IOException {
-    // On charge les données du fichier testLectureDonnees.txt dans association2
+    // On charge les données du fichier testChargementDonnees.txt dans
+    // association2
     GestionAssociation association2 = new GestionAssociation();
-    association2.chargerDonnees("testSauvegardeDonnees.txt");
-
+    association2.chargerDonnees("testChargementDonnees.txt");
+    
     // On vérifie que les données sont les mêmes
     assertEquals(association, association2);
+  }
+  
+  /**
+   * Vérifie que le programme ne produit pas d'erreur si on essaye de sérialiser alors que 
+   * gestionMembres et gestionEvenements sont à null.
+   * @throws IOException
+   */
+  @Test
+  void testSauvegardeNull() throws IOException {
+    // On crée un objet vide
+    GestionAssociation association2 = new GestionAssociation();
+    
+    // On sauvegarde puis charge les données
+    association2.sauvegarderDonnees("testSauvegardeNull.txt");
+    association2.chargerDonnees("testSauvegardeNull.txt");
+    
+    assertEquals(association2.gestionnaireEvenements(), new GestionEvenements());
+    assertEquals(association2.gestionnaireMembre(), new GestionMembres());
   }
 }
