@@ -276,13 +276,25 @@ class TestGestionMembres {
   }
   
   /**
+   * Test du getter de l'ensemble des membres. 
+   * la méthode le renvoie vide et non null.
+   */
+  @Test
+  void testGetterEnsembleMembreVide() {
+    assertTrue(gt.ensembleMembres() != null);
+    assertTrue(gt.ensembleMembres().isEmpty());
+  }
+  
+  /**
    * Test du getter de construction de l'ensemble des membres. Si l'ensemble est
    * <code>null</code>, la méthode le renvoie vide. Sinon elle renvoie la liste
    * des membres.
    */
   @Test
-  void testGetterEnsembleMembre() {
+  void testGetterEnsembleMembreNonVide() {
+    gt.ajouterMembre(membreT1);
+    gt.ajouterMembre(membreT2);
     assertTrue(gt.ensembleMembres() != null);
-    ;
+    assertFalse(gt.ensembleMembres().isEmpty());
   }
 }
