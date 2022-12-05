@@ -11,6 +11,7 @@ import association.InformationPersonnelle;
 import association.InterGestionEvenements;
 import association.InterGestionMembres;
 import association.Membre;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -107,9 +108,9 @@ public class TestGestionAssociation {
    */
   @AfterAll
   static void teardown() throws IOException {
-    Files.delete(Path.of("testChargementDonnees.txt"));
-    Files.delete(Path.of("testSauvegardeDonnees.txt"));
-    Files.delete(Path.of("testSauvegardeNull.txt"));
+    new File("testChargementDonnees.txt").delete();
+    new File("testSauvegardeDonnees.txt").delete();
+    new File("testSauvegardeNull.txt").delete();
   }
   
   /**
