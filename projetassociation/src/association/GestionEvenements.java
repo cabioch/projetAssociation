@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Gestion des événements.
  *
- * @author romain
+ * @author Romain TACON
  */
 public class GestionEvenements implements InterGestionEvenements, Serializable {
   
@@ -23,13 +23,17 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
   List<Evenement> listeEvenements;
   
   /**
-   * Initialise un gestionEvenements et sa liste interne.
+   * Constructeur de la classe GestionEvenements.
+   * Initialise la liste interne d'évènement de l'association.
    */
   public GestionEvenements() {
     this.listeEvenements = new ArrayList<>();
   }
 
-
+  /**
+   * Setter de la liste d'évènements
+   * @param listeEvenements une liste d'Evènements
+   */
   public void setListeEvenements(List<Evenement> listeEvenements) {
     this.listeEvenements = listeEvenements;
   }

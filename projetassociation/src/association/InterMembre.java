@@ -3,29 +3,29 @@ package association;
 import java.util.List;
 
 /**
- * Définit les actions pour un membre d'une association qui peut participer à
- * des événements organisés par l'association.
+ * DÃ©finit les actions pour un membre d'une association qui peut participer Ã 
+ * des Ã©vÃ¨nements organisÃ©s par l'association.
  *
  * @author Eric Cariou
  */
 public interface InterMembre {
   /**
-   * La liste des événements auquel le membre est inscrit ou a participé.
+   * La liste des Ã©vÃ¨nements auquel le membre est inscrit ou a participÃ©.
    *
-   * @return la liste des événements du membre
+   * @return la liste des Ã©vÃ¨nements du membre
    */
   List<Evenement> ensembleEvenements();
 
   /**
-   * La liste des événements auquel le membre est inscrit et qui n'ont pas
+   * La liste des Ã©vÃ¨nements auquel le membre est inscrit et qui n'ont pas
    * encore eu lieu.
    *
-   * @return la liste des événements à venir du memmbre
+   * @return la liste des Ã©vÃ¨nements Ã  venir du membre
    */
   List<Evenement> ensembleEvenementsAvenir();
 
   /**
-   * Définit les informations personnelles du membre.
+   * Dï¿½finit les informations personnelles du membre.
    *
    * @param info les informations personnelles du membre
    */
@@ -35,7 +35,7 @@ public interface InterMembre {
    * Renvoie les informations personnelles du membre.
    *
    * @return l'objet contenant les informations personnelles du membre ou
-   *         <code>null</code> si elles n'ont pas été définies
+   *         <code>null</code> si elles n'ont pas Ã©tÃ© dÃ©finies
    */
   InformationPersonnelle getInformationPersonnelle();
 }

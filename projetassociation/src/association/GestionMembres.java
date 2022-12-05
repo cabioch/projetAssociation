@@ -51,7 +51,8 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   @Override
   public boolean ajouterMembre(InterMembre membre) {   
     // verifie que le membre ajouté n'a pas un attribut null en prénom ou nom.
-    if (membre.getInformationPersonnelle().getPrenom() == null ||membre.getInformationPersonnelle().getNom() == null) {
+    if (membre.getInformationPersonnelle().getPrenom() == null
+    	|| membre.getInformationPersonnelle().getNom() == null) {
       return false;
     }
     // verifie que le membre ajouté n'est pas égale a un membre déja existant

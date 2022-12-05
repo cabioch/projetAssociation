@@ -15,15 +15,21 @@ import java.util.Objects;
 
 /**
  * Gère la sauvegarde des données de l'association.
+ * 
+ * @author Enzo CABIOCH
  */
 public class GestionAssociation
     implements InterGestionAssociation, Serializable {
   
   private static final long serialVersionUID = 392L;
   /**
-   * Le gestionnaire d'evenements.
+   * Le gestionnaire d'evenements de l'association.
    */
   private GestionEvenements gestionEvenements = null;
+  
+  /**
+   * Le gestionnaire de Membres de l'association.
+   */
   private GestionMembres gestionMembres = null;
   
   /**
@@ -31,7 +37,7 @@ public class GestionAssociation
    * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
    * c'est la référence sur cet objet qui est retournée.
    *
-   * @return le gestionnaire d'évènements de l'association
+   * @return le gestionnaire d'évènements de l'association.
    */
   @Override
   public InterGestionEvenements gestionnaireEvenements() {
@@ -47,7 +53,7 @@ public class GestionAssociation
    * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
    * c'est la référence sur cet objet qui est retournée.
    *
-   * @return le gestionnaire de membres de l'association
+   * @return le gestionnaire de membres de l'association.
    */
   @Override
   public InterGestionMembres gestionnaireMembre() {
@@ -80,8 +86,8 @@ public class GestionAssociation
    * évènements avaient déjà été définis, ils sont écrasés par le contenu trouvé
    * dans le fichier.
    *
-   * @param nomFichier le fichier à partir duquel charger les données
-   * @throws IOException en cas de problème de lecture dans le fichier
+   * @param nomFichier le fichier à partir duquel charger les données.
+   * @throws IOException en cas de problème de lecture dans le fichier.
    */
   @Override
   public void chargerDonnees(String nomFichier) throws IOException {

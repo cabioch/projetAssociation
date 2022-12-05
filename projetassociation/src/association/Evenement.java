@@ -10,6 +10,8 @@ import java.util.Set;
 /**
  * Représente un Evenement nommé a un lieu donné, avec un debut, une fin et des
  * participants.
+ * 
+ * @author Enzo CABIOCH
  */
 public class Evenement implements java.io.Serializable {
   
@@ -47,13 +49,13 @@ public class Evenement implements java.io.Serializable {
   private final Set<InterMembre> participants = new HashSet<>();
   
   /**
-   * Vérifie que 2 Evenements ne se passent pas en même temps et au même
-   * endroit. On considère un évenement qui commence exactement à la fin d'un
+   * Vérifie que deux Evenements ne se passent pas en même temps et dans un même lieu. 
+   * On considère un évenement qui commence exactement à la fin d'un
    * autre comme un chevauchement.
    *
    * @param evt Un evenement
-   * @return vrai si l'evenement en parametre ne se chevauche pas en temps et en
-   *         lieu avec celui-ci
+   * @return <code>true</code> si l'evenement en parametre ne se chevauche pas en temps et en
+   *         lieu avec celui-ci.
    */
   public boolean pasDeChevauchementLieu(Evenement evt) {
     // J'ai un doute sur le fonctionnement de la méthode
@@ -64,19 +66,19 @@ public class Evenement implements java.io.Serializable {
   }
   
   /**
-   * Vérifie si 2 Evenements ne se passent pas en même temps. On considère un
+   * Vérifie si deux Evenements ne se passent pas en même temps. On considère un
    * évenement qui commence exactement à la fin d'un autre comme un
    * chevauchement.
    *
    * @param evt Un evenement
-   * @return vrai si l'evenement en parametre ne se chevauche pas en temps avec
-   *         celui-ci
+   * @return <code>true</code> si l'evenement en parametre ne se chevauche pas en temps avec
+   *         celui-ci.
    */
   public boolean pasDeChevauchementTemps(Evenement evt) {
     LocalDateTime finThis = date.plusMinutes(duree);
     LocalDateTime finEvt = evt.date.plusMinutes(evt.duree);
     
-    // Pas supperposé en temps
+    // Pas superposé en temps
     // TODO a réécrire
     return (finThis.compareTo(evt.date) < 0 || date.compareTo(finEvt) > 0);
   }
@@ -139,9 +141,7 @@ public class Evenement implements java.io.Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    
     Evenement evenement = (Evenement) o;
-    
     if (duree != evenement.duree) {
       return false;
     }
@@ -172,7 +172,8 @@ public class Evenement implements java.io.Serializable {
    * particpants n'est pas déjà atteint.
    *
    * @param participant Un participant
-   * @return Vrai si le participant a bien pu être ajouté
+   * @return <code>true</code> si le participant a bien pu être ajouté,
+   * 		 <code>false</code> si le nombre maximal à déja été atteint.
    */
   public boolean ajouterParticipant(InterMembre participant) {
     if (participants.size() >= nbParticipantsMax) {
@@ -182,10 +183,10 @@ public class Evenement implements java.io.Serializable {
   }
   
   /**
-   * Enleve un participant de la liste de participants.
+   * Enleve un participant de la liste des participants.
    *
    * @param participant Un participant
-   * @return Vrai si le participant a bien été enlevé
+   * @return <code>true</code> si le participant a bien été enlevé.
    */
   public boolean enleverParticipant(InterMembre participant) {
     return this.participants.remove(participant);
@@ -193,7 +194,7 @@ public class Evenement implements java.io.Serializable {
   
   /**
    * Crée un évenement a partir d'un nom, d'un lieu, d'un objet LocalDateTime,
-   * d'une dur�e et d'un nombre de participants maximum. L'année ne peut pas
+   * d'une durée et d'un nombre de participants maximum. L'année ne peut pas
    * être inférieure à l'année en cours.
    *
    * @param nom Le nom de l'evenement (non nul & non vide)

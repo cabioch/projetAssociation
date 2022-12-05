@@ -34,8 +34,8 @@ public interface InterGestionMembres {
    *
    * @param membre le membre à désigner comme président.
    * @return <code>false</code> si le membre n'�tait pas dans l'association (le
-   *         pr�sident n'est alors pas positionn�), <code>true</code> si le
-   *         membre a �t� nomm� pr�sident
+   *         président n'est alors pas positionné), <code>true</code> si le
+   *         membre a été nommé président
    */
   boolean designerPresident(InterMembre membre);
 
@@ -47,9 +47,9 @@ public interface InterGestionMembres {
   Set<InterMembre> ensembleMembres();
 
   /**
-   * Renvoie le pr�sident de l'association.
+   * Renvoie le président de l'association.
    *
-   * @return le membre pr�sident de l'association s'il avait �t� d�sign� sinon
+   * @return le membre président de l'association s'il avait été désigné sinon
    *         retourne <code>null</code>
    */
   InterMembre president();

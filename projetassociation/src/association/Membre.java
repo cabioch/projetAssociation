@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Gestion du membre ainsi que les é©vènements du membres et ses informations
+ * Gestion du membre ainsi que les évènements du membres et ses informations
  * personnelles.
  *
- * @author Jean
+ * @author Jean-André THOMAS
  */
 public class Membre implements InterMembre, Serializable {
   
@@ -65,14 +65,14 @@ public class Membre implements InterMembre, Serializable {
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
     
-    // on instancie une nouvelle liste des que la méthode est appelée pour
-    // prendre en compte la date
+    /* on instancie une nouvelle liste des que la méthode est appelée pour
+     prendre en compte la date*/
     List<Evenement> avenir = new ArrayList<>();
     
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listEvenements) {
-      // si la liste contient l'objet infos du membre ET si l'évènement est
-      // après la date locale, donc à venir.
+      /* si la liste contient l'objet infos du membre ET si l'évènement est
+      après la date locale, donc à venir.*/
       if (e.getDate().isAfter(LocalDateTime.now())) {
         avenir.add(e);
       }
@@ -82,7 +82,7 @@ public class Membre implements InterMembre, Serializable {
   
   /**
    * Définit les informations personnelles (adresse et age) du membre en
-   * vérifant si c'est bien lui (nom et prenom).
+   * vérifiant si c'est bien lui (nom et prénom).
    *
    * @param info les informations personnelles du membre.
    */
@@ -119,12 +119,12 @@ public class Membre implements InterMembre, Serializable {
   }
   
   /**
-   * Retourne en string les infos du membre.
+   * Redéfinition de la méthode toString.
    */
   @Override
   public String toString() {
-    return infos.getNom() + " " + infos.getPrenom() + " " + infos.getAdresse()
-        + " " + infos.getAge();
+    return infos.getNom() + " " + infos.getPrenom() + " :" + infos.getAdresse()
+        + " " + infos.getAge() +" ans.";
   }
   
   

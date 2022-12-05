@@ -3,47 +3,47 @@ package association;
 import java.io.IOException;
 
 /**
- * Définition des actions de gestion de l'association.
+ * Dï¿½finition des actions de gestion de l'association.
  *
  * @author Eric Cariou
  */
 public interface InterGestionAssociation {
 
   /**
-   * Renvoie le gestionnaire d'événements de l'association. L'objet retourné est
-   * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
-   * c'est la référence sur cet objet qui est retournée.
+   * Renvoie le gestionnaire d'ï¿½vï¿½nements de l'association. L'objet retournÃ© est
+   * unique. Au premier appel de la mÃ©thode, il est crÃ©Ã© et aux appels suivants,
+   * c'est la rÃ©fÃ©rence sur cet objet qui est retournÃ©e.
    *
-   * @return le gestionnaire d'événements de l'association
+   * @return le gestionnaire d'ï¿½vï¿½nements de l'association
    */
   InterGestionEvenements gestionnaireEvenements();
 
   /**
-   * Renvoie le gestionnaire de membres de l'association. L'objet retourné est
-   * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
-   * c'est la référence sur cet objet qui est retournée.
+   * Renvoie le gestionnaire de membres de l'association. L'objet retournÃ© est
+   * unique. Au premier appel de la mÃ©thode, il est crÃ©e et aux appels suivants,
+   * c'est la rÃ©fÃ©rence sur cet objet qui est retournÃ©e.
    *
    * @return le gestionnaire de membres de l'association
    */
   InterGestionMembres gestionnaireMembre();
   
   /**
-   * Enregistre dans un fichier toutes les données de l'association,
-   * c'est-à-dire l'ensemble des membres et des événéments.
+   * Enregistre dans un fichier toutes les donnees de l'association,
+   * c'est-Ã -dire l'ensemble des membres et des Ã©vÃ¨nements.
    *
-   * @param nomFichier le fichier dans lequel enregistrer les données
-   * @throws IOException en cas de problème d'écriture dans le fichier
+   * @param nomFichier le fichier dans lequel enregistrer les donnÃ©es
+   * @throws IOException en cas de problÃ¨me d'Ã©criture dans le fichier
    */
   void sauvegarderDonnees(String nomFichier) throws IOException;
 
   /**
-   * Charge à partir d'un fichier toutes les données de l'association,
-   * c'est-à-dire un ensemble de membres et d'événements. Si des membres et des
-   * événéments avaient déjà été définis, ils sont écrasés par le contenu trouvé
+   * Charge Ã  partir d'un fichier toutes les donnÃ©es de l'association,
+   * c'est-Ã -dire un ensemble de membres et d'ï¿½vï¿½nements. Si des membres et des
+   * Ã©vÃ¨nements avaient dÃ©jÃ  Ã©tÃ© dÃ©finis, ils sont Ã©crasÃ©s par le contenu trouvÃ©
    * dans le fichier.
    *
-   * @param nomFichier le fichier à partir duquel charger les données
-   * @throws IOException en cas de problème de lecture dans le fichier
+   * @param nomFichier le fichier Ã  partir duquel charger les donnÃ©es
+   * @throws IOException en cas de problÃ¨me de lecture dans le fichier
    */
   void chargerDonnees(String nomFichier) throws IOException;
 }
