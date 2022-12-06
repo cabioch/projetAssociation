@@ -486,15 +486,13 @@ public class Controleur implements Initializable {
     int annee = Integer.parseInt(dateStrArray[2]);
     int indexMois = Integer.parseInt(dateStrArray[1]) - 1;
     
-    
     // On vérifie que le mois est bien entre 1 et 12
-    Month mois;
-    try {
-      mois = Month.values()[indexMois];
-    } catch (ArrayIndexOutOfBoundsException e) {
+    if (indexMois > 11 || indexMois < 0) {
       message.setText("Le mois doit être compris entre 1 et 12.");
       return;
     }
+
+    Month mois = Month.values()[indexMois];
     int jour = Integer.parseInt(dateStrArray[0]);
     int heure = Integer.parseInt(heureStrArray[0]);
     int minute = Integer.parseInt(heureStrArray[1]);

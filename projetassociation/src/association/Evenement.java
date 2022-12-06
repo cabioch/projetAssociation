@@ -1,9 +1,13 @@
 package association;
 
+import java.text.DateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -166,9 +170,12 @@ public class Evenement implements java.io.Serializable {
   
   @Override
   public String toString() {
-    return "Evénement : " + nom + " | Lieu : " + lieu + " | Date : " + date
-        + " à " + date.plusMinutes(duree) + " | Nombre de participants max : "
-        + nbParticipantsMax + " participants.";
+    // Obtiens un formatteur de date au format désiré
+    DateTimeFormatter dtformat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    
+
+    return "Evénement : " + nom + " | Lieu : " + lieu + " | Date : " + dtformat.format(date)
+        + " | Durée " + duree + " | Nombre de participants max : " + nbParticipantsMax;
   }
   // </editor-fold>
   
