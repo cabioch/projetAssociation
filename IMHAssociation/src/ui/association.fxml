@@ -124,8 +124,8 @@
                   <TextField fx:id="entreeNomEvt" layoutX="112.0" layoutY="54.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez un nom" />
                   <TextField fx:id="entreeLieuEvt" layoutX="112.0" layoutY="79.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez le lieu" />
                   <TextField fx:id="entreeDateEvt" layoutX="112.0" layoutY="104.0" prefHeight="25.0" prefWidth="212.0" promptText="Format : Jour-Mois-Année" />
-                  <TextField fx:id="entreeHeureEvt" layoutX="112.0" layoutY="129.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez l'heure de début" />
-                  <TextField fx:id="entreeDureeEvt" layoutX="112.0" layoutY="154.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez une durée en minute" />
+                  <TextField fx:id="entreeHeureEvt" layoutX="112.0" layoutY="129.0" prefHeight="25.0" prefWidth="212.0" promptText="Ex format heure de début : 12:00" />
+                  <TextField fx:id="entreeDureeEvt" layoutX="112.0" layoutY="154.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez une durée en minutes" />
                   <TextField fx:id="entreeMaxParticipantsEvt" layoutX="112.0" layoutY="179.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez le nombre maximal de participants" />
                   <Label layoutX="20.0" layoutY="108.0" text="Date" />
                   <Label layoutX="20.0" layoutY="133.0" text="Heure" />

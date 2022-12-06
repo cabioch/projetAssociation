@@ -186,8 +186,8 @@ public class Controleur implements Initializable {
   /**
    * Affiche l’événement sélectionné : si un événement est sélectionné dans la
    * liste, affiche ses informations dans les champs en haut de la fenêtre.
-   * 
-   * @param event
+   *
+   * @param event Est l'événement sélectionné quand on clic sur le bouton
    */
   @FXML
   void actionBoutonEvenementSelectionneEvt(ActionEvent event) {
@@ -212,7 +212,7 @@ public class Controleur implements Initializable {
    * Affiche tous les événements futurs de l’association. Les évènements sont
    * listés dans la zone de texte.
    *
-   * @param event
+   * @param event Est l'objet récupéré en cliquant sur le bouton
    */
   @FXML
   void actionBoutonEvenementsFutursAssociation(ActionEvent event) {
@@ -342,11 +342,32 @@ public class Controleur implements Initializable {
   /**
    * Supprimer : efface de la liste des événements l’événement dont les
    * informations sont affichées.
+   * 
+   * @param event Est l'événement sélectionné pour la suppression
    */
   @FXML
   void actionBoutonSupprimerEvt(ActionEvent event) {
+	//On prend les valeurs des entrées et on les associe à un événement
     Evenement e = getEvenementFromFields();
+    //On supprime cet événement dans le gestionnaire
     association.gestionnaireEvenements().supprimerEvenement(e);
+    //On clear les liste des événements pour l'affichage de la liste mise à jour
+    listeEvenements.getItems().clear();
+    
+    //on affiche la liste mise à jour
+    for (Evenement ei : association.gestionnaireEvenements()
+            .ensembleEvenements()) {
+          listeEvenements.getItems().add(ei);
+        }
+    
+    //On oublie pas de supprimer les entrées
+    entreeNomEvt.clear();
+    entreeLieuEvt.clear();
+    entreeDateEvt.clear();
+    entreeHeureEvt.clear();
+    entreeDureeEvt.clear();
+    entreeMaxParticipantsEvt.clear();
+    
     //gérer la suppression en cas d'erreur. 
     //Si l'evenement existe et a bien été supprimer comme les membre sinon un aute message.
     message.setText("La suppression a bien été prise en compte.");
