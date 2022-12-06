@@ -158,14 +158,13 @@ public class Evenement implements java.io.Serializable {
     return Objects.equals(date, other.date) && duree == other.duree
         && Objects.equals(lieu, other.lieu)
         && nbParticipantsMax == other.nbParticipantsMax
-        && Objects.equals(nom, other.nom)
-        && Objects.equals(participants, other.participants);
+        && Objects.equals(nom, other.nom);
   }
   
   @Override
   public int hashCode() {
-    return Objects.hash(date, duree, lieu, nbParticipantsMax, nom,
-        participants);
+    return Objects.hash(date, duree, lieu, nbParticipantsMax, nom
+        );
   }
   
   @Override

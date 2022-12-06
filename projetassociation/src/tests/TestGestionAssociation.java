@@ -40,16 +40,13 @@ public class TestGestionAssociation {
   private static final Membre membre3 =
       new Membre(new InformationPersonnelle("André", "Dupuis"));  
 
-  /** Utilisée pour écrire testChargementDonnees.txt */
-  private static GestionAssociation association1;
-  
   /**
    * Crée une gestionAssociation et y ajoute des membres et des évenements, puis
    * le sérialise dans testChargementDonnees.txt.
    */
   @BeforeAll
   static void setUpAll() throws FileNotFoundException, IOException {
-    association1 = getAssociationTypique();
+    GestionAssociation association1 = getAssociationTypique();
     
     // On sérialise les données dans un fichier pour testChargementDonnees
     ObjectOutputStream ois = new ObjectOutputStream(
