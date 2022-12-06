@@ -411,7 +411,7 @@ public class Controleur implements Initializable {
     String adresse = this.entreAdresseMembre.getText();
     InformationPersonnelle info = new InformationPersonnelle(this.entreeNomMembre.getText(),
         this.entreePrenomMembre.getText(), adresse, age);
-    if (info.getAge() ) {
+    if (info.getAge() <0 ) {
       age = 0;
     }
     if(info.getAdresse() == null) {
