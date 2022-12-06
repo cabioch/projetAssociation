@@ -127,8 +127,8 @@ public class Membre implements InterMembre, Serializable {
    */
   @Override
   public String toString() {
-    return infos.getPrenom() + " Prenom " + infos.getNom() + " Nom : "
-        + infos.getAdresse() + " adresse, " + infos.getAge() + " ans.";
+    return "Prenom : " + infos.getPrenom() + ", Nom : " + infos.getNom() + ", / " +
+        " Adresse : " + infos.getAdresse() + ", Age : " + infos.getAge();
   }
   
   
