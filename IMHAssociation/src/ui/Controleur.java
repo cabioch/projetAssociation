@@ -406,11 +406,17 @@ public class Controleur implements Initializable {
    * Méthode de création d'un membre via les inputs de l'interface.
    */
   private Membre getMembreFromFields() {
-    // TODO Gerer erreurs
+    // TODO Gerer erreurs    
     int age = Integer.parseInt(entreAgeMembre.getText());
+    String adresse = this.entreAdresseMembre.getText();
     InformationPersonnelle info = new InformationPersonnelle(this.entreeNomMembre.getText(),
-        this.entreePrenomMembre.getText(),
-        this.entreAdresseMembre.getText(), age);
+        this.entreePrenomMembre.getText(), adresse, age);
+    if (info.getAge() ) {
+      age = 0;
+    }
+    if(info.getAdresse() == null) {
+      adresse = "";
+    }
     Membre m = new Membre(info);
     return m;
   }
@@ -472,7 +478,7 @@ public class Controleur implements Initializable {
         "Application  de Gestion d'une Association.\n\n"
             + "Réalisation par Jean-André, Enzo, Nicolas & Romain\n\n"
             + "Tutoriel : \n"
-            + "Vous avez deux encarts. La fênetre de gauche permet la gestion des membres "
+            + "Vous avez deux encarts.\n La fênetre de gauche permet la gestion des membres "
             + "et leur importation dans l'association.\n "
             + "La fenêtre de droite permet la gestion des évènements de l'association.\n";
     alerte.setContentText(content);
