@@ -14,7 +14,9 @@ import java.util.Objects;
  */
 public class Membre implements InterMembre, Serializable {
   
-  
+  /**
+   * id de sérialisation.
+   */
   private static final long serialVersionUID = 2037L;
   /**
    * Les evenements auxquels participe ou a participé le membre.
@@ -122,18 +124,8 @@ public class Membre implements InterMembre, Serializable {
     return Objects.hash(infos);
   }
   
-  /**
-   * Redéfinition de la méthode toString.
-   */
   @Override
-  public String toString() {
-    return "Prenom : " + infos.getPrenom() + ", Nom : " + infos.getNom() + ", / " +
-        " Adresse : " + infos.getAdresse() + ", Age : " + infos.getAge();
-  }
-  
-  
-  @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -144,10 +136,16 @@ public class Membre implements InterMembre, Serializable {
       return false;
     }
     Membre other = (Membre) obj;
-    return Objects.equals(infos.getAdresse(), other.infos.getAdresse())
-        && infos.getAge() == other.infos.getAge()
-        && Objects.equals(infos.getNom(), other.infos.getNom())
-        && Objects.equals(infos.getPrenom(), other.infos.getPrenom());
+    return Objects.equals(infos, other.infos);
+  }
+  
+  /**
+   * Redéfinition de la méthode toString.
+   */
+  @Override
+  public String toString() {
+    return "Prenom : " + infos.getPrenom() + ", Nom : " + infos.getNom() + " | "
+        + " Adresse : " + infos.getAdresse() + ", Age : " + infos.getAge();
   }
 }
 

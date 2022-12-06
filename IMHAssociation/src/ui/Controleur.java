@@ -288,8 +288,6 @@ public class Controleur implements Initializable {
     // TODO GESTION ERREUR GESTION ERREUR
     InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
     Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
-    
-    
     // TODO Encore de la gestion d'erreur
     m.ensembleEvenements().remove(e);
     e.enleverParticipant(m);
@@ -304,13 +302,19 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonInscrireMembreEvenement(ActionEvent event) {
-    // TODO GESTION ERREUR GESTION ERREUR
-    InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
-    Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
-    
-    // TODO Encore de la gestion d'erreur
-    association.gestionnaireEvenements().inscriptionEvenement(e, m);
-  }
+	// TODO GESTION ERREUR GESTION ERREUR
+	    InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
+	    Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
+	    if (e.getParticipants().size() < e.getNbParticipantsMax()) {
+	    	
+	       // listeMembres.getItems().add((Membre) m);
+	        //listeEvenements.getItems().add((Membre) m);
+	        e.ajouterParticipant(m);
+	        m.ensembleEvenements().add(e);
+	        association.gestionnaireEvenements().inscriptionEvenement(e, m);
+	    }
+	    // TODO Encore de la gestion d'erreur
+	  }
   
   /**
    * Bouton de réinitialisation d'un nouvel évènement. Efface le contenu des
