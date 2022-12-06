@@ -409,6 +409,8 @@ public class Controleur implements Initializable {
         e.getNom(), e.getLieu(), date.getDayOfMonth(), date.getMonth(),
         date.getYear(), date.getHour(), date.getMinute(), e.getDuree(),
         e.getNbParticipantsMax());
+    //TODO Possibilité de mettre les informations de l'événement à jour si la 
+    //personne sélectionne l'événement dans la liste des événements
   }
 
   /**
@@ -420,7 +422,7 @@ public class Controleur implements Initializable {
     String adresse = this.entreAdresseMembre.getText();
     InformationPersonnelle info = new InformationPersonnelle(this.entreeNomMembre.getText(),
         this.entreePrenomMembre.getText(), adresse, age);
-    if (info.getAge() <0 ) {
+    if (info.getAge() < 0) {
       age = 0;
     }
     if(info.getAdresse() == null) {
