@@ -167,6 +167,8 @@ public class Controleur implements Initializable {
     for (InterMembre m : e.getParticipants()) {
       listeMembres.getItems().add((Membre) m);
     }
+    labelListeAfficheeEvt.setText(" Tous les participants de l'événement " + e.getNom());
+    message.setText("Affichage des participants de l'événement " + e.getNom() + " a été effectué.");
   }
   
   /**
@@ -209,7 +211,7 @@ public class Controleur implements Initializable {
   /**
    * Affiche tous les événements futurs de l’association. Les évènements sont
    * listés dans la zone de texte.
-   * 
+   *
    * @param event
    */
   @FXML
@@ -221,12 +223,14 @@ public class Controleur implements Initializable {
     }
     
     labelListeAfficheeEvt.setText("Tous les événements futurs de l'association. ");
+    message.setText(
+        "L'affichage de tous les événements futurs de l'association a bien été effectué.");
   }
   
   /**
    * Evénements futurs : idem mais en affichant uniquement les événements à
    * venir pour le membre.
-   * 
+   *
    * @param event
    */
   @FXML
@@ -384,6 +388,7 @@ public class Controleur implements Initializable {
     }
     
     labelListeAfficheeEvt.setText(" Tous les événements de l'association.");
+    message.setText("L'affichage de tous les événements de l'association a bien été effectué.");
   }
   
   /**
