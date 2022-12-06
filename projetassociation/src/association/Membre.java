@@ -65,14 +65,18 @@ public class Membre implements InterMembre, Serializable {
   @Override
   public List<Evenement> ensembleEvenementsAvenir() {
     
-    /* on instancie une nouvelle liste des que la méthode est appelée pour
-     prendre en compte la date*/
+    /*
+     * on instancie une nouvelle liste des que la méthode est appelée pour
+     * prendre en compte la date
+     */
     List<Evenement> avenir = new ArrayList<>();
     
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listEvenements) {
-      /* si la liste contient l'objet infos du membre ET si l'évènement est
-      après la date locale, donc à venir.*/
+      /*
+       * si la liste contient l'objet infos du membre ET si l'évènement est
+       * après la date locale, donc à venir.
+       */
       if (e.getDate().isAfter(LocalDateTime.now())) {
         avenir.add(e);
       }
@@ -123,8 +127,8 @@ public class Membre implements InterMembre, Serializable {
    */
   @Override
   public String toString() {
-    return infos.getNom() + " " + infos.getPrenom() + " :" + infos.getAdresse()
-        + " " + infos.getAge() +" ans.";
+    return infos.getPrenom() + " Prenom " + infos.getNom() + " Nom : "
+        + infos.getAdresse() + " adresse, " + infos.getAge() + " ans.";
   }
   
   
