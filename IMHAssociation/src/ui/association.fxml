@@ -45,9 +45,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.CheckBox?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controleur">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controleur">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -66,13 +65,13 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.48552338530066813" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane prefHeight="573.0" prefWidth="380.0">
           <children>
-            <Label alignment="CENTER" layoutX="171.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Membres" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="145.0" layoutY="9.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Membres" textAlignment="CENTER" wrapText="false">
               <font>
-                <Font size="18.0" fx:id="x1" />
+                <Font size="24.0" fx:id="x1" />
               </font>
               <textFill>
                 <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
@@ -82,71 +81,74 @@
                   <Label layoutX="40.0" layoutY="82.0" text="Prénom" />
                   <Label layoutX="40.0" layoutY="106.0" text="Adresse" />
                   <Label layoutX="40.0" layoutY="131.0" text="Age" />
-                  <TextField fx:id="entreeNomMembre" layoutX="97.0" layoutY="54.0" prefHeight="25.0" prefWidth="290.0" promptText="Entrez un prénom"/>
-                  <TextField fx:id="entreePrenomMembre" layoutX="97.0" layoutY="78.0" prefHeight="25.0" prefWidth="290.0" promptText="Entrez un nom" />
-                  <TextField fx:id="entreAdresseMembre" layoutX="97.0" layoutY="102.0" prefHeight="25.0" prefWidth="290.0" promptText="Entrez une adresse"/>
-                  <TextField fx:id="entreAgeMembre" layoutX="97.0" layoutY="126.0" prefHeight="25.0" prefWidth="290.0" promptText="Entrez un age"/>
-                  <Button layoutX="3.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonNouveauMembre" text="Nouveau" />
-                  <Button layoutX="70.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonValiderMembre" text="Valider" />
-                  <Label layoutX="33.0" layoutY="203.0" text="La liste affiche :">
+                  <TextField fx:id="entreeNomMembre" layoutX="97.0" layoutY="54.0" prefHeight="25.0" prefWidth="174.0" promptText="Entrez un prénom" />
+                  <TextField fx:id="entreePrenomMembre" layoutX="97.0" layoutY="78.0" prefHeight="25.0" prefWidth="174.0" promptText="Entrez un nom" />
+                  <TextField fx:id="entreAdresseMembre" layoutX="97.0" layoutY="102.0" prefHeight="25.0" prefWidth="174.0" promptText="Entrez une adresse" />
+                  <TextField fx:id="entreAgeMembre" layoutX="97.0" layoutY="126.0" prefHeight="25.0" prefWidth="174.0" promptText="Entrez un age" />
+                  <Button layoutX="297.0" layoutY="54.0" mnemonicParsing="false" onAction="#actionBoutonNouveauMembre" prefHeight="25.0" prefWidth="81.0" text="Nouveau" />
+                  <Button layoutX="296.0" layoutY="83.0" mnemonicParsing="false" onAction="#actionBoutonValiderMembre" prefHeight="25.0" prefWidth="81.0" text="Valider" />
+                  <Label layoutX="35.0" layoutY="240.0" text="La liste affiche :">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelListeAfficheeMembre" layoutX="130.0" layoutY="203.0" text="...">
+                  <Label fx:id="labelListeAfficheeMembre" layoutX="135.0" layoutY="240.0" text="...">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="199.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonEvenementsMembreMembre" text="Evénements membre" />
-                  <Button layoutX="329.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonEvenementsFutursMembre" text="Evénements futurs" />
-                  <ListView fx:id="listeMembres" layoutX="31.0" layoutY="226.0" prefHeight="185.0" prefWidth="364.0" />
-                  <Button layoutX="32.0" layoutY="419.0" mnemonicParsing="false" onAction="#actionBoutonAfficherMembreSelectionneMembre" text="Afficher le membre sélectionné" />
-                  <Button layoutX="216.0" layoutY="419.0" mnemonicParsing="false" onAction="#actionBoutonAfficherTousMembresMembre" text="Afficher tous les membres" />
-                  <Button layoutX="32.0" layoutY="449.0" mnemonicParsing="false" onAction="#actionBoutonInscrireMembreEvenement" text="Inscrire membre à événement" />
-                  <Label layoutX="7.0" layoutY="503.0" text="Message : ">
+                  <Button layoutX="34.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonEvenementsMembreMembre" text="Evénements du membre" />
+                  <Button layoutX="188.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonEvenementsFutursMembre" text="Evénements futurs" />
+                  <ListView fx:id="listeMembres" layoutX="31.0" layoutY="266.0" prefHeight="156.0" prefWidth="364.0" />
+                  <Button layoutX="33.0" layoutY="433.0" mnemonicParsing="false" onAction="#actionBoutonAfficherMembreSelectionneMembre" text="Afficher le membre sélectionné" />
+                  <Button layoutX="225.0" layoutY="433.0" mnemonicParsing="false" onAction="#actionBoutonAfficherTousMembresMembre" prefHeight="25.0" prefWidth="168.0" text="Afficher tous les membres" />
+                  <Button layoutX="34.0" layoutY="201.0" mnemonicParsing="false" onAction="#actionBoutonInscrireMembreEvenement" prefHeight="25.0" prefWidth="174.0" text="Inscription à un évènement" />
+                  <Label layoutX="33.0" layoutY="466.0" text="Message : ">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="message" layoutX="76.0" layoutY="484.0" prefHeight="65.0" prefWidth="333.0" />
-                  <Button layoutX="125.0" layoutY="166.0" mnemonicParsing="false" onAction="#actionBoutonSupprimerMembre" text="Supprimer" />
-                  <Button layoutX="217.0" layoutY="449.0" mnemonicParsing="false" onAction="#actionBoutonDesinscrireMembreEvenement" text="Désinscrire membre à événement" />
+                  <TextArea fx:id="message" layoutX="34.0" layoutY="487.0" prefHeight="73.0" prefWidth="364.0" />
+                  <Button layoutX="296.0" layoutY="113.0" mnemonicParsing="false" onAction="#actionBoutonSupprimerMembre" prefHeight="25.0" prefWidth="81.0" text="Supprimer" />
+                  <Button layoutX="213.0" layoutY="201.0" mnemonicParsing="false" onAction="#actionBoutonDesinscrireMembreEvenement" text="Désinscription à un évènement" />
           </children>
         </AnchorPane>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" font="$x1" layoutX="161.0" layoutY="14.0" style="&#10;" text="Evénements" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+            <Label alignment="CENTER" layoutX="163.0" layoutY="7.0" style="&#10;" text="Evénements" textAlignment="CENTER" textFill="$x2" wrapText="false">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Label>
                   <Label layoutX="19.0" layoutY="58.0" text="Nom" />
                   <Label layoutX="19.0" layoutY="84.0" text="Lieu" />
-                  <TextField fx:id="entreeNomEvt" layoutX="112.0" layoutY="54.0" prefHeight="25.0" prefWidth="258.0" promptText="Entrez un nom"/>
-                  <TextField fx:id="entreeLieuEvt" layoutX="112.0" layoutY="79.0" prefHeight="25.0" prefWidth="258.0" promptText="Entrez le lieu"/>
-                  <TextField fx:id="entreeDateEvt" layoutX="112.0" layoutY="104.0" prefHeight="25.0" prefWidth="258.0" promptText="Format : Année/Mois/Jour"/>
-                  <TextField fx:id="entreeHeureEvt" layoutX="112.0" layoutY="129.0" prefHeight="25.0" prefWidth="258.0" promptText="Entrez l'heure de début"/>
-                  <TextField fx:id="entreeDureeEvt" layoutX="112.0" layoutY="154.0" prefHeight="25.0" prefWidth="258.0" promptText="Entrez une durée en minute"/>
-                  <TextField fx:id="entreeMaxParticipantsEvt" layoutX="112.0" layoutY="179.0" prefHeight="25.0" prefWidth="258.0" promptText="Entrez le nombre maximal de participants"/>
+                  <TextField fx:id="entreeNomEvt" layoutX="112.0" layoutY="54.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez un nom" />
+                  <TextField fx:id="entreeLieuEvt" layoutX="112.0" layoutY="79.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez le lieu" />
+                  <TextField fx:id="entreeDateEvt" layoutX="112.0" layoutY="104.0" prefHeight="25.0" prefWidth="212.0" promptText="Format : Année/Mois/Jour" />
+                  <TextField fx:id="entreeHeureEvt" layoutX="112.0" layoutY="129.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez l'heure de début" />
+                  <TextField fx:id="entreeDureeEvt" layoutX="112.0" layoutY="154.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez une durée en minute" />
+                  <TextField fx:id="entreeMaxParticipantsEvt" layoutX="112.0" layoutY="179.0" prefHeight="25.0" prefWidth="212.0" promptText="Entrez le nombre maximal de participants" />
                   <Label layoutX="20.0" layoutY="108.0" text="Date" />
                   <Label layoutX="20.0" layoutY="133.0" text="Heure" />
                   <Label layoutX="19.0" layoutY="158.0" text="Durée" />
                   <Label layoutX="19.0" layoutY="183.0" text="Participants max" />
-                  <Button layoutX="47.0" layoutY="213.0" mnemonicParsing="false" onAction="#actionBoutonNouveauEvt" text="Nouveau" />
-                  <Button layoutX="114.0" layoutY="213.0" mnemonicParsing="false" onAction="#actionBoutonValiderEvt" text="Valider" />
-                  <Button layoutX="245.0" layoutY="213.0" mnemonicParsing="false" onAction="#actionBoutonAfficherParticipantsEvt" text="Afficher les participants" />
-                  <Label layoutX="18.0" layoutY="253.0" text="La liste affiche :">
+                  <Button layoutX="354.0" layoutY="74.0" mnemonicParsing="false" onAction="#actionBoutonNouveauEvt" prefHeight="25.0" prefWidth="75.0" text="Nouveau" />
+                  <Button layoutX="354.0" layoutY="104.0" mnemonicParsing="false" onAction="#actionBoutonValiderEvt" prefHeight="25.0" prefWidth="75.0" text="Valider" />
+                  <Button layoutX="230.0" layoutY="249.0" mnemonicParsing="false" onAction="#actionBoutonAfficherParticipantsEvt" prefHeight="25.0" prefWidth="212.0" text="Afficher les participants" />
+                  <Label layoutX="20.0" layoutY="290.0" text="La liste affiche :">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelListeAfficheeEvt" layoutX="115.0" layoutY="253.0" text="...">
+                  <Label fx:id="labelListeAfficheeEvt" layoutX="124.0" layoutY="290.0" text="...">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ListView fx:id="listeEvenements" layoutX="18.0" layoutY="276.0" prefHeight="191.0" prefWidth="355.0" />
-                  <Button layoutX="19.0" layoutY="476.0" mnemonicParsing="false" onAction="#actionBoutonEvenementSelectionneEvt" text="Afficher l'événement sélectionné" />
-                  <Button layoutX="19.0" layoutY="507.0" mnemonicParsing="false" onAction="#actionBoutonTousEvenementsAssociationEvt" text="Afficher tous les événements de l'association" />
-                  <Button layoutX="19.0" layoutY="537.0" mnemonicParsing="false" onAction="#actionBoutonEvenementsFutursAssociation" text="Afficher tous les événements futurs de l'association" />
-                  <Button layoutX="170.0" layoutY="213.0" mnemonicParsing="false" onAction="#actionBoutonSupprimerEvt" text="Supprimer" />
+                  <ListView fx:id="listeEvenements" layoutX="18.0" layoutY="320.0" prefHeight="239.0" prefWidth="422.0" />
+                  <Button layoutX="19.0" layoutY="249.0" mnemonicParsing="false" onAction="#actionBoutonEvenementSelectionneEvt" prefHeight="25.0" prefWidth="198.0" text="Afficher l'événement sélectionné" />
+                  <Button layoutX="19.0" layoutY="216.0" mnemonicParsing="false" onAction="#actionBoutonTousEvenementsAssociationEvt" prefHeight="25.0" prefWidth="198.0" text="Evénements de l'association" />
+                  <Button layoutX="228.0" layoutY="216.0" mnemonicParsing="false" onAction="#actionBoutonEvenementsFutursAssociation" prefHeight="25.0" prefWidth="212.0" text="Evénements futurs de l'association" />
+                  <Button layoutX="354.0" layoutY="134.0" mnemonicParsing="false" onAction="#actionBoutonSupprimerEvt" prefHeight="25.0" prefWidth="75.0" text="Supprimer" />
           </children>
         </AnchorPane>
       </items>
