@@ -149,11 +149,15 @@ public class Controleur implements Initializable {
    * liste, affiche ses informations personnelles dans les quatres champs en
    * haut de la fenêtre.
    * 
-   *@param event Est l'événement sélectionné quand on clic sur le bouton
+   * @param event Est l'événement sélectionné quand on clic sur le bouton
    */
   @FXML
   void actionBoutonAfficherMembreSelectionneMembre(ActionEvent event) {
     InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
+    if (m == null) {
+      message.setText("Aucun membre sélectionné.");
+      return;
+    }
     InformationPersonnelle info = m.getInformationPersonnelle();
     // TODO Vérifier qu'il est toujours dans l'association
     entreeNomMembre.setText(info.getNom());
@@ -175,15 +179,28 @@ public class Controleur implements Initializable {
    * Afficher les participants : affiche dans la liste de gauche, les
    * participants inscrits à l’événement dont les informations sont affichées.
    * 
-   *@param event Est l'événement sélectionné quand on clic sur le bouton
+   * @param event Est l'événement sélectionné quand on clic sur le bouton
    */
   @FXML
   void actionBoutonAfficherParticipantsEvt(ActionEvent event) {
-    listeEvenements.getItems().clear();
     Evenement e = getEvenementFromFields();
+    if (e == null) {
+      message.setText("L'événement n'est pas un élément valide.");
+      return;
+    }
+    
+    // Si l'événement sélectionné ne fait pas parti de l'association
+    if (!association.gestionnaireEvenements().ensembleEvenements()
+        .contains(e)) {
+      message.setText("L'évenement ne fait pas parti de l'association.");
+      return;
+    }
+    
+    listeEvenements.getItems().clear();
     for (InterMembre m : e.getParticipants()) {
       listeMembres.getItems().add((Membre) m);
     }
+    
     labelListeAfficheeEvt
         .setText(" Tous les participants de l'événement " + e.getNom());
     message.setText("Affichage des participants de l'événement " + e.getNom()
@@ -204,7 +221,7 @@ public class Controleur implements Initializable {
     }
     labelListeAfficheeMembre.setText("Tous les membres.");
     message.setText("Affichage des membres de l'association.");
-
+    
   }
   
   /**
@@ -303,6 +320,17 @@ public class Controleur implements Initializable {
     // TODO GESTION ERREUR GESTION ERREUR
     InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
     Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
+
+    if (m == null) {
+      message.setText("Aucun membre sélectionné.");
+      return;
+    }
+    
+    if (e == null) {
+      message.setText("Aucun événement sélectionné.");
+      return;
+    }
+
     // TODO Encore de la gestion d'erreur
     m.ensembleEvenements().remove(e);
     e.enleverParticipant(m);
@@ -317,19 +345,29 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonInscrireMembreEvenement(ActionEvent event) {
-	// TODO GESTION ERREUR GESTION ERREUR
-	    InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
-	    Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
-	    if (e.getParticipants().size() < e.getNbParticipantsMax()) {
-	    	
-	       // listeMembres.getItems().add((Membre) m);
-	        //listeEvenements.getItems().add((Membre) m);
-	        e.ajouterParticipant(m);
-	        m.ensembleEvenements().add(e);
-	        association.gestionnaireEvenements().inscriptionEvenement(e, m);
-	    }
-	    // TODO Encore de la gestion d'erreur
-	  }
+    InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
+    Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
+    
+    if (m == null) {
+      message.setText("Aucun membre sélectionné.");
+      return;
+    }
+    
+    if (e == null) {
+      message.setText("Aucun événement sélectionné.");
+      return;
+    }
+    
+    if (e.getParticipants().size() < e.getNbParticipantsMax()) {
+      
+      // listeMembres.getItems().add((Membre) m);
+      // listeEvenements.getItems().add((Membre) m);
+      e.ajouterParticipant(m);
+      m.ensembleEvenements().add(e);
+      association.gestionnaireEvenements().inscriptionEvenement(e, m);
+    }
+    // TODO Encore de la gestion d'erreur
+  }
   
   /**
    * Bouton de réinitialisation d'un nouvel évènement. Efface le contenu des
@@ -375,20 +413,26 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonSupprimerEvt(ActionEvent event) {
-	//On prend les valeurs des entrées et on les associe à un événement
+    // On prend les valeurs des entrées et on les associe à un événement
     Evenement e = getEvenementFromFields();
-    //On supprime cet événement dans le gestionnaire
+    
+    if (e == null) {
+      message.setText("Aucun événement sélectionné.");
+      return;
+    }
+    // On supprime cet événement dans le gestionnaire
     association.gestionnaireEvenements().supprimerEvenement(e);
-    //On clear les liste des événements pour l'affichage de la liste mise à jour
+    // On clear les liste des événements pour l'affichage de la liste mise à
+    // jour
     listeEvenements.getItems().clear();
     
-    //on affiche la liste mise à jour
+    // on affiche la liste mise à jour
     for (Evenement ei : association.gestionnaireEvenements()
-            .ensembleEvenements()) {
-          listeEvenements.getItems().add(ei);
-        }
+        .ensembleEvenements()) {
+      listeEvenements.getItems().add(ei);
+    }
     
-    //On oublie pas de supprimer les entrées
+    // On oublie pas de supprimer les entrées
     entreeNomEvt.clear();
     entreeLieuEvt.clear();
     entreeDateEvt.clear();
@@ -396,8 +440,9 @@ public class Controleur implements Initializable {
     entreeDureeEvt.clear();
     entreeMaxParticipantsEvt.clear();
     
-    //gérer la suppression en cas d'erreur. 
-    //Si l'evenement existe et a bien été supprimer comme les membre sinon un aute message.
+    // gérer la suppression en cas d'erreur.
+    // Si l'evenement existe et a bien été supprimer comme les membre sinon un
+    // aute message.
     message.setText("La suppression a bien été prise en compte.");
   }
   
@@ -406,7 +451,8 @@ public class Controleur implements Initializable {
    * affichées dans les champs. Si le membre était président, un message de
    * place vacante est affiché pour le rôle de président.
    *
-   * @param event l'objet récupéré par un clique sur le bouton supprimer membres.
+   * @param event l'objet récupéré par un clique sur le bouton supprimer
+   *        membres.
    *
    */
   @FXML
@@ -414,7 +460,12 @@ public class Controleur implements Initializable {
     if (entreeNomMembre.getText() == "" && entreePrenomMembre.getText() == "") {
       message.setText("Erreur, aucun membre sélectionné.");
     } else {
-      int age = Integer.parseInt(entreAgeMembre.getText());
+      int age;
+      try {
+        age = Integer.parseInt(entreAgeMembre.getText());
+      } catch (NumberFormatException e) {
+        age = 0;
+      }
       Membre m =
           new Membre(new InformationPersonnelle(entreeNomMembre.getText(),
               entreePrenomMembre.getText(), entreAdresseMembre.getText(), age));
@@ -492,9 +543,9 @@ public class Controleur implements Initializable {
     
     // On sépare et récupère les données de date & d'heure
     // [0] -> Jour; [1] -> Mois; [2] -> Année
-    String[] dateStrArray = dateStr.split("-"); 
+    String[] dateStrArray = dateStr.split("-");
     // [0] -> Heure; [1] -> Minutes
-    String[] heureStrArray = heureStr.split(":"); 
+    String[] heureStrArray = heureStr.split(":");
     
     // On ne fait pas de gestion d'erreur sur les parseInt
     // car on sait déjà qu'ils sont conformes grâce Au test avec regex d'avant
@@ -506,7 +557,7 @@ public class Controleur implements Initializable {
       message.setText("Le mois doit être compris entre 1 et 12.");
       return;
     }
-
+    
     Month mois = Month.values()[indexMois];
     int jour = Integer.parseInt(dateStrArray[0]);
     int heure = Integer.parseInt(heureStrArray[0]);
@@ -527,16 +578,16 @@ public class Controleur implements Initializable {
    * Méthode de création d'un membre via les inputs de l'interface.
    */
   private Membre getMembreFromFields() {
-    // TODO Gerer erreurs    
+    // TODO Gerer erreurs
     int age;
     try {
       age = Integer.parseInt(entreAgeMembre.getText());
     } catch (NumberFormatException e) {
       age = 0;
-    }   
+    }
     association.InformationPersonnelle info = new InformationPersonnelle(
-        this.entreeNomMembre.getText(),
-        this.entreePrenomMembre.getText(), this.entreAdresseMembre.getText(), age);
+        this.entreeNomMembre.getText(), this.entreePrenomMembre.getText(),
+        this.entreAdresseMembre.getText(), age);
     Membre m = new Membre(info);
     return m;
   }
@@ -553,14 +604,14 @@ public class Controleur implements Initializable {
   void actionBoutonValiderMembre(ActionEvent event) {
     Membre m = getMembreFromFields();
     
-    //nouveau membre
+    // nouveau membre
     if (association.gestionnaireMembre().ajouterMembre(m)) {
-      message.setText(""
-          + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
-          + this.entreePrenomMembre.getText()
-              .substring(1, entreePrenomMembre.getLength()).toLowerCase()
-          + " " + this.entreeNomMembre.getText().toUpperCase()
-          + " à bien été ajouté comme nouveau membre.");
+      message.setText(
+          "" + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
+              + this.entreePrenomMembre.getText()
+                  .substring(1, entreePrenomMembre.getLength()).toLowerCase()
+              + " " + this.entreeNomMembre.getText().toUpperCase()
+              + " à bien été ajouté comme nouveau membre.");
       // on efface les champs automatiquement.
       entreePrenomMembre.clear();
       entreeNomMembre.clear();
@@ -689,10 +740,11 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * Fonction intermédiaire qui permet de récupérer un objet Evenement à partir des données 
-   * entrées dans les champs.
+   * Fonction intermédiaire qui permet de récupérer un objet Evenement à partir
+   * des données entrées dans les champs.
    * 
-   * @return Un Evenement à partir des champs ou bien <code>null</code> si il n'est pas valide.
+   * @return Un Evenement à partir des champs ou bien <code>null</code> si il
+   *         n'est pas valide.
    */
   private Evenement getEvenementFromFields() {
     String nom = entreeNomEvt.getText();
@@ -708,7 +760,7 @@ public class Controleur implements Initializable {
     } catch (NumberFormatException e) {
       return null;
     }
-
+    
     // Crée un objet LocalDateTime
     LocalDateTime date;
     try {
@@ -716,7 +768,7 @@ public class Controleur implements Initializable {
     } catch (DateTimeParseException e) {
       return null;
     }
-
+    
     Evenement evt = new Evenement(nom, lieu, date, duree, participants);
     
     // que l'objet récupéré est correct ou bien retourne null
