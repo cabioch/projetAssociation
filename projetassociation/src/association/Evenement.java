@@ -19,6 +19,13 @@ public class Evenement implements java.io.Serializable {
   private static final long serialVersionUID = 7414938932769654866L;
   
   /**
+   * Définit une date nulle; la date sera définie a cette valeur en cas d'erreur
+   * sur la date.
+   */
+  public static final LocalDateTime DATE_NULLE =
+      LocalDateTime.of(0, 1, 1, 0, 0);
+  
+  /**
    * Le nom de l'evenement.
    */
   private String nom;
@@ -49,18 +56,15 @@ public class Evenement implements java.io.Serializable {
   private final Set<InterMembre> participants = new HashSet<>();
   
   /**
-   * Vérifie que deux Evenements ne se passent pas en même temps et dans un même lieu. 
-   * On considère un évenement qui commence exactement à la fin d'un
-   * autre comme un chevauchement.
+   * Vérifie que deux Evenements ne se passent pas en même temps et dans un même
+   * lieu. On considère un évenement qui commence exactement à la fin d'un autre
+   * comme un chevauchement.
    *
    * @param evt Un evenement
-   * @return <code>true</code> si l'evenement en parametre ne se chevauche pas en temps et en
-   *         lieu avec celui-ci.
+   * @return <code>true</code> si l'evenement en parametre ne se chevauche pas
+   *         en temps et en lieu avec celui-ci.
    */
   public boolean pasDeChevauchementLieu(Evenement evt) {
-    // J'ai un doute sur le fonctionnement de la méthode
-    // -> Les 2 conditions doivent etre vérifiées ou juste une ?
-    // Pris le fonctionnement a une condition vérifiée
     return (!Objects.equals(evt.lieu, this.lieu)
         || pasDeChevauchementTemps(evt));
   }
@@ -71,16 +75,18 @@ public class Evenement implements java.io.Serializable {
    * chevauchement.
    *
    * @param evt Un evenement
-   * @return <code>true</code> si l'evenement en parametre ne se chevauche pas en temps avec
-   *         celui-ci.
+   * @return <code>true</code> si l'evenement en parametre ne se chevauche pas
+   *         en temps avec celui-ci.
    */
   public boolean pasDeChevauchementTemps(Evenement evt) {
-    LocalDateTime finThis = date.plusMinutes(duree);
+    LocalDateTime debutThis = this.date;
+    LocalDateTime finThis = this.date.plusMinutes(duree);
+    LocalDateTime debutEvt = evt.date;
     LocalDateTime finEvt = evt.date.plusMinutes(evt.duree);
     
-    // Pas superposé en temps
-    // TODO a réécrire
-    return (finThis.compareTo(evt.date) < 0 || date.compareTo(finEvt) > 0);
+    // Vérifie que this fini avant le début de evt ou que this commence après la
+    // fin de evt
+    return (finThis.compareTo(debutEvt) < 0 || debutThis.compareTo(finEvt) > 0);
   }
   
   // <editor-fold desc="Getter-Setter">
@@ -135,34 +141,35 @@ public class Evenement implements java.io.Serializable {
   // <editor-fold desc="Overrides">
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
+  
+  public boolean equals(Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (obj == null) {
       return false;
     }
-    Evenement evenement = (Evenement) o;
-    if (duree != evenement.duree) {
+    if (getClass() != obj.getClass()) {
       return false;
     }
-    if (!Objects.equals(lieu, evenement.lieu)) {
-      return false;
-    }
-    return Objects.equals(date, evenement.date);
+    Evenement other = (Evenement) obj;
+    return Objects.equals(date, other.date) && duree == other.duree
+        && Objects.equals(lieu, other.lieu)
+        && nbParticipantsMax == other.nbParticipantsMax
+        && Objects.equals(nom, other.nom)
+        && Objects.equals(participants, other.participants);
   }
   
   @Override
   public int hashCode() {
-    int result = lieu != null ? lieu.hashCode() : 0;
-    result = 31 * result + (date != null ? date.hashCode() : 0);
-    result = 31 * result + duree;
-    return result;
+    return Objects.hash(date, duree, lieu, nbParticipantsMax, nom,
+        participants);
   }
   
   @Override
   public String toString() {
-    return "Evénement : " + nom + " | Lieu : " + lieu + " | Date : " + date + " à "
-        + date.plusMinutes(duree) + " | Nombre de participants max : "
+    return "Evénement : " + nom + " | Lieu : " + lieu + " | Date : " + date
+        + " à " + date.plusMinutes(duree) + " | Nombre de participants max : "
         + nbParticipantsMax + " participants.";
   }
   // </editor-fold>
@@ -235,7 +242,7 @@ public class Evenement implements java.io.Serializable {
       // On définit alors une date nulle
       date = LocalDateTime.of(annee, mois, jour, heure, minutes);
     } catch (DateTimeException e) {
-      date = LocalDateTime.of(0, 1, 1, 0, 0);
+      date = DATE_NULLE;
     }
     builder(nom, lieu, date, duree, nbParticipantsMax);
   }
@@ -262,7 +269,7 @@ public class Evenement implements java.io.Serializable {
     }
     // Date nulle si l'année précède 2022
     if (date.getYear() < 2022) {
-      date = LocalDateTime.of(0, 1, 1, 0, 0);
+      date = DATE_NULLE;
     }
     if (nom == null) {
       nom = "";

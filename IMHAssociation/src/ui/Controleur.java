@@ -2,12 +2,19 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import association.Evenement;
 import association.GestionAssociation;
 import association.InformationPersonnelle;
@@ -139,8 +146,8 @@ public class Controleur implements Initializable {
   
   /**
    * Afficher le membre sélectionné : si un membre est sélectionné dans la
-   * liste, affiche ses informations personnelles dans les quatres champs en haut de
-   * la fenêtre.
+   * liste, affiche ses informations personnelles dans les quatres champs en
+   * haut de la fenêtre.
    * 
    * @param event
    */
@@ -167,8 +174,10 @@ public class Controleur implements Initializable {
     for (InterMembre m : e.getParticipants()) {
       listeMembres.getItems().add((Membre) m);
     }
-    labelListeAfficheeEvt.setText(" Tous les participants de l'événement " + e.getNom());
-    message.setText("Affichage des participants de l'événement " + e.getNom() + " a été effectué.");
+    labelListeAfficheeEvt
+        .setText(" Tous les participants de l'événement " + e.getNom());
+    message.setText("Affichage des participants de l'événement " + e.getNom()
+        + " a été effectué.");
   }
   
   /**
@@ -202,7 +211,8 @@ public class Controleur implements Initializable {
     // Récupère la date au format YYYY-MM-DD (comme l'entrée nécessaire)
     entreeDateEvt.setText(e.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
     // Récupère l'heure au format HH:MM (comme l'entrée nécessaire)
-    entreeHeureEvt.setText(e.getDate().format(DateTimeFormatter.ISO_LOCAL_TIME));
+    entreeHeureEvt
+        .setText(e.getDate().format(DateTimeFormatter.ISO_LOCAL_TIME));
     entreeDureeEvt.setText(Integer.toString(e.getDuree()));
     entreeMaxParticipantsEvt
         .setText(Integer.toString(e.getNbParticipantsMax()));
@@ -222,7 +232,8 @@ public class Controleur implements Initializable {
       listeEvenements.getItems().add(e);
     }
     
-    labelListeAfficheeEvt.setText("Tous les événements futurs de l'association. ");
+    labelListeAfficheeEvt
+        .setText("Tous les événements futurs de l'association. ");
     message.setText(
         "L'affichage de tous les événements futurs de l'association a bien été effectué.");
   }
@@ -240,7 +251,7 @@ public class Controleur implements Initializable {
     for (Evenement e : m.ensembleEvenementsAvenir()) {
       listeEvenements.getItems().add(e);
     }
-    if(m.ensembleEvenementsAvenir().isEmpty()) {
+    if (m.ensembleEvenementsAvenir().isEmpty()) {
       message.setText("Aucun évènements futurs à afficher.");
     } else {
       message.setText("Liste générée.");
@@ -260,7 +271,7 @@ public class Controleur implements Initializable {
     for (Evenement e : m.ensembleEvenements()) {
       listeEvenements.getItems().add(e);
     }
-    if(m.ensembleEvenements().isEmpty()) {
+    if (m.ensembleEvenements().isEmpty()) {
       message.setText("Aucune participation à des évènements.");
     } else {
       message.setText("Liste des évènements générée.");
@@ -302,9 +313,8 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * Bouton de réinitialisation d'un nouvel évènement.
-   * Efface le contenu des champs d’un événement afin de rajouter un
-   * nouvel événement.
+   * Bouton de réinitialisation d'un nouvel évènement. Efface le contenu des
+   * champs d’un événement afin de rajouter un nouvel événement.
    *
    * @param event l'objet récupéré par un clique sur le bouton "Nouveau".
    */
@@ -322,8 +332,8 @@ public class Controleur implements Initializable {
   
   /**
    * Bouton de création d'un nouveau membre. Efface les données inscrites
-   * précédemment dans les zones de textes.Un message indique qu'un nouveau membre
-   * peut-être créé.
+   * précédemment dans les zones de textes.Un message indique qu'un nouveau
+   * membre peut-être créé.
    *
    * @param event l'objet récupéré par un clique sur le bouton "Nouveau".
    */
@@ -334,8 +344,7 @@ public class Controleur implements Initializable {
     entreeNomMembre.clear();
     entreAdresseMembre.clear();
     entreAgeMembre.clear();
-    message.setText(
-        "Le contenu des champs a été réinitialisé.\n"
+    message.setText("Le contenu des champs a été réinitialisé.\n"
         + "Veuillez entrer de nouvelles données créer un nouveau membre.");
   }
   
@@ -427,7 +436,8 @@ public class Controleur implements Initializable {
     }
     
     labelListeAfficheeEvt.setText(" Tous les événements de l'association.");
-    message.setText("L'affichage de tous les événements de l'association a bien été effectué.");
+    message.setText(
+        "L'affichage de tous les événements de l'association a bien été effectué.");
   }
   
   /**
@@ -436,22 +446,66 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonValiderEvt(ActionEvent event) {
-    Evenement e = getEvenementFromFields();
-    // Approche horrible a changer
-    // Actuellement je crée un évenement a partir des champs, puis je recrée un
-    // autre en appelant gestionEvenements
-    // Au lieu de direct appeler gestionEvenement
-    // J'écrirais probablement une deuxième méthode dans GestionEvenements pour
-    // faire ça
-    LocalDateTime date = e.getDate();
-    Evenement cree = association.gestionnaireEvenements().creerEvenement(
-        e.getNom(), e.getLieu(), date.getDayOfMonth(), date.getMonth(),
-        date.getYear(), date.getHour(), date.getMinute(), e.getDuree(),
-        e.getNbParticipantsMax());
-    //TODO Possibilité de mettre les informations de l'événement à jour si la 
-    //personne sélectionne l'événement dans la liste des événements
+    final String nom = entreeNomEvt.getText();
+    final String lieu = entreeLieuEvt.getText();
+    String dateStr = entreeDateEvt.getText();
+    String heureStr = entreeHeureEvt.getText();
+    int duree;
+    int participants;
+    
+    // On vérifie les paramètres de durée et de participants
+    try {
+      duree = Integer.parseInt(entreeDureeEvt.getText());
+      participants = Integer.parseInt(entreeMaxParticipantsEvt.getText());
+    } catch (NumberFormatException e) {
+      message.setText(
+          "Merci de définir une durée en minutes et un nombre de participants supérieur à zéro.");
+      return;
+    }
+    
+    // On vérifie que la date correspond bien au format attendu
+    if (!dateStr.matches("\\d{1,2}-\\d{1,2}-\\d{4}")
+        || !heureStr.matches("\\d{2}:\\d{2}")) {
+      message.setText("Merci de respecter le format des dates :\n"
+          + "JJ-MM-AAAA\n" + "HH:MM");
+      return;
+    }
+    
+    // On sépare et récupère les données de date & d'heure
+    // [0] -> Jour; [1] -> Mois; [2] -> Année
+    String[] dateStrArray = dateStr.split("-"); 
+    // [0] -> Heure; [1] -> Minutes
+    String[] heureStrArray = heureStr.split(":"); 
+    
+    // On ne fait pas de gestion d'erreur sur les parseInt
+    // car on sait déjà qu'ils sont conformes grâce Au test avec regex d'avant
+    int annee = Integer.parseInt(dateStrArray[2]);
+    int indexMois = Integer.parseInt(dateStrArray[1]) - 1;
+    
+    
+    // On vérifie que le mois est bien entre 1 et 12
+    Month mois;
+    try {
+      mois = Month.values()[indexMois];
+    } catch (ArrayIndexOutOfBoundsException e) {
+      message.setText("Le mois doit être compris entre 1 et 12.");
+      return;
+    }
+    int jour = Integer.parseInt(dateStrArray[0]);
+    int heure = Integer.parseInt(heureStrArray[0]);
+    int minute = Integer.parseInt(heureStrArray[1]);
+    
+    
+    Evenement cree = association.gestionnaireEvenements().creerEvenement(nom,
+        lieu, jour, mois, annee, heure, minute, duree, participants);
+    
+    if (cree != null) {
+      message.setText("L'évenement " + cree.getNom() + " A bien été créé.");
+      return;
+    }
+    message.setText("L'événement n'as pas pu être créé. Vérifiez vos entrées.");
   }
-
+  
   /**
    * Méthode de création d'un membre via les inputs de l'interface.
    */
@@ -472,8 +526,8 @@ public class Controleur implements Initializable {
   
   /**
    * Bouton d'action pour valider les informations d'un membre. Les informations
-   * prennent en compte un nom, un prénom, une adresse et un age.
-   * Si le membre existe déjà, ses informations sont mises à jour.
+   * prennent en compte un nom, un prénom, une adresse et un age. Si le membre
+   * existe déjà, ses informations sont mises à jour.
    *
    * @param event l'objet récupéré par un clique sur le bouton "Valider Membre".
    */
@@ -529,21 +583,20 @@ public class Controleur implements Initializable {
   void actionMenuApropos(ActionEvent event) {
     Alert alerte = new Alert(AlertType.INFORMATION);
     alerte.setTitle("A Propos");
-    String content =
-        "Application  de Gestion d'une Association.\n\n"
-            + "Réalisation par Jean-André, Enzo, Nicolas & Romain\n\n"
-            + "Tutoriel : \n"
-            + "Vous avez deux encarts.\n La fênetre de gauche permet la gestion des membres "
-            + "et leur importation dans l'association.\n "
-            + "La fenêtre de droite permet la gestion des évènements de l'association.\n";
+    String content = "Application  de Gestion d'une Association.\n\n"
+        + "Réalisation par Jean-André, Enzo, Nicolas & Romain\n\n"
+        + "Tutoriel : \n"
+        + "Vous avez deux encarts.\n La fênetre de gauche permet la gestion des membres "
+        + "et leur importation dans l'association.\n "
+        + "La fenêtre de droite permet la gestion des évènements de l'association.\n";
     alerte.setContentText(content);
     alerte.showAndWait();
   }
   
   /**
-   * Menu Charger : charge les membres et les événements de l’association à partir
-   * d’un fichier (dont on pourra optionnellement choisir l’emplacement). Une
-   * fois chargé, les deux listes affichent tous les membres et tous les
+   * Menu Charger : charge les membres et les événements de l’association à
+   * partir d’un fichier (dont on pourra optionnellement choisir l’emplacement).
+   * Une fois chargé, les deux listes affichent tous les membres et tous les
    * événements.
    */
   @FXML
@@ -551,15 +604,16 @@ public class Controleur implements Initializable {
     // TODO Choisir le fichier
     try {
       association.chargerDonnees("sauvegarde");
-      message.setText("Fichier des données de l'Association chargé avec succès");
+      message
+          .setText("Fichier des données de l'Association chargé avec succès");
     } catch (IOException e) {
       message.setText("Impossible de charger le fichier.");
     }
   }
   
   /**
-   * Menu Nouveau : Réinitialise l’association (efface tous les événements et membres chargés
-   * en mémoire).
+   * Menu Nouveau : Réinitialise l’association (efface tous les événements et
+   * membres chargés en mémoire).
    */
   @FXML
   void actionMenuNouveau(ActionEvent event) {
@@ -584,7 +638,7 @@ public class Controleur implements Initializable {
   void actionMenuQuitter(ActionEvent event) {
     Alert quitter = new Alert(AlertType.CONFIRMATION);
     quitter.setTitle("Quitter l'application ?");
-       
+    
     // Retourne le type de bouton séléctionné ou null si un bouton n'a
     // pas été séléctionné ( = il a séléctionné la croix)
     ButtonType result = quitter.showAndWait().orElse(null);
@@ -616,26 +670,44 @@ public class Controleur implements Initializable {
     association = new GestionAssociation();
     
   }
-
-
+  
   /**
+   * Fonction intermédiaire qui permet de récupérer un objet Evenement à partir des données 
+   * entrées dans les champs.
    * 
-   * @return
+   * @return Un Evenement à partir des champs ou bien <code>null</code> si il n'est pas valide.
    */
   private Evenement getEvenementFromFields() {
     String nom = entreeNomEvt.getText();
     String lieu = entreeLieuEvt.getText();
     String dateSansHeures = entreeDateEvt.getText();
     String heures = entreeHeureEvt.getText();
-    int duree = Integer.parseInt(entreeDureeEvt.getText());
-    int participants = Integer.parseInt(entreeMaxParticipantsEvt.getText());
+    int duree;
+    int participants;
+    // Essaye de convertir les strings de durée et de participants en int
+    try {
+      duree = Integer.parseInt(entreeDureeEvt.getText());
+      participants = Integer.parseInt(entreeMaxParticipantsEvt.getText());
+    } catch (NumberFormatException e) {
+      return null;
+    }
+
+    // Crée un objet LocalDateTime
+    LocalDateTime date;
+    try {
+      date = LocalDateTime.parse(dateSansHeures + "T" + heures);
+    } catch (DateTimeParseException e) {
+      return null;
+    }
+
+    Evenement evt = new Evenement(nom, lieu, date, duree, participants);
     
-    // TODO Gestion d'erreur, encore
-    // La fonction essaye de générer un objet LocalDateTime a partir d'un
-    // string. On combine les deux et on les donne a la fonction
-    LocalDateTime date = LocalDateTime.parse(dateSansHeures + "T" + heures);
-    Evenement e = new Evenement(nom, lieu, date, duree, participants);
-    return e;
+    // que l'objet récupéré est correct ou bien retourne null
+    if (evt.getDuree() == 0 || evt.getNbParticipantsMax() == 0
+        || evt.getLieu().isEmpty() || evt.getNom().isEmpty()
+        || evt.getDate() == Evenement.DATE_NULLE) {
+      return null;
+    }
+    return evt;
   }
 }
-

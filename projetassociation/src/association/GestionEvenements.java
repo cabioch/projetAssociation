@@ -64,6 +64,19 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
     // Instanciation de l'événement avec les paramètres donnés
     Evenement newEvent = new Evenement(nom, lieu, annee, mois, jour, heure,
         minutes, duree, nbParticipants);
+    
+    // On vérifie que l'objet Evenement créé est un objet valable
+    if (newEvent.getDuree() == 0 || newEvent.getNbParticipantsMax() == 0
+        || newEvent.getLieu().isEmpty() || newEvent.getNom().isEmpty()
+        || newEvent.getDate() == Evenement.DATE_NULLE) {
+      return null;
+    }
+    
+    // Si l'évenement est déjà dans la liste d'évenements, on refuse de l'ajouter
+    if (listeEvenements.contains(newEvent)) {
+      return null;
+    }
+    
     // On parcours la liste de tous les événements et on compare
     // l'événement avec les autres pour voir si il y a un chevauchement en
     // lieu et en temps.
