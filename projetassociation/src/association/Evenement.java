@@ -173,7 +173,7 @@ public class Evenement implements java.io.Serializable {
    *
    * @param participant Un participant
    * @return <code>true</code> si le participant a bien pu être ajouté,
-   * 		 <code>false</code> si le nombre maximal à déja été atteint.
+   *         <code>false</code> si le nombre maximal à déja été atteint.
    */
   public boolean ajouterParticipant(InterMembre participant) {
     if (participants.size() >= nbParticipantsMax) {

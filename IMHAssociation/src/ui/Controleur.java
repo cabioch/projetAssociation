@@ -296,8 +296,11 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * Nouveau : efface le contenu des champs d’un événement afin de rajouter un
+   * Bouton de réinitialisation d'un nouvel évènement.
+   * Efface le contenu des champs d’un événement afin de rajouter un
    * nouvel événement.
+   *
+   * @param event l'objet récupéré par un clique sur le bouton "Nouveau".
    */
   @FXML
   void actionBoutonNouveauEvt(ActionEvent event) {
@@ -325,9 +328,11 @@ public class Controleur implements Initializable {
     entreeNomMembre.clear();
     entreAdresseMembre.clear();
     entreAgeMembre.clear();
-    message.setText("Le contenu des champs d'un membre a été réinitialisés.\nVeuillez insérer les données d'un nouveau membre.");
+    message.setText(
+        "Le contenu des champs a été réinitialisé.\n"
+        + "Veuillez entrer de nouvelles données créer un nouveau membre.");
   }
-
+  
   /**
    * Supprimer : efface de la liste des événements l’événement dont les
    * informations sont affichées.
@@ -342,17 +347,19 @@ public class Controleur implements Initializable {
   }
   
   /**
-   * Efface de la liste des membres, le membre dont les informations
-   * sont affichées. si le membre était président, un message de "place vacante" est affiché pour le
-   * rôle de président en plus.
+   * Efface de la liste des membres, le membre dont les informations sont
+   * affichées. si le membre était président, un message de "place vacante" est
+   * affiché pour le rôle de président en plus.
    */
   @FXML
   void actionBoutonSupprimerMembre(ActionEvent event) {
     Membre m = new Membre(new InformationPersonnelle(entreeNomMembre.getText(),
         entreePrenomMembre.getText()));
-    if (association.gestionnaireMembre().supprimerMembre(m) && association.gestionnaireMembre().president().equals(m)) {
+    if (association.gestionnaireMembre().supprimerMembre(m)
+        && association.gestionnaireMembre().president().equals(m)) {
       listeMembres.getItems().remove(m);
-      message.setText("La suppression du membre a été faite.\n La place de président est vacante.");
+      message.setText(
+          "La suppression du membre a été faite.\n La place de président est vacante.");
     } else {
       message.setText("La suppression du membre a été faite.");
     }
@@ -361,8 +368,9 @@ public class Controleur implements Initializable {
   /**
    * Afficher tous les événements de l’association : afficher dans la liste tous
    * les événements de l’association.
-   * 
-   * @param event
+   *
+   * @param event l'objet récupéré par un clique sur le bouton "Afficher tous
+   *        les évènements de l'association".
    */
   @FXML
   void actionBoutonTousEvenementsAssociationEvt(ActionEvent event) {
