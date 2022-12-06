@@ -77,30 +77,19 @@ public class TestGestionEvenements {
    */
   private Evenement event9;
   
+  
   /**
-   *  Création d'un dixième événement appelé event10 pour tester la
-   *  gestion d'un nom d'événement null.
+   * Création d'un douzième événement appelé event10 pour tester la
+   * création d'un événement comportant le même nom qu'un autre événement.
    */
   private Evenement event10;
   
   /**
-   *  Création d'un onzième événement appelé event11 pour tester la
-   *  gestion de valeurs négatives lors de la création d'un événement.
-   */
-  private Evenement event11;
-  
-  /**
-   * Création d'un douzième événement appelé event12 pour tester la
-   * création d'un événement comportant le même nom qu'un autre événement.
-   */
-  private Evenement event12;
-  
-  /**
-   * Création d'un treizième événement appelé event13 pour tester la
+   * Création d'un treizième événement appelé event12 pour tester la
    * création d'un événement comportant le même nom, les mêmes horraire
    *  qu'un autre événement avec un lieu différent pour les différencier.
    */
-  private Evenement event13;
+  private Evenement event12;
   
   
   /**
@@ -187,24 +176,13 @@ public class TestGestionEvenements {
     event9 = new Evenement("Mer", "Bretagne", 2022, Month.MARCH, 15, 18,
         45, 100, 23);
     
-    // Ajout d'un dixième événement pour notre test d'erreur lieu null
-    // en ayant un lieu "" comme devrait renvoyer la création de l'événement
-    // après traitenement de l'élément null au lieu.
-    event10 = new Evenement("Mer", "", 2022, Month.MARCH, 15, 18,
-        45, 100, 23);
-    
-    //Ajout d'un onzième événement tester nos cas d'erreur de format de l'heure ayant 
-    //une valeur négative pour les minutes ou les heures.
-    event11 = new Evenement("Mer", "Lannion", 1, Month.JANUARY, 0000, 0,
-            0, 100, 23);
-    
     // Ajout d'un événement comportant le même nom qu'un événement issue de l'association
     // ayant tout comme point de différence les horraires de l'événement.
-    event12 = new Evenement("Bowling", "Lannion", 2022, Month.MARCH, 14, 22,
+    event10 = new Evenement("Bowling", "Lannion", 2022, Month.MARCH, 14, 22,
             00, 20, 16);
     
     // Ajout d'un événement "clône" à l'événement 1 ayant juste le lieu de différent de celui-ci.
-    event13 = new Evenement("Bowling", "Brest", 2022, Month.MARCH, 14, 14, 0, 120, 10);
+    event12 = new Evenement("Bowling", "Brest", 2022, Month.MARCH, 14, 14, 0, 120, 10);
     
     // Ajout du prénom Titi et nom Beau comme nom pour le premier membre
     infoC = new InformationPersonnelle("Titi", "Beau");
@@ -399,35 +377,33 @@ public class TestGestionEvenements {
   
   /**
    * Test de la création d'un événement ayant comme paramètre de lieu null.
-   * La méthode doit nous retourner l'événement ayant rien d'inscrit au lieu.
+   * La méthode doit nous retourner null.
    */
   @Test
   void testCreationEvenementErreurLieuNull() {
-    assertEquals(event10, gevent.creerEvenement("Mer", null, 15, Month.MARCH, 2022, 18,
+    assertEquals(null, gevent.creerEvenement("Mer", null, 15, Month.MARCH, 2022, 18,
         45, 100, 23));
   }
   
   /**
    * Test de la création d'un événement comportant une erreur de format sur l'heure de
    * l'événement. Ayant une valeur négative sur les minutes.
-   * La mthode doit nous renvoyer l'événement avec une heure formatée automatiquement 
-   * au format 
+   * La méthode doit nous renvoyer null.
    */
   @Test
   void testCreationEvenementErreurMinuteNegatif() {
-    assertEquals(event11, gevent.creerEvenement("Mer", "Lannion", 15, Month.MARCH, 2022, 18,
+    assertEquals(null, gevent.creerEvenement("Mer", "Lannion", 15, Month.MARCH, 2022, 18,
         -45, 100, 23));
   }
   
   /**
    * Test de la création d'un événement comportant une erreur de format sur l'heure de
    * l'événement. Ayant une valeur négative sur les heures.
-   * La mthode doit nous renvoyer l'événement avec une heure formatée automatiquement 
-   * au format 
+   * La méthode doit nous renvoyer null. 
    */
   @Test
   void testCreationEvenementErreurHeureNegatif() {
-    assertEquals(event11, gevent.creerEvenement("Mer", "Lannion", 15, Month.MARCH, 2022, -18,
+    assertEquals(null, gevent.creerEvenement("Mer", "Lannion", 15, Month.MARCH, 2022, -18,
         45, 100, 23));
   }
   
@@ -448,7 +424,7 @@ public class TestGestionEvenements {
    */
   @Test
   void testCreationEvenementMemeNomHorrairesDifferentes() {
-    assertEquals(event12, gevent.creerEvenement("Bowling", "Lannion", 14, Month.MARCH, 2022, 22,
+    assertEquals(event10, gevent.creerEvenement("Bowling", "Lannion", 14, Month.MARCH, 2022, 22,
         00, 20, 16));
   }
   
@@ -460,7 +436,7 @@ public class TestGestionEvenements {
    */
   @Test
   void testCreationEvenementMemeNomMemeHorrairesLieuDifferents() {
-    assertEquals(event13, gevent.creerEvenement("Bowling", "Brest", 14, Month.MARCH, 2022, 14,
+    assertEquals(event12, gevent.creerEvenement("Bowling", "Brest", 14, Month.MARCH, 2022, 14,
         00, 120, 10));
   }
   
