@@ -173,9 +173,16 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
     }
     // Si toutes l'événement passe toutes les vérifications, on l'ajoute à la
     // liste des événements du membre.
-    mbr.ensembleEvenements().add(evt); // A Changer ?
+    if (!mbr.ensembleEvenements().add(evt)) {
+      return false;
+    }
     // Puis on ajoute le membre aux participants de l'événement.
-    return evt.ajouterParticipant(mbr);
+    boolean tmp = evt.ajouterParticipant(mbr);
+    if(!tmp) {
+      mbr.ensembleEvenements().remove(evt);
+      return false;
+    }
+    return true;
   }
   
   /**

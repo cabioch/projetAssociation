@@ -10,9 +10,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import association.Evenement;
@@ -196,12 +198,14 @@ public class Controleur implements Initializable {
       return;
     }
     
-    listeEvenements.getItems().clear();
+    
+    listeMembres.getItems().clear();
+    Set<InterMembre> st = e.getParticipants();
     for (InterMembre m : e.getParticipants()) {
       listeMembres.getItems().add((Membre) m);
     }
     
-    labelListeAfficheeEvt
+    labelListeAfficheeMembre
         .setText(" Tous les participants de l'événement " + e.getNom());
     message.setText("Affichage des participants de l'événement " + e.getNom()
         + " a été effectué.");
@@ -232,6 +236,9 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonEvenementSelectionneEvt(ActionEvent event) {
+    final DateTimeFormatter dtformatDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    final DateTimeFormatter dtformatHeure = DateTimeFormatter.ofPattern("HH:mm");
+
     Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
     if (e == null) {
       message.setText("Aucun événement sélectionné.");
@@ -240,11 +247,11 @@ public class Controleur implements Initializable {
     
     entreeNomEvt.setText(e.getNom());
     entreeLieuEvt.setText(e.getLieu());
-    // Récupère la date au format YYYY-MM-DD (comme l'entrée nécessaire)
-    entreeDateEvt.setText(e.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+    // Récupère la date au format DD-MM-YYYY (comme l'entrée nécessaire)
+    entreeDateEvt.setText(dtformatDate.format(e.getDate()));
     // Récupère l'heure au format HH:MM (comme l'entrée nécessaire)
     entreeHeureEvt
-        .setText(e.getDate().format(DateTimeFormatter.ISO_LOCAL_TIME));
+        .setText(dtformatHeure.format(e.getDate()));
     entreeDureeEvt.setText(Integer.toString(e.getDuree()));
     entreeMaxParticipantsEvt
         .setText(Integer.toString(e.getNbParticipantsMax()));
@@ -358,15 +365,12 @@ public class Controleur implements Initializable {
       return;
     }
     
-    if (e.getParticipants().size() < e.getNbParticipantsMax()) {
-      
-      // listeMembres.getItems().add((Membre) m);
-      // listeEvenements.getItems().add((Membre) m);
-      e.ajouterParticipant(m);
-      m.ensembleEvenements().add(e);
-      association.gestionnaireEvenements().inscriptionEvenement(e, m);
+    if (association.gestionnaireEvenements().inscriptionEvenement(e, m)) {
+      message.setText("Le membre a bien été inscrit à l'évenement.");
+      return;
     }
-    // TODO Encore de la gestion d'erreur
+    
+    message.setText("Il y a eu une erreur lors de l'ajout du membre à l'événement.");
   }
   
   /**
@@ -588,8 +592,16 @@ public class Controleur implements Initializable {
     association.InformationPersonnelle info = new InformationPersonnelle(
         this.entreeNomMembre.getText(), this.entreePrenomMembre.getText(),
         this.entreAdresseMembre.getText(), age);
+    // Essaye de récupérer le membre dans l'ensemble de membres avec les événements
+    // Correspondants
     Membre m = new Membre(info);
-    return m;
+    for (InterMembre mbr : association.gestionnaireMembre().ensembleMembres()) {
+      if (mbr.equals(m)) {
+        return (Membre) mbr;
+      }
+    }
+    
+    return null;
   }
   
   /**
@@ -747,13 +759,14 @@ public class Controleur implements Initializable {
    *         n'est pas valide.
    */
   private Evenement getEvenementFromFields() {
-    String nom = entreeNomEvt.getText();
-    String lieu = entreeLieuEvt.getText();
-    String dateSansHeures = entreeDateEvt.getText();
-    String heures = entreeHeureEvt.getText();
+    final String nom = entreeNomEvt.getText();
+    final String lieu = entreeLieuEvt.getText();
+    String dateStr = entreeDateEvt.getText();
+    String heureStr = entreeHeureEvt.getText();
     int duree;
     int participants;
-    // Essaye de convertir les strings de durée et de participants en int
+    
+    // On vérifie les paramètres de durée et de participants
     try {
       duree = Integer.parseInt(entreeDureeEvt.getText());
       participants = Integer.parseInt(entreeMaxParticipantsEvt.getText());
@@ -761,22 +774,41 @@ public class Controleur implements Initializable {
       return null;
     }
     
-    // Crée un objet LocalDateTime
-    LocalDateTime date;
-    try {
-      date = LocalDateTime.parse(dateSansHeures + "T" + heures);
-    } catch (DateTimeParseException e) {
+    // On vérifie que la date correspond bien au format attendu
+    if (!dateStr.matches("\\d{1,2}-\\d{1,2}-\\d{4}")
+        || !heureStr.matches("\\d{2}:\\d{2}")) {
       return null;
     }
     
-    Evenement evt = new Evenement(nom, lieu, date, duree, participants);
+    // On sépare et récupère les données de date & d'heure
+    // [0] -> Jour; [1] -> Mois; [2] -> Année
+    String[] dateStrArray = dateStr.split("-");
+    // [0] -> Heure; [1] -> Minutes
+    String[] heureStrArray = heureStr.split(":");
     
-    // que l'objet récupéré est correct ou bien retourne null
-    if (evt.getDuree() == 0 || evt.getNbParticipantsMax() == 0
-        || evt.getLieu().isEmpty() || evt.getNom().isEmpty()
-        || evt.getDate() == Evenement.DATE_NULLE) {
+    // On ne fait pas de gestion d'erreur sur les parseInt
+    // car on sait déjà qu'ils sont conformes grâce Au test avec regex d'avant
+    int annee = Integer.parseInt(dateStrArray[2]);
+    int indexMois = Integer.parseInt(dateStrArray[1]) - 1;
+    
+    // On vérifie que le mois est bien entre 1 et 12
+    if (indexMois > 11 || indexMois < 0) {
       return null;
     }
-    return evt;
+    
+    Month mois = Month.values()[indexMois];
+    int jour = Integer.parseInt(dateStrArray[0]);
+    int heure = Integer.parseInt(heureStrArray[0]);
+    int minute = Integer.parseInt(heureStrArray[1]);
+
+    // Retourne l'événement avec les participants nécessaires
+    Evenement evTmp = new Evenement(nom, lieu, annee, mois, jour, heure, minute, duree, participants);
+    for (Evenement e : association.gestionnaireEvenements().ensembleEvenements()) {
+      if (e.equals(evTmp)) {
+        return e;
+      }
+    }
+    
+    return null;
   }
 }
