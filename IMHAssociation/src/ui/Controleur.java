@@ -375,20 +375,38 @@ public class Controleur implements Initializable {
   
   /**
    * Efface de la liste des membres, le membre dont les informations sont
-   * affichées. si le membre était président, un message de "place vacante" est
-   * affiché pour le rôle de président en plus.
+   * affichées dans les champs. Si le membre était président, un message de
+   * place vacante est affiché pour le rôle de président.
+   *
+   * @param event l'objet récupéré par un clique sur le bouton supprimer membres.
+   *
    */
   @FXML
   void actionBoutonSupprimerMembre(ActionEvent event) {
-    Membre m = new Membre(new InformationPersonnelle(entreeNomMembre.getText(),
-        entreePrenomMembre.getText()));
-    if (association.gestionnaireMembre().supprimerMembre(m)
-        && association.gestionnaireMembre().president().equals(m)) {
-      listeMembres.getItems().remove(m);
-      message.setText(
-          "La suppression du membre a été faite.\n La place de président est vacante.");
+    if (entreeNomMembre.getText() == "" && entreePrenomMembre.getText() == "") {
+      message.setText("Erreur, aucun membre sélectionné.");
     } else {
-      message.setText("La suppression du membre a été faite.");
+      int age = Integer.parseInt(entreAgeMembre.getText());
+      Membre m =
+          new Membre(new InformationPersonnelle(entreeNomMembre.getText(),
+              entreePrenomMembre.getText(), entreAdresseMembre.getText(), age));
+      if (association.gestionnaireMembre().president() != null
+          && association.gestionnaireMembre().president().equals(m)) {
+        message.setText(
+            "La suppression du membre a été faite.\n La place de président est vacante.");
+      } else {
+        message.setText("La suppression du membre a été faite.");
+      }
+      association.gestionnaireMembre().supprimerMembre(m);
+      listeMembres.getItems().clear();
+      for (InterMembre ei : association.gestionnaireMembre()
+          .ensembleMembres()) {
+        listeMembres.getItems().add((Membre) ei);
+      }
+      entreePrenomMembre.clear();
+      entreeNomMembre.clear();
+      entreAdresseMembre.clear();
+      entreAgeMembre.clear();
     }
   }
   
@@ -439,16 +457,15 @@ public class Controleur implements Initializable {
    */
   private Membre getMembreFromFields() {
     // TODO Gerer erreurs    
-    int age = Integer.parseInt(entreAgeMembre.getText());
-    String adresse = this.entreAdresseMembre.getText();
-    InformationPersonnelle info = new InformationPersonnelle(this.entreeNomMembre.getText(),
-        this.entreePrenomMembre.getText(), adresse, age);
-    if (info.getAge() < 0) {
+    int age;
+    try {
+      age = Integer.parseInt(entreAgeMembre.getText());
+    } catch (NumberFormatException e) {
       age = 0;
-    }
-    if(info.getAdresse() == null) {
-      adresse = "";
-    }
+    }   
+    association.InformationPersonnelle info = new InformationPersonnelle(
+        this.entreeNomMembre.getText(),
+        this.entreePrenomMembre.getText(), this.entreAdresseMembre.getText(), age);
     Membre m = new Membre(info);
     return m;
   }
@@ -464,36 +481,42 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonValiderMembre(ActionEvent event) {
     Membre m = getMembreFromFields();
+    
+    //nouveau membre
     if (association.gestionnaireMembre().ajouterMembre(m)) {
-      message.setText("Membre "
+      message.setText(""
           + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
           + this.entreePrenomMembre.getText()
               .substring(1, entreePrenomMembre.getLength()).toLowerCase()
           + " " + this.entreeNomMembre.getText().toUpperCase()
-          + " à bien été créé et ajouté à l'association.");
+          + " à bien été ajouté comme nouveau membre.");
       // on efface les champs automatiquement.
       entreePrenomMembre.clear();
       entreeNomMembre.clear();
       entreAdresseMembre.clear();
       entreAgeMembre.clear();
     } else {
+      // si pas d'ajout, verif si membre existe puis maj sinon erreur.
       for (InterMembre me : association.gestionnaireMembre()
           .ensembleMembres()) {
         if (m.getInformationPersonnelle().getNom()
             .equals(me.getInformationPersonnelle().getNom())
             && m.getInformationPersonnelle().getPrenom()
                 .equals(me.getInformationPersonnelle().getPrenom())) {
-          m.definirInformationPersonnnelle(m.getInformationPersonnelle());
           message.setText("Le membre "
               + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
               + this.entreePrenomMembre.getText()
                   .substring(1, entreePrenomMembre.getLength()).toLowerCase()
               + " " + this.entreeNomMembre.getText().toUpperCase()
-              + "n'est pas créé.\n Ses informations personnelles ont été mise à jour.");
+              + " n'est pas créé.\n Ses informations personnelles ont été mise à jour.");
+          association.gestionnaireMembre().supprimerMembre(me);
+          me.definirInformationPersonnnelle(m.getInformationPersonnelle());
+          association.gestionnaireMembre().ajouterMembre(me);
+        } else {
+          message.setText(
+              "Erreur sur la création du membre.\n Veuillez vérifier les valeurs des champs.");
         }
       }
-      message.setText(
-          "Erreur sur la création du membre.\n Veuillez vérifier les valeurs des champs.");
     }
   }
   
