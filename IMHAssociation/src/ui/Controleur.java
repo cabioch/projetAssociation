@@ -396,7 +396,6 @@ public class Controleur implements Initializable {
 
   /**
    * Méthode de création d'un membre via les inputs de l'interface.
-   * TODO A commenter et probablement faire de la gestion d'erreur
    */
   private Membre getMembreFromFields() {
     // TODO Gerer erreurs
@@ -419,26 +418,43 @@ public class Controleur implements Initializable {
   @FXML
   void actionBoutonValiderMembre(ActionEvent event) {
     Membre m = getMembreFromFields();
-// problème de lajout de membre avec nom et prenom identique -> selon Antony on devrait plutot faire une mise a jour.
-    //pb la mise a jour peut se faire en selectionnant le membre.
     if (association.gestionnaireMembre().ajouterMembre(m)) {
-      message.setText("Le membre "+ this.entreePrenomMembre.getText() + " " + this.entreeNomMembre.getText() + " à bien été créé et ajouté à l'association.");
+      message.setText("Membre "
+          + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
+          + this.entreePrenomMembre.getText()
+              .substring(1, entreePrenomMembre.getLength()).toLowerCase()
+          + " " + this.entreeNomMembre.getText().toUpperCase()
+          + " à bien été créé et ajouté à l'association.");
+      // on efface les champs automatiquement.
+      entreePrenomMembre.clear();
+      entreeNomMembre.clear();
+      entreAdresseMembre.clear();
+      entreAgeMembre.clear();
     } else {
-      for ( InterMembre me : association.gestionnaireMembre().ensembleMembres()) {
-        if(m.getInformationPersonnelle().getNom().equals(me.getInformationPersonnelle().getNom()) && m.getInformationPersonnelle().getPrenom().equals(me.getInformationPersonnelle().getPrenom())) {
+      for (InterMembre me : association.gestionnaireMembre()
+          .ensembleMembres()) {
+        if (m.getInformationPersonnelle().getNom()
+            .equals(me.getInformationPersonnelle().getNom())
+            && m.getInformationPersonnelle().getPrenom()
+                .equals(me.getInformationPersonnelle().getPrenom())) {
           m.definirInformationPersonnnelle(m.getInformationPersonnelle());
-          message.setText("Le membre n'a pas été ajouté mais ses informations ont été mise à jour.");
-        } else {
-          message.setText("Erreur sur la création du membre.\n chaine vide ou valeur nulle.");
+          message.setText("Le membre "
+              + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
+              + this.entreePrenomMembre.getText()
+                  .substring(1, entreePrenomMembre.getLength()).toLowerCase()
+              + " " + this.entreeNomMembre.getText().toUpperCase()
+              + "n'est pas créé.\n Ses informations personnelles ont été mise à jour.");
         }
       }
+      message.setText(
+          "Erreur sur la création du membre.\n Veuillez vérifier les valeurs des champs.");
     }
   }
   
   /**
    * A propos : affiche quelques informations sur votre application.
-   * 
-   * @param event
+   *
+   * @param event l'objet récupéré par un clique sur le menu "à propos".
    */
   @FXML
   void actionMenuApropos(ActionEvent event) {
