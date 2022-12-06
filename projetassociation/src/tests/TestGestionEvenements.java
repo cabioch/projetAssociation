@@ -85,11 +85,11 @@ public class TestGestionEvenements {
   private Evenement event10;
   
   /**
-   * Création d'un treizième événement appelé event12 pour tester la
+   * Création d'un treizième événement appelé event11 pour tester la
    * création d'un événement comportant le même nom, les mêmes horraire
    *  qu'un autre événement avec un lieu différent pour les différencier.
    */
-  private Evenement event12;
+  private Evenement event11;
   
   
   /**
@@ -182,7 +182,7 @@ public class TestGestionEvenements {
             00, 20, 16);
     
     // Ajout d'un événement "clône" à l'événement 1 ayant juste le lieu de différent de celui-ci.
-    event12 = new Evenement("Bowling", "Brest", 2022, Month.MARCH, 14, 14, 0, 120, 10);
+    event11 = new Evenement("Bowling", "Brest", 2022, Month.MARCH, 14, 14, 0, 120, 10);
     
     // Ajout du prénom Titi et nom Beau comme nom pour le premier membre
     infoC = new InformationPersonnelle("Titi", "Beau");
@@ -436,7 +436,7 @@ public class TestGestionEvenements {
    */
   @Test
   void testCreationEvenementMemeNomMemeHorrairesLieuDifferents() {
-    assertEquals(event12, gevent.creerEvenement("Bowling", "Brest", 14, Month.MARCH, 2022, 14,
+    assertEquals(event11, gevent.creerEvenement("Bowling", "Brest", 14, Month.MARCH, 2022, 14,
         00, 120, 10));
   }
   
