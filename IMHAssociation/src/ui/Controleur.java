@@ -236,9 +236,11 @@ public class Controleur implements Initializable {
    */
   @FXML
   void actionBoutonEvenementSelectionneEvt(ActionEvent event) {
-    final DateTimeFormatter dtformatDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    final DateTimeFormatter dtformatHeure = DateTimeFormatter.ofPattern("HH:mm");
-
+    final DateTimeFormatter dtformatDate =
+        DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    final DateTimeFormatter dtformatHeure =
+        DateTimeFormatter.ofPattern("HH:mm");
+    
     Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
     if (e == null) {
       message.setText("Aucun événement sélectionné.");
@@ -250,8 +252,7 @@ public class Controleur implements Initializable {
     // Récupère la date au format DD-MM-YYYY (comme l'entrée nécessaire)
     entreeDateEvt.setText(dtformatDate.format(e.getDate()));
     // Récupère l'heure au format HH:MM (comme l'entrée nécessaire)
-    entreeHeureEvt
-        .setText(dtformatHeure.format(e.getDate()));
+    entreeHeureEvt.setText(dtformatHeure.format(e.getDate()));
     entreeDureeEvt.setText(Integer.toString(e.getDuree()));
     entreeMaxParticipantsEvt
         .setText(Integer.toString(e.getNbParticipantsMax()));
@@ -309,7 +310,8 @@ public class Controleur implements Initializable {
     Membre m = getMembreFromFields();
     
     if (m == null) {
-      message.setText("Impossible de trouver le membre dans l'ensemble des membres");
+      message.setText(
+          "Impossible de trouver le membre dans l'ensemble des membres");
     }
     for (Evenement e : m.ensembleEvenements()) {
       listeEvenements.getItems().add(e);
@@ -331,7 +333,7 @@ public class Controleur implements Initializable {
     // TODO GESTION ERREUR GESTION ERREUR
     InterMembre m = listeMembres.getSelectionModel().getSelectedItem();
     Evenement e = listeEvenements.getSelectionModel().getSelectedItem();
-
+    
     if (m == null) {
       message.setText("Aucun membre sélectionné.");
       return;
@@ -341,7 +343,7 @@ public class Controleur implements Initializable {
       message.setText("Aucun événement sélectionné.");
       return;
     }
-
+    
     // TODO Encore de la gestion d'erreur
     m.ensembleEvenements().remove(e);
     e.enleverParticipant(m);
@@ -369,12 +371,18 @@ public class Controleur implements Initializable {
       return;
     }
     
+    if (e.getDate().isBefore(LocalDateTime.now())) {
+      message.setText("L'événement est déjà passé");
+      return;
+    }
+    
     if (association.gestionnaireEvenements().inscriptionEvenement(e, m)) {
       message.setText("Le membre a bien été inscrit à l'évenement.");
       return;
     }
     
-    message.setText("Il y a eu une erreur lors de l'ajout du membre à l'événement.");
+    message.setText(
+        "Il y a eu une erreur lors de l'ajout du membre à l'événement.");
   }
   
   /**
@@ -596,7 +604,8 @@ public class Controleur implements Initializable {
     association.InformationPersonnelle info = new InformationPersonnelle(
         this.entreeNomMembre.getText(), this.entreePrenomMembre.getText(),
         this.entreAdresseMembre.getText(), age);
-    // Essaye de récupérer le membre dans l'ensemble de membres avec les événements
+    // Essaye de récupérer le membre dans l'ensemble de membres avec les
+    // événements
     // Correspondants
     Membre m = new Membre(info);
     for (InterMembre mbr : association.gestionnaireMembre().ensembleMembres()) {
@@ -627,7 +636,8 @@ public class Controleur implements Initializable {
     association.InformationPersonnelle info = new InformationPersonnelle(
         this.entreeNomMembre.getText(), this.entreePrenomMembre.getText(),
         this.entreAdresseMembre.getText(), age);
-    // Essaye de récupérer le membre dans l'ensemble de membres avec les événements
+    // Essaye de récupérer le membre dans l'ensemble de membres avec les
+    // événements
     // Correspondants
     Membre m = new Membre(info);
     
@@ -644,27 +654,26 @@ public class Controleur implements Initializable {
       entreeNomMembre.clear();
       entreAdresseMembre.clear();
       entreAgeMembre.clear();
-    } else {
-      // si pas d'ajout, verif si membre existe puis maj sinon erreur.
-      for (InterMembre me : association.gestionnaireMembre()
-          .ensembleMembres()) {
-        if (m.getInformationPersonnelle().getNom()
-            .equals(me.getInformationPersonnelle().getNom())
-            && m.getInformationPersonnelle().getPrenom()
-                .equals(me.getInformationPersonnelle().getPrenom())) {
-          message.setText("Le membre "
-              + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
-              + this.entreePrenomMembre.getText()
-                  .substring(1, entreePrenomMembre.getLength()).toLowerCase()
-              + " " + this.entreeNomMembre.getText().toUpperCase()
-              + " n'est pas créé.\n Ses informations personnelles ont été mise à jour.");
-          association.gestionnaireMembre().supprimerMembre(me);
-          me.definirInformationPersonnnelle(m.getInformationPersonnelle());
-          association.gestionnaireMembre().ajouterMembre(me);
-        } else {
-          message.setText(
-              "Erreur sur la création du membre.\n Veuillez vérifier les valeurs des champs.");
-        }
+      return;
+    }
+    // si pas d'ajout, verif si membre existe puis maj sinon erreur.
+    for (InterMembre me : association.gestionnaireMembre().ensembleMembres()) {
+      if (m.getInformationPersonnelle().getNom()
+          .equals(me.getInformationPersonnelle().getNom())
+          && m.getInformationPersonnelle().getPrenom()
+              .equals(me.getInformationPersonnelle().getPrenom())) {
+        message.setText("Le membre "
+            + this.entreePrenomMembre.getText().substring(0, 1).toUpperCase()
+            + this.entreePrenomMembre.getText()
+                .substring(1, entreePrenomMembre.getLength()).toLowerCase()
+            + " " + this.entreeNomMembre.getText().toUpperCase()
+            + " n'est pas créé.\n Ses informations personnelles ont été mise à jour.");
+        association.gestionnaireMembre().supprimerMembre(me);
+        me.definirInformationPersonnnelle(m.getInformationPersonnelle());
+        association.gestionnaireMembre().ajouterMembre(me);
+      } else {
+        message.setText(
+            "Erreur sur la création du membre.\n Veuillez vérifier les valeurs des champs.");
       }
     }
   }
@@ -815,10 +824,12 @@ public class Controleur implements Initializable {
     int jour = Integer.parseInt(dateStrArray[0]);
     int heure = Integer.parseInt(heureStrArray[0]);
     int minute = Integer.parseInt(heureStrArray[1]);
-
+    
     // Retourne l'événement avec les participants nécessaires
-    Evenement evTmp = new Evenement(nom, lieu, annee, mois, jour, heure, minute, duree, participants);
-    for (Evenement e : association.gestionnaireEvenements().ensembleEvenements()) {
+    Evenement evTmp = new Evenement(nom, lieu, annee, mois, jour, heure, minute,
+        duree, participants);
+    for (Evenement e : association.gestionnaireEvenements()
+        .ensembleEvenements()) {
       if (e.equals(evTmp)) {
         return e;
       }
