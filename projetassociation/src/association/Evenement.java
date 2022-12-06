@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Représente un Evenement nommé a un lieu donné, avec un debut, une fin et des
  * participants.
- * 
+ *
  * @author Enzo CABIOCH
  */
 public class Evenement implements java.io.Serializable {
@@ -161,8 +161,8 @@ public class Evenement implements java.io.Serializable {
   
   @Override
   public String toString() {
-    return "Evenement \"" + nom + "\" a " + lieu + " , de " + date + " a "
-        + date.plusMinutes(duree) + ". Il y a un maximum de "
+    return "Evénement : " + nom + " | Lieu : " + lieu + " | Date : " + date + " à "
+        + date.plusMinutes(duree) + " | Nombre de participants max : "
         + nbParticipantsMax + " participants.";
   }
   // </editor-fold>

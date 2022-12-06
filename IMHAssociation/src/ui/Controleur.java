@@ -219,6 +219,8 @@ public class Controleur implements Initializable {
         .ensembleEvenementAvenir()) {
       listeEvenements.getItems().add(e);
     }
+    
+    labelListeAfficheeEvt.setText("Tous les événements futurs de l'association. ");
   }
   
   /**
@@ -380,6 +382,8 @@ public class Controleur implements Initializable {
         .ensembleEvenements()) {
       listeEvenements.getItems().add(e);
     }
+    
+    labelListeAfficheeEvt.setText(" Tous les événements de l'association.");
   }
   
   /**

@@ -31,7 +31,8 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
   }
 
   /**
-   * Setter de la liste d'évènements
+   * Setter de la liste d'évènements.
+   *
    * @param listeEvenements une liste d'Evènements
    */
   public void setListeEvenements(List<Evenement> listeEvenements) {
