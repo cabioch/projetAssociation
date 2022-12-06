@@ -140,8 +140,6 @@ public class Evenement implements java.io.Serializable {
   
   // <editor-fold desc="Overrides">
   @Override
-  public boolean equals(Object o) {
-  
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;
