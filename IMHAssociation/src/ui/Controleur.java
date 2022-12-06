@@ -149,7 +149,7 @@ public class Controleur implements Initializable {
    * liste, affiche ses informations personnelles dans les quatres champs en
    * haut de la fenêtre.
    * 
-   * @param event
+   *@param event Est l'événement sélectionné quand on clic sur le bouton
    */
   @FXML
   void actionBoutonAfficherMembreSelectionneMembre(ActionEvent event) {
@@ -160,12 +160,22 @@ public class Controleur implements Initializable {
     entreePrenomMembre.setText(info.getPrenom());
     entreAgeMembre.setText(Integer.toString(info.getAge()));
     entreAdresseMembre.setText(info.getAdresse());
+    if (association.gestionnaireMembre().president() != null && association
+        .gestionnaireMembre().president().getInformationPersonnelle().getNom()
+        .equals(m.getInformationPersonnelle().getNom())) {
+      labelListeAfficheeMembre
+          .setText("Le membre selectionné est le président.");
+    } else {
+      labelListeAfficheeMembre.setText("Le membre selectionné.");
+    }
+    message.setText("Affichage du membre sélectionné.");
   }
   
   /**
    * Afficher les participants : affiche dans la liste de gauche, les
    * participants inscrits à l’événement dont les informations sont affichées.
    * 
+   *@param event Est l'événement sélectionné quand on clic sur le bouton
    */
   @FXML
   void actionBoutonAfficherParticipantsEvt(ActionEvent event) {
@@ -183,6 +193,8 @@ public class Controleur implements Initializable {
   /**
    * Afficher tous les membres : affiche dans la liste tous les membres de
    * l’association.
+   * 
+   * @param event Est l'événement sélectionné quand on clic sur le bouton
    */
   @FXML
   void actionBoutonAfficherTousMembresMembre() {
@@ -190,6 +202,9 @@ public class Controleur implements Initializable {
     for (InterMembre m : association.gestionnaireMembre().ensembleMembres()) {
       listeMembres.getItems().add((Membre) m);
     }
+    labelListeAfficheeMembre.setText("Tous les membres.");
+    message.setText("Affichage des membres de l'association.");
+
   }
   
   /**
