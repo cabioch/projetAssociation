@@ -307,6 +307,10 @@ public class Controleur implements Initializable {
   void actionBoutonEvenementsMembreMembre(ActionEvent event) {
     listeEvenements.getItems().clear();
     Membre m = getMembreFromFields();
+    
+    if (m == null) {
+      message.setText("Impossible de trouver le membre dans l'ensemble des membres");
+    }
     for (Evenement e : m.ensembleEvenements()) {
       listeEvenements.getItems().add(e);
     }
@@ -614,7 +618,18 @@ public class Controleur implements Initializable {
   
   @FXML
   void actionBoutonValiderMembre(ActionEvent event) {
-    Membre m = getMembreFromFields();
+    int age;
+    try {
+      age = Integer.parseInt(entreAgeMembre.getText());
+    } catch (NumberFormatException e) {
+      age = 0;
+    }
+    association.InformationPersonnelle info = new InformationPersonnelle(
+        this.entreeNomMembre.getText(), this.entreePrenomMembre.getText(),
+        this.entreAdresseMembre.getText(), age);
+    // Essaye de récupérer le membre dans l'ensemble de membres avec les événements
+    // Correspondants
+    Membre m = new Membre(info);
     
     // nouveau membre
     if (association.gestionnaireMembre().ajouterMembre(m)) {
