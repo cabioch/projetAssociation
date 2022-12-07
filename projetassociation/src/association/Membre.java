@@ -72,7 +72,6 @@ public class Membre implements InterMembre, Serializable {
      * prendre en compte la date
      */
     List<Evenement> avenir = new ArrayList<>();
-    
     // regarde pour chaque evenement dans la liste d'évènement
     for (Evenement e : listEvenements) {
       /*

@@ -14,6 +14,9 @@ import java.util.Set;
  */
 public class GestionMembres implements InterGestionMembres, Serializable {
   
+  /**
+   * id de sérialisation.
+   */
   
   private static final long serialVersionUID = 37L;
   
@@ -52,7 +55,7 @@ public class GestionMembres implements InterGestionMembres, Serializable {
   public boolean ajouterMembre(InterMembre membre) {   
     // verifie que le membre ajouté n'a pas un attribut null en prénom ou nom.
     if (membre.getInformationPersonnelle().getPrenom() == null
-    	|| membre.getInformationPersonnelle().getNom() == null) {
+        || membre.getInformationPersonnelle().getNom() == null) {
       return false;
     }
     // verifie que le membre ajouté n'est pas égale a un membre déja existant

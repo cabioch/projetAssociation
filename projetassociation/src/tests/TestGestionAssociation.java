@@ -18,8 +18,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Month;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,11 +26,17 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests JUnit de la classe {@link GestionAssociation}.
+ *
+ *@author Enzo Cabioch
+ *@see association.GestionAssociation
  */
 public class TestGestionAssociation {
   
   private GestionAssociation association;
   
+  /**
+   * Des membres pour les tests avec des informations personnelles basiques.
+   */
   private static final Membre membre1 =
       new Membre(new InformationPersonnelle("Jean", "Pierre"));
   private static final Membre membre2 =
@@ -66,7 +70,7 @@ public class TestGestionAssociation {
   /**
    * Permet de créer une association typique avec des membres et des évenements,
    * et des membres inscrits à des évenements.
-   * 
+   *
    * @return Une association avec des membres et des évenements pour les tests.
    */
   private static GestionAssociation getAssociationTypique() {

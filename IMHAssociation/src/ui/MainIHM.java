@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 
 public final class MainIHM extends Application {
-
+  
   @Override
   public void start(Stage primaryStage) {
     try {
@@ -30,7 +30,7 @@ public final class MainIHM extends Application {
     primaryStage.setTitle("Association");
     primaryStage.show();
   }
-
+  
   public static void main(String[] args) {
     launch(args);
   }

@@ -14,6 +14,9 @@ import java.util.Objects;
  */
 public class GestionEvenements implements InterGestionEvenements, Serializable {
   
+  /**
+   * id de sérialisation.
+   */
   
   private static final long serialVersionUID = 210393L;
   
@@ -178,7 +181,7 @@ public class GestionEvenements implements InterGestionEvenements, Serializable {
     }
     // Puis on ajoute le membre aux participants de l'événement.
     boolean tmp = evt.ajouterParticipant(mbr);
-    if(!tmp) {
+    if (!tmp) {
       mbr.ensembleEvenements().remove(evt);
       return false;
     }

@@ -1,13 +1,10 @@
 package association;
 
-import java.text.DateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -93,7 +90,13 @@ public class Evenement implements java.io.Serializable {
     return (finThis.compareTo(debutEvt) < 0 || debutThis.compareTo(finEvt) > 0);
   }
   
-  // <editor-fold desc="Getter-Setter">
+  /**
+   * Les getters et setters des attributs de la classe Evènement :
+   * Nom,Lieu,Date, Durée, Nb Participants.
+   *
+   * @return les attributs précédemments cités
+   */
+  
   public String getNom() {
     return nom;
   }
@@ -137,9 +140,6 @@ public class Evenement implements java.io.Serializable {
   public Set<InterMembre> getParticipants() {
     return participants;
   }
-  
-  // Juste enleve le setter de participants
-  // </editor-fold>
   
   
   // <editor-fold desc="Overrides">

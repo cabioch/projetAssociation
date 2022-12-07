@@ -3,18 +3,18 @@ package association;
 import java.io.IOException;
 
 /**
- * D�finition des actions de gestion de l'association.
+ * Définition des actions de gestion de l'association.
  *
  * @author Eric Cariou
  */
 public interface InterGestionAssociation {
 
   /**
-   * Renvoie le gestionnaire d'�v�nements de l'association. L'objet retourné est
+   * Renvoie le gestionnaire d'évènements de l'association. L'objet retourné est
    * unique. Au premier appel de la méthode, il est créé et aux appels suivants,
    * c'est la référence sur cet objet qui est retournée.
    *
-   * @return le gestionnaire d'�v�nements de l'association
+   * @return le gestionnaire d'évènements de l'association
    */
   InterGestionEvenements gestionnaireEvenements();
 

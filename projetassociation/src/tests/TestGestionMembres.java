@@ -1,14 +1,11 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import association.GestionMembres;
 import association.InformationPersonnelle;
-import association.InterMembre;
 import association.Membre;
-import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

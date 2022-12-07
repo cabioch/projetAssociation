@@ -25,7 +25,7 @@ public interface InterMembre {
   List<Evenement> ensembleEvenementsAvenir();
 
   /**
-   * D�finit les informations personnelles du membre.
+   * Définit les informations personnelles du membre.
    *
    * @param info les informations personnelles du membre
    */

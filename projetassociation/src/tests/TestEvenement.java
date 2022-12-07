@@ -15,19 +15,32 @@ import org.junit.jupiter.api.Test;
 
 
 /**
- * Tests JUnit de {@link Evenement}. TODO Commenter chaque test
+ * Tests JUnit de la classe {@link Evenement}.
+ *
+ * @author Enzo Cabioch
+ * @see association.Evenement
  */
 public class TestEvenement {
   
+  /**
+   * Des attributs évènements pour les tests.
+   */
   private Evenement evenement1;
   private Evenement evenement2;
   private Evenement evenement3;
   private Evenement evenement4;
   private Evenement evenement5;
   
+  /**
+   * Des attributs membres pour les tests.
+   */
   private InterMembre membre1;
   private InterMembre membre2;
   private InterMembre membre3;
+  
+  /**
+    * Des attributs de lieu et de nom pour les tests.
+    */
   private final String nom = "test";
   private final String lieu = "endroit";
   
@@ -87,6 +100,10 @@ public class TestEvenement {
     return ev1.pasDeChevauchementTemps(ev2) || ev2.pasDeChevauchementTemps(ev1);
   }
   
+  /**
+   * Tests de chevauchement en lieu.
+   * 
+   */
   @Test
   void testChevauchementLieu() {
     // Se chevauchent en temps & en lieu
@@ -99,6 +116,9 @@ public class TestEvenement {
     assertTrue(evenement2.pasDeChevauchementLieu(evenement5));
   }
   
+  /**
+   * Test d'ajout de participants.
+   */
   @Test
   void testAjoutParticipants() {
     
@@ -113,12 +133,18 @@ public class TestEvenement {
     assertEquals(2, evenement1.getParticipants().size());
   }
   
+  /**
+   * Test de double ajouts de participants.
+   */
   @Test
   void testDoubleAjout() {
     evenement1.ajouterParticipant(membre1);
     assertFalse(evenement1.ajouterParticipant(membre1));
   }
   
+  /**
+   * Test pour retirer un participant.
+   */
   @Test
   void testEnleverParticipants() {
     evenement1.ajouterParticipant(membre1);
@@ -131,6 +157,9 @@ public class TestEvenement {
     assertEquals(0, evenement1.getParticipants().size());
   }
   
+  /**
+   * Test pour retirer un non participant d'un evènement.
+   */
   @Test
   void testEnleverNonParticipant() {
     assertFalse(evenement1.enleverParticipant(membre1));
@@ -138,6 +167,9 @@ public class TestEvenement {
     assertEquals(0, evenement1.getParticipants().size());
   }
   
+  /**
+   * Test du constructeur.
+   */
   @Test
   void testConstructeur1() {
     LocalDateTime date = LocalDateTime.of(2022, 11, 29, 15, 23);
@@ -149,6 +181,9 @@ public class TestEvenement {
     assertEquals(ev.getNbParticipantsMax(), 20);
   }
   
+  /**
+   * Un deuxieme test du constructeur.
+   */
   @Test
   void testConstructeur2() {
     LocalDateTime date = LocalDateTime.of(2022, 11, 29, 15, 23);
@@ -161,6 +196,9 @@ public class TestEvenement {
     assertEquals(ev.getNbParticipantsMax(), 20);
   }
   
+  /**
+   * Un test avec un évènement avec une année négative.
+   */
   @Test
   void testEvenementAnneeNegative() {
     Evenement ev1 =
@@ -171,6 +209,9 @@ public class TestEvenement {
     assertTrue(isDateNulle(ev2));
   }
   
+  /**
+   * Un test avec un évènement et une année égale à zéro.
+   */
   @Test
   void testEvenementAnneeZero() {
     Evenement ev3 =
@@ -181,6 +222,9 @@ public class TestEvenement {
     assertTrue(isDateNulle(ev4));
   }
   
+  /**
+   * Un test avec un évènement et des minutes négatives.
+   */
   @Test
   void testEvenementMinutesNegatives() {
     Evenement ev1 =
@@ -188,6 +232,9 @@ public class TestEvenement {
     assertTrue(isDateNulle(ev1));
   }
   
+  /**
+   * Un test avec un évènement et une heure négative.
+   */
   @Test
   void testEvenementHeureNegative() {
     Evenement ev1 =
@@ -195,6 +242,9 @@ public class TestEvenement {
     assertTrue(isDateNulle(ev1));
   }
   
+  /**
+   * Un test avec un évènement et avec aucun participant.
+   */
   @Test
   void testEvenementZeroParticipants() {
     Evenement ev1 =
@@ -205,6 +255,9 @@ public class TestEvenement {
     assertEquals(-1, ev2.getNbParticipantsMax());
   }
   
+  /**
+   * Un test avec un nombre de participants négatifs.
+   */
   @Test
   void testParticipantsNegatifs() {
     Evenement ev1 =
@@ -215,6 +268,9 @@ public class TestEvenement {
     assertEquals(-1, ev2.getNbParticipantsMax());
   }
   
+  /**
+   * Un test avec une durée d'évènement égale à zéro.
+   */
   @Test
   void testDureeZero() {
     Evenement ev1 =
@@ -225,6 +281,9 @@ public class TestEvenement {
     assertEquals(0, ev2.getDuree());
   }
   
+  /**
+   * Un test avec une durée d'évènement négative.
+   */
   @Test
   void testDureeNegative() {
     Evenement ev1 =
@@ -235,6 +294,9 @@ public class TestEvenement {
     assertEquals(0, ev2.getDuree());
   }
   
+  /**
+   * Un test avec un lieu d'évènement nul.
+   */
   @Test
   void testLieuNull() {
     Evenement ev1 =
@@ -244,6 +306,10 @@ public class TestEvenement {
     assertEquals("", ev1.getLieu());
     assertEquals("", ev2.getLieu());
   }
+  
+  /**
+   * Un test avec un nom d'évènement nul.
+   */
   
   @Test
   void testNomNull() {

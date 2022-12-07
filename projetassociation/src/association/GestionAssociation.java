@@ -15,12 +15,15 @@ import java.util.Objects;
 
 /**
  * Gère la sauvegarde des données de l'association.
- * 
+ *
  * @author Enzo CABIOCH
  */
 public class GestionAssociation
     implements InterGestionAssociation, Serializable {
   
+  /**
+   * id de sérialisation.
+   */
   private static final long serialVersionUID = 392L;
   /**
    * Le gestionnaire d'evenements de l'association.

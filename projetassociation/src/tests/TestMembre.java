@@ -2,18 +2,15 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import association.Evenement;
 import association.InformationPersonnelle;
-import association.InterGestionEvenements;
-import association.InterGestionMembres;
 import association.Membre;
+import java.time.Month;
+import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 /**
  * Tests JUnit de la classe {@link association.Membre.Membre}.
@@ -29,21 +26,12 @@ public class TestMembre {
   private Membre membre;
   
   /**
-   * Création d'un membreVide non complet(sans adresse et age) pour les tests.
-   */
-  private Membre membreVide;
-  
-  /**
    * Création d'un membreListeVide non complet(sans adresse et age) et sans
    * liste.
    */
   private Membre membreListeVide;
   
   private Membre membreNonConforme;
-  
-  private Membre membreNull;
-  
-  private Membre membreCopie;
   
   /**
    * Création d'un membre complet pour les tests.
@@ -59,12 +47,7 @@ public class TestMembre {
    * Une information basique: nom, prenom mais VIDE.
    */
   private InformationPersonnelle infosVide;
-  
-  /**
-   * Un appel a la méthode gestion membre.
-   */
-  private InterGestionMembres gestionMembres;
-  
+   
   /**
    * Une information complete: nom, prenom, adresse, age.
    */
@@ -76,30 +59,20 @@ public class TestMembre {
    */
   private InformationPersonnelle infosListVide;
   
+  /**
+   * Création d'information personnelle nom et prenom, adresse nulle et age négatif.
+   * liste vide.
+   */
   private InformationPersonnelle infosNonConforme;
   
-  private InformationPersonnelle infosNull;
-  
-  private InformationPersonnelle infosCopie;
-  
   /**
-   * La liste des évènements du membre.
+   *  Instance d'évènements.
    */
-  private List<Evenement> listEvenements;
-  
-  /**
-   * La liste des évènements du membre.
-   */
-  private List<Evenement> listEvenementsVide;
-  
   private Evenement evenements;
   private Evenement evenements2;
   private Evenement evenements3;
-  
-  private Evenement evenementListeVide;
-  
-  private Evenement evenementAVenir1;
-  private Evenement evenementAVenir2;
+  private Evenement evenementaVenir1;
+  private Evenement evenementaVenir2;
   private Evenement evenementPasse;
   
   /**
@@ -118,10 +91,10 @@ public class TestMembre {
     
     membre = new Membre(infos);
     membreComplet = new Membre(infosComplet);
-    membreVide = new Membre(infosVide);
+    new Membre(infosVide);
     membreListeVide = new Membre(infosListVide);
     membreNonConforme = new Membre(infosNonConforme);
-    listEvenements = new ArrayList<>();
+    new ArrayList<>();
     
     // Ajout d'un événement nommé Classe se trouvant à Lannion et ayant
     // la particularité de commencer le 17 Mars 2022 durant 60 minutes et
@@ -135,11 +108,10 @@ public class TestMembre {
         new Evenement("Fete", "Lannion", 2022, Month.MARCH, 20, 20, 00, 60, 5);
     evenements3 =
         new Evenement("Boum", "Lannion", 2022, Month.MARCH, 25, 21, 00, 30, 10);
-    evenementListeVide =
-        new Evenement("Boum", "Lannion", 2022, Month.MARCH, 25, 21, 00, 30, 10);
-    evenementAVenir1 = new Evenement("Party Night", "Brest", 2023,
+    new Evenement("Boum", "Lannion", 2022, Month.MARCH, 25, 21, 00, 30, 10);
+    evenementaVenir1 = new Evenement("Party Night", "Brest", 2023,
         Month.JANUARY, 25, 21, 00, 30, 10);
-    evenementAVenir2 = new Evenement("Beach Party", "Monaco", 2023,
+    evenementaVenir2 = new Evenement("Beach Party", "Monaco", 2023,
         Month.JANUARY, 25, 21, 00, 30, 10);
     evenementPasse = new Evenement("Party Sun", "Paris", 2021, Month.MARCH, 25,
         21, 00, 30, 10);
@@ -185,76 +157,40 @@ public class TestMembre {
     assertEquals(membreTest.getInformationPersonnelle().getPrenom(),
         "jean-andre");
     assertEquals(membreTest.getInformationPersonnelle().getNom(), "thomas");
-    
   }
   
-  /**
-   * Vérifie l'instanciation d'un membre null.
-   */
-  @Test
-  void testConstructeurMembreNull() {
-    infosNull = new InformationPersonnelle(null, null);
-    membreNull = new Membre(infosNull);
-    assertEquals(null, membreNull.getInformationPersonnelle().getPrenom());
-    assertEquals(null, membreNull.getInformationPersonnelle().getNom());
-
-  }
   
   /**
-   * Vérifie l'instanciation d'un membre null.
-   */
-  @Test
-  void testConstructeurMembreCopie() {
-    infosCopie = new InformationPersonnelle("thomas", "jean-andre");
-    membreCopie = new Membre(infosCopie);
-    
-    assertEquals(membre.getInformationPersonnelle().getPrenom(),
-        membreCopie.getInformationPersonnelle().getPrenom());
-    
-  }
-  
-  /**
-   * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs
+   * Vérifie que la definitionInformationPersonnelle ne modifie pas les valeurs
    * si l'age est négatif.
    * 
    */
   @Test
-  void testdefinirInformationpersonnelleAgeNegatif() {
-    InformationPersonnelle infoModif =
-        new InformationPersonnelle("thomas", "jean-andre", "test_invalide", 30);
+  void testdefinirInformationPersonnelleAgeNegatif() {
+    InformationPersonnelle infoModif = new InformationPersonnelle("thomas",
+        "jean-andre", "test_invalide", -30);
     membreComplet.definirInformationPersonnnelle(infoModif);
-    assertEquals(30, membreComplet.getInformationPersonnelle().getAge());
+    assertEquals(20, membreComplet.getInformationPersonnelle().getAge());
   }
   
   /**
-   * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs
-   * si l'age est négatif.
+   * Appelle un membre déjà présent pour le modifier. Son âge et son adresse
+   * reste inchangé car son age était valide et qu'aucun autre âge est passé en
+   * paramètres.
    * 
    */
   @Test
-  void testdefinirInformationpersonnelle() {
+  void testdefinirInformationPersonnelleModification() {
     InformationPersonnelle infoModif =
-        new InformationPersonnelle("thomas", "jean-andre", "test_passer", 30);
+        new InformationPersonnelle("thomas", "jean-andre");
     membreComplet.definirInformationPersonnnelle(infoModif);
-    assertEquals(30, membreComplet.getInformationPersonnelle().getAge());
+    assertEquals(20, membreComplet.getInformationPersonnelle().getAge());
   }
   
-  /**
-   * Verefie que la definitionInformationPersonnelle ne modifie pas les valeurs
-   * si l'âge est négatif.
-   * 
-   */
-  @Test
-  void testdefinirInformationpersonnellePrenomNomVide() {
-    InformationPersonnelle infoModif =
-        new InformationPersonnelle(" ", " ", "test_invalide", 40);
-    membreVide.definirInformationPersonnnelle(infoModif);
-    assertFalse(membreComplet.getInformationPersonnelle().getAge() == 40);
-  }
   
   /**
    * Vérifie que la definitionInformationPersonnelle ne fonctionne pas en
-   * donnant un nom et un prenom qui ne correspond pas � l'instance de classe.
+   * donnant un nom et un prenom qui ne correspond pas à l'instance de classe.
    */
   @Test
   void testdefinirInformationPersonnelleNomPrenomFaux() {
@@ -351,47 +287,34 @@ public class TestMembre {
   
   /**
    * Ajoute un évènement à venir au membre et evènement dépassé au membre. La
-   * liste de ses évènement ne doit dpnc comprendre qu'un évènement.
+   * liste de ses évènement à venir ne doit donc comprendre qu'un évènement.
    */
   @Test
   void testensembleEvenementsaVenir2Evenements() {
-    evenementAVenir1.ajouterParticipant(membreComplet);
-    membreComplet.ensembleEvenements().add(evenementAVenir1);
+    evenementaVenir1.ajouterParticipant(membreComplet);
+    membreComplet.ensembleEvenements().add(evenementaVenir1);
     evenementPasse.ajouterParticipant(membreComplet);
     membreComplet.ensembleEvenements().add(evenementPasse);
     assertEquals(1, membreComplet.ensembleEvenementsAvenir().size());
   }
   
   /**
-   * Ajoute une participation d'un membre à un évènement et ajoute l'évènement à
-   * une liste vide.
+   * Ajoute un évènement à venir et évènement passé aà deux membres différents.
    */
   @Test
   void testensembleEvenementsaVenir2Membres() {
-    evenementAVenir1.ajouterParticipant(membreComplet);
-    membreComplet.ensembleEvenements().add(evenementAVenir1);
+    evenementaVenir1.ajouterParticipant(membreComplet);
+    membreComplet.ensembleEvenements().add(evenementaVenir1);
     evenementPasse.ajouterParticipant(membreComplet);
     membreComplet.ensembleEvenements().add(evenementPasse);
     
-    evenementAVenir2.ajouterParticipant(membre);
-    membre.ensembleEvenements().add(evenementAVenir2);
+    evenementaVenir2.ajouterParticipant(membre);
+    membre.ensembleEvenements().add(evenementaVenir2);
     evenementPasse.ajouterParticipant(membre);
     membre.ensembleEvenements().add(evenementPasse);
     
     assertEquals(1, membreComplet.ensembleEvenementsAvenir().size());
     assertEquals(1, membre.ensembleEvenementsAvenir().size());
-  }
-  
-  /**
-   * Appelle la fonction toString d'un membre complet.
-   */
-  @Test
-  void testtoString() {
-    String res = membreComplet.toString();
-    assertEquals(membreComplet.getInformationPersonnelle().getNom() + " "
-        + membreComplet.getInformationPersonnelle().getPrenom() + " "
-        + membreComplet.getInformationPersonnelle().getAdresse() + " "
-        + membreComplet.getInformationPersonnelle().getAge(), res);
   }
   
   /**
@@ -401,10 +324,9 @@ public class TestMembre {
   @Test
   void testtoStringMembreNonComplet() {
     String res = membre.toString();
-    assertEquals(membre.getInformationPersonnelle().getNom() + " "
-        + membre.getInformationPersonnelle().getPrenom() + " "
-        + membre.getInformationPersonnelle().getAdresse() + " "
-        + membre.getInformationPersonnelle().getAge(), res);
-    // le toString affichera nom prenom 0
+    assertEquals(
+        "Prenom : " + infos.getPrenom() + ", Nom : " + infos.getNom() + " | "
+            + " Adresse : " + infos.getAdresse() + ", Age : " + infos.getAge(),
+        res);
   }
 }
